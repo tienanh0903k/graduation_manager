@@ -1,0 +1,58 @@
+.login-wrapper {
+    background-image: url('https://wallpapers.com/images/hd/project-management-aesthetic-desktop-6oxfxe1l1508cpv8.jpg'); // bạn để ảnh này trong src/assets/
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    background-color: white;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.login-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #444;
+}
+
+.login-input {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.login-button {
+    font-weight: bold;
+}
+
+.btn-lang {
+    background: #dbeafe;
+    border: none;
+    padding: 4px 8px;
+    margin-left: 4px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.login-footer {
+    font-size: 0.75rem;
+    color: #666;
+}
