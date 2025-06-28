@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +17,10 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity 
 @RequiredArgsConstructor
 public class SecurityConfiguration  {
+
+    private final AuthenticationFilter authenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+
    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -34,6 +38,7 @@ public class SecurityConfiguration  {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider)
+            .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .httpBasic(Customizer.withDefaults());
 
         return http.build();

@@ -1,9 +1,13 @@
 package com.example.graduate.exception;
 
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.example.graduate.response.ResponseObject;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -15,10 +19,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED); // Mã lỗi 401
     }
 
-    // Xử lý các lỗi không xác định khác
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGenericException(Exception ex) {
-        return new ResponseEntity<>("An unexpected error occurred: " + ex.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR); // Mã lỗi 500
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ResponseObject> handleGeneralException(Exception ex) {
+        return ResponseEntity.internalServerError().body(
+                ResponseObject.builder()
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .message(ex.getMessage())
+                        .build());
+
     }
+
 }
