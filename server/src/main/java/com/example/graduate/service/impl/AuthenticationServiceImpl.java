@@ -119,13 +119,25 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         return user;
     }
 
+    @Override
+    public void assignRoleToUser(Long userId, Long roleId) {
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+        Roles role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new RuntimeException("Role not found with ID: " + roleId));
+        user.setRole(role);
+        userRepository.save(user);
+        logger.info("Assigned role {} to user {}", role.getName(), user.getEmail());
+    }
+
     // Phương thức tạo AuthenticationResponse
     private AuthenticationResponse buildAuthenticationResponse(String token, Users user) {
         List<MenuPermissionResponseDTO> menuPermissions = getMenusWithPermissionsByUser(user);
         return AuthenticationResponse.builder()
                 .token(token)
                 .userDto(UserMapper.ConvertUser(user))
-                .menuPermissions(menuPermissions) 
+                .menuPermissions(menuPermissions)
+                .message("Authentication successful")
                 .build();
     }
 }

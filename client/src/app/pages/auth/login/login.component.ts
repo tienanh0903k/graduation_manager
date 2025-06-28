@@ -7,9 +7,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../../layout/component/app.floatingconfigurator';
-import { AuthService } from '../../../core/services/auth.service';
 import { PasswordValidator } from '../../../shared/validators/password.validator';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import * as AuthActions from '../../../core/store/auth/auth.actions';
+import { selectAuthError, selectAuthIsLoading } from '../../../core/store/auth/auth.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-login',
@@ -21,21 +24,25 @@ import { CommonModule } from '@angular/common';
 export class Login {
     loginForm: FormGroup;
     private _fb = inject(FormBuilder);
-    private _authService = inject(AuthService);
     private _router = inject(Router);
+    private store = inject(Store);
+
+    isLoading$: Observable<boolean>;
+    error$: Observable<any>;
 
     constructor() {
         this.loginForm = this._fb.group({
             email: ['', [Validators.required]],
             password: ['', [PasswordValidator.strong]]
         });
+
+        this.isLoading$ = this.store.select(selectAuthIsLoading);
+        this.error$ = this.store.select(selectAuthError);
     }
 
     login(): void {
         if (this.loginForm.valid) {
-            this._authService.login(this.loginForm.value).subscribe(() => {
-                this._router.navigate(['/']);
-            });
+            this.store.dispatch(AuthActions.login({ request: this.loginForm.value }));
         }
     }
 

@@ -1,24 +1,24 @@
-//Viết phương thức lấy danh sách menu + quyền theo user
+fix lỗi 
 
-// service/impl/UserServiceImpl.java (hoặc nơi nào bạn xử lý login)
-public List<MenuPermissionResponseDTO> getMenusWithPermissionsByUser(Users user) {
-    Roles role = user.getRole(); // Lấy role của user
+X [ERROR] TS2339: Property 'hasToken' does not exist on type 'AuthService'. [plugin angular-compiler]
 
-    List<RoleMenuPermission> roleMenuPermissions = roleMenuPermissionRepository.findByRole(role);
+    src/app/core/guards/auth.guard.ts:16:25:
+      16 │     if (this.authService.hasToken()) {
+         ╵                          ~~~~~~~~
 
-    return roleMenuPermissions.stream().map(rmp -> {
-        MenuItem menu = rmp.getMenu();
 
-        return MenuPermissionResponseDTO.builder()
-            .label(menu.getLabel())
-            .route(menu.getRoute())
-            .icon(menu.getIcon())
-            .permissions(List.of(PermissionDTO.builder()
-                .canRead(rmp.isCanRead())
-                .canCreate(rmp.isCanCreate())
-                .canUpdate(rmp.isCanUpdate())
-                .canDelete(rmp.isCanDelete())
-                .build()))
-            .build();
-    }).collect(Collectors.toList());
-}
+X [ERROR] TS2307: Cannot find module '../MenuPermission/MenuPermissionResponseDTO' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/core/models/authentication-response.model.ts:2:42:
+      2 │ ...onResponseDTO } from '../MenuPermission/MenuPermissionResponseDTO';
+        ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Application bundle generation failed. [1.800 seconds]
+
+X [ERROR] TS2307: Cannot find module '../MenuPermission/MenuPermissionResponseDTO' or its corresponding type declarations. [plugin angular-compiler]
+
+    src/app/core/models/authentication-response.model.ts:2:42:
+      2 │ ...onResponseDTO } from '../MenuPermission/MenuPermissionResponseDTO';
+        ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+

@@ -1,39 +1,30 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { User } from '../models/user.model';
+import { Observable } from 'rxjs';
+import { AuthenticationRequest } from '../models/authentication-request.model';
+import { AuthenticationResponse } from '../models/authentication-response.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
-  private authUrl = 'http://localhost:8080/auth';
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
-  public isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
+    private authUrl = 'http://localhost:8080/auth';
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
-  login(user: User): Observable<any> {
-    return this.http.post(`${this.authUrl}/login`, user).pipe(
-      tap((response: any) => {
-        localStorage.setItem('token', response.token);
-        this.isAuthenticatedSubject.next(true);
-      })
-    );
-  }
+    login(request: AuthenticationRequest): Observable<AuthenticationResponse> {
+        return this.http.post<AuthenticationResponse>(`${this.authUrl}/login`, request);
+    }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    this.isAuthenticatedSubject.next(false);
-  }
+    logout(): void {
+        localStorage.removeItem('token');
+    }
 
-  public hasToken(): boolean {
-    return !!localStorage.getItem('token');
-  }
+    public getToken(): string | null {
+        return localStorage.getItem('token');
+    }
 
-  public getToken(): string | null {
-    return localStorage.getItem('token');
-  }
+    public hasToken(): boolean {
+        return !!this.getToken();
+    }
 }
