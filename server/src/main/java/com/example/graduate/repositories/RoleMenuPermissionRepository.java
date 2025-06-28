@@ -6,6 +6,7 @@ import com.example.graduate.models.RoleMenuPermission;
 import com.example.graduate.models.Roles;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
 @Repository
 public interface RoleMenuPermissionRepository extends JpaRepository<RoleMenuPermission, Long> {
@@ -15,5 +16,5 @@ public interface RoleMenuPermissionRepository extends JpaRepository<RoleMenuPerm
      * @param roleMenuPermission RoleMenuPermission chứa thông tin role
      */
     void deleteByRole(Roles role);
-    
+    List<RoleMenuPermission> findByRole(Roles role);
 }

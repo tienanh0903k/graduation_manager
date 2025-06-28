@@ -8,12 +8,14 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../../layout/component/app.floatingconfigurator';
 import { AuthService } from '../../../core/services/auth.service';
+import { PasswordValidator } from '../../../shared/validators/password.validator';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-login',
     standalone: true,
     templateUrl: './login.component.html',
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, ReactiveFormsModule, RouterModule, RippleModule, AppFloatingConfigurator],
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, ReactiveFormsModule, RouterModule, RippleModule, AppFloatingConfigurator, CommonModule],
     styleUrls: ['./login.component.scss']
 })
 export class Login {
@@ -24,8 +26,8 @@ export class Login {
 
     constructor() {
         this.loginForm = this._fb.group({
-            username: ['', [Validators.required]],
-            password: ['', [Validators.required]]
+            email: ['', [Validators.required]],
+            password: ['', [PasswordValidator.strong]]
         });
     }
 
@@ -35,5 +37,13 @@ export class Login {
                 this._router.navigate(['/']);
             });
         }
+    }
+
+    get passwordError(): string | null {
+        const control = this.loginForm.get('password');
+        if (control?.hasError('passwordStrength') && control?.dirty) {
+            return control.getError('passwordStrength').message;
+        }
+        return null;
     }
 }

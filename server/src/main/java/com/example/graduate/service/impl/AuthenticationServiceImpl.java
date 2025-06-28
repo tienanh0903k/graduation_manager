@@ -9,14 +9,22 @@ import org.springframework.stereotype.Service;
 import com.example.graduate.dto.AuthenticationRequest;
 import com.example.graduate.dto.AuthenticationResponse;
 import com.example.graduate.dto.RegisterRequest;
+import com.example.graduate.dto.MenuPermission.MenuPermissionResponseDTO;
+import com.example.graduate.dto.MenuPermission.PermissionDTO;
 import com.example.graduate.mapper.UserMapper;
 import com.example.graduate.models.Users;
 import com.example.graduate.models.RoleName;
 import com.example.graduate.models.Roles;
+import com.example.graduate.models.MenuItem;
+import com.example.graduate.models.RoleMenuPermission;
 import com.example.graduate.repositories.RoleRepository;
 import com.example.graduate.repositories.UserRepository;
+import com.example.graduate.repositories.RoleMenuPermissionRepository;
 import com.example.graduate.service.interfaces.IAuthenticationService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +35,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final RoleMenuPermissionRepository roleMenuPermissionRepository;
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
@@ -60,6 +69,29 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         }
     }
 
+    @Override
+    public List<MenuPermissionResponseDTO> getMenusWithPermissionsByUser(Users user) {
+        Roles role = user.getRole(); // Lấy role của user
+
+        List<RoleMenuPermission> roleMenuPermissions = roleMenuPermissionRepository.findByRole(role);
+
+        return roleMenuPermissions.stream().map(rmp -> {
+            MenuItem menu = rmp.getMenu();
+
+            return MenuPermissionResponseDTO.builder()
+                .label(menu.getLabel())
+                .route(menu.getRoute())
+                .icon(menu.getIcon())
+                .permissions(List.of(PermissionDTO.builder()
+                    .canRead(rmp.isCanRead())
+                    .canCreate(rmp.isCanCreate())
+                    .canUpdate(rmp.isCanUpdate())
+                    .canDelete(rmp.isCanDelete())
+                    .build()))
+                .build();
+        }).collect(Collectors.toList());
+    }
+
     // Phương thức tạo User từ request
     private Users createUserFromRequest(RegisterRequest request) {
         Users user = new Users();
@@ -89,9 +121,11 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     // Phương thức tạo AuthenticationResponse
     private AuthenticationResponse buildAuthenticationResponse(String token, Users user) {
+        List<MenuPermissionResponseDTO> menuPermissions = getMenusWithPermissionsByUser(user);
         return AuthenticationResponse.builder()
                 .token(token)
                 .userDto(UserMapper.ConvertUser(user))
+                .menuPermissions(menuPermissions) 
                 .build();
     }
 }
