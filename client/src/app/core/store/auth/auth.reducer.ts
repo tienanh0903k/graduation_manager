@@ -14,9 +14,9 @@ export interface AuthState {
 }
 
 export const initialState: AuthState = {
-  token: null,
-  userDto: null,
-  menuPermissions: null,
+  token: localStorage.getItem('auth_token'),
+  userDto: JSON.parse(localStorage.getItem('user') || 'null'),
+  menuPermissions: JSON.parse(localStorage.getItem('menuPermissions') || 'null'),
   message: null,
   isLoading: false,
   error: null,

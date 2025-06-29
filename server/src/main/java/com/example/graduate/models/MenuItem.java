@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +37,8 @@ public class MenuItem {
     private String icon;
     private Integer orderNo;
     private Boolean isVisible = true;
+    @Column(name = "module")
+    private String module;
 
     @ManyToOne
     @JoinColumn(name = "parent_id")

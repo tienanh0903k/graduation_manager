@@ -79,9 +79,14 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             MenuItem menu = rmp.getMenu();
 
             return MenuPermissionResponseDTO.builder()
+                .id(menu.getId())
                 .label(menu.getLabel())
                 .route(menu.getRoute())
                 .icon(menu.getIcon())
+                .orderNo(menu.getOrderNo())
+                .module(menu.getModule())
+                .isVisible(menu.getIsVisible())
+                .parentId(menu.getParent() != null ? menu.getParent().getId() : null)                
                 .permissions(List.of(PermissionDTO.builder()
                     .canRead(rmp.isCanRead())
                     .canCreate(rmp.isCanCreate())
