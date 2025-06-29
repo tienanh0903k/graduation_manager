@@ -9532,3 +9532,4 @@ io.jsonwebtoken.ExpiredJwtException: JWT expired at 2025-06-29T03:04:51Z. Curren
 2025-06-29 14:37:25.228 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
 2025-06-29 15:42:43.697 [HikariPool-6 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=23m30s395ms200µs500ns).
 2025-06-29 15:44:14.281 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-06-29 16:39:10.439 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully

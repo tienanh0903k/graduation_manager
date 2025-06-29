@@ -9,6 +9,10 @@ export function buildMenuTree(flatMenus: any[]): any[] {
   const tree: any[] = [];
 
   clonedMenus.forEach(menu => {
+    if (menu.route) {
+      menu.routerLink = [menu.route];
+    }
+
     if (menu.parentId === null) {
       tree.push(menu);
     } else {
