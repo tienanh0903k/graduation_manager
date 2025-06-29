@@ -18,7 +18,7 @@ import { LayoutService } from '../service/layout.service';
             <a *ngIf="(!item.routerLink || item.items) && item.visible !== false" [attr.href]="item.url" (click)="itemClick($event)" [ngClass]="item.styleClass" [attr.target]="item.target" tabindex="0" pRipple>
                 <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
                 <span class="layout-menuitem-text">{{ item.label }}</span>
-                <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items?.length > 0"></i>
+                <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items?.length"></i>
             </a>
             <a
                 *ngIf="item.routerLink && !item.items && item.visible !== false"
@@ -40,10 +40,10 @@ import { LayoutService } from '../service/layout.service';
             >
                 <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
                 <span class="layout-menuitem-text">{{ item.label }}</span>
-                <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items && item.items.length > 0"></i>
+                <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items?.length"></i>
             </a>
 
-            <ul *ngIf="item.items && item.visible !== false" [@children]="submenuAnimation">
+            <ul *ngIf="item.items?.length && item.visible !== false" [@children]="submenuAnimation">
                 <ng-template ngFor let-child let-i="index" [ngForOf]="item.items">
                     <li app-menuitem [item]="child" [index]="i" [parentKey]="key" [class]="child['badgeClass']"></li>
                 </ng-template>
