@@ -1,0 +1,93 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+
+  font-size: 14px;
+  color: #333;
+
+  box-shadow: 0 1px 2px rgba(128, 128, 128, 0.099);
+
+  span {
+    margin-right: 4px;
+  }
+}
+
+
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  p-dropdown,
+  input,
+  button {
+    min-width: 180px;
+  }
+
+  button {
+    align-self: center;
+  }
+}
+
+.propose-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+// modals styles
+::ng-deep .p-dialog .p-field {
+  margin-bottom: 1rem;
+}
+
+::ng-deep .p-dialog label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+::ng-deep .p-dialog input,
+::ng-deep .p-dialog textarea {
+  width: 100%;
+}
+
+::ng-deep .p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  margin-top: 1rem;
+}
+
+
+
+
+:host ::ng-deep .p-table {
+  font-size: 14px;
+}
+
+:host ::ng-deep .p-tag-success {
+  background-color: #c8e6c9;
+  color: #256029;
+  font-weight: bold;
+}
+
+:host ::ng-deep .p-button-text {
+  color: #1976d2;
+}

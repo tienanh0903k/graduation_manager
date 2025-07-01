@@ -1,0 +1,119 @@
+<nav class="breadcrumb">
+    <span>Trang chủ</span>
+    <span>/</span>
+    <span>{{ breadcrumbLabel }}</span>
+</nav>
+
+
+<p-panel header="Tìm kiếm đề tài" [toggleable]="true">
+    <div class="search-bar">
+        <p-dropdown [options]="departments" [(ngModel)]="selectedDepartment" placeholder="Mã Bộ môn"></p-dropdown>
+        <input type="text" pInputText placeholder="Tên đề tài" [(ngModel)]="searchTitle" />
+        <p-dropdown [options]="lecturers" [(ngModel)]="selectedLecturer" placeholder="Tên giảng viên"></p-dropdown>
+        <button pButton type="button" (click)="filterTopics()">Tìm kiếm</button>
+    </div>
+</p-panel>
+
+<div class="propose-wrapper">
+  <button
+    pButton
+    type="button"
+    icon="pi pi-plus"
+    label="Đề xuất đề tài"
+    class="p-button-success"
+    (click)="openProposeDialog()"
+  ></button>
+</div>
+
+
+<p-panel>
+    <p-table [value]="topics" [paginator]="true" [rows]="10" responsiveLayout="scroll"
+        [tableStyle]="{ 'min-width': '50rem' }">
+
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>STT</th>
+                <th>Tên đề tài</th>
+                <th>Tên giảng viên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Mô tả</th>
+                <th>Số lượng SV</th>
+                <th>Tác vụ</th>
+                <th>Trạng thái</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-topic let-i="rowIndex">
+            <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ topic.title }}</td>
+                <td>{{ topic.lecturer }}</td>
+                <td>{{ topic.email }}</td>
+                <td>{{ topic.phone }}</td>
+                <td>{{ topic.description }}</td>
+                <td>{{ topic.studentCount }}</td>
+                <td>
+                    <button pButton icon="pi pi-eye" class="p-button-text"></button>
+                </td>
+                <td>
+                    <span class="p-tag" [ngClass]="{
+          'p-tag-success': topic.status === 'Đã được duyệt',
+          'p-tag-warning': topic.status === 'Chờ duyệt'
+        }">
+                        {{ topic.status }}
+                    </span>
+                </td>
+            </tr>
+        </ng-template>
+
+
+    </p-table>
+</p-panel>
+
+<!--------------------------------------- dialog  ------------------------------------------->
+<p-dialog
+  header="Đề xuất đề tài mới"
+  [(visible)]="isDialogVisible"
+  [modal]="true"
+  [style]="{ width: '600px' }"
+  (onHide)="closeProposeDialog()"
+>
+  <form class="p-fluid" (ngSubmit)="submitProposal()">
+    <div class="p-field">
+      <label for="title">Tên đề tài</label>
+      <input id="title" type="text" pInputText [(ngModel)]="form.title" name="title" required />
+    </div>
+
+    <div class="p-field">
+      <label for="lecturer">Tên giảng viên</label>
+      <input id="lecturer" type="text" pInputText [(ngModel)]="form.lecturer" name="lecturer" required />
+    </div>
+
+    <div class="p-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" pInputText [(ngModel)]="form.email" name="email" required />
+    </div>
+
+    <div class="p-field">
+      <label for="phone">Số điện thoại</label>
+      <input id="phone" type="text" pInputText [(ngModel)]="form.phone" name="phone" required />
+    </div>
+
+    <div class="p-field">
+      <label for="description">Mô tả</label>
+      <textarea id="description" pInputTextarea rows="3" [(ngModel)]="form.description" name="description"></textarea>
+    </div>
+
+    <div class="p-field">
+      <label for="studentCount">Số lượng SV</label>
+      <input id="studentCount" type="text" pInputText [(ngModel)]="form.studentCount" name="studentCount" required />
+    </div>
+
+    <div class="p-dialog-footer">
+      <button pButton type="button" label="Hủy" class="p-button-text" (click)="closeProposeDialog()"></button>
+      <button pButton type="submit" label="Lưu" class="p-button-success"></button>
+    </div>
+  </form>
+</p-dialog>

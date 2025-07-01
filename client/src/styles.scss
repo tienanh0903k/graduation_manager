@@ -3,3 +3,14 @@
 @use './assets/layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './assets/demo/demo.scss';
+
+.active-menuitem > a {
+  background-color: #e6f4ff;
+  color: #007ad9;
+  font-weight: 600;
+}
+
+.active-menuitem > a .layout-menuitem-icon,
+.active-menuitem > a .layout-menuitem-text {
+  color: #007ad9;
+}

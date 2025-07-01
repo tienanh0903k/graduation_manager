@@ -86,15 +86,13 @@ export class AppMenuitem {
         private layoutService: LayoutService
     ) {
         this.menuSourceSubscription = this.layoutService.menuSource$.subscribe((value) => {
-            Promise.resolve(null).then(() => {
-                if (value.routeEvent) {
-                    this.active = value.key === this.key || value.key.startsWith(this.key + '-') ? true : false;
-                } else {
-                    if (value.key !== this.key && !value.key.startsWith(this.key + '-')) {
-                        this.active = false;
-                    }
+            if (value.routeEvent) {
+                this.active = value.key === this.key || value.key.startsWith(this.key + '-');
+            } else {
+                if (value.key !== this.key && !value.key.startsWith(this.key + '-')) {
+                    this.active = false;
                 }
-            });
+            }
         });
 
         this.menuResetSubscription = this.layoutService.resetSource$.subscribe(() => {
@@ -125,32 +123,33 @@ export class AppMenuitem {
     }
 
     itemClick(event: Event) {
-        // avoid processing disabled items
         if (this.item.disabled) {
             event.preventDefault();
             return;
         }
 
-        // execute command
         if (this.item.command) {
             this.item.command({ originalEvent: event, item: this.item });
         }
 
-        // toggle active state
+        // Nếu có sub menu thì toggle
         if (this.item.items) {
             this.active = !this.active;
+        } else {
+            // Không có sub-menu => đóng toàn bộ menu khác
+            this.active = true;
         }
 
+        // Gửi key hiện tại cho toàn hệ thống
         this.layoutService.onMenuStateChange({ key: this.key });
     }
 
     get submenuAnimation() {
         return this.root ? 'expanded' : this.active ? 'expanded' : 'collapsed';
     }
-
     @HostBinding('class.active-menuitem')
     get activeClass() {
-        return this.active && !this.root;
+        return this.active && !!this.item.routerLink;
     }
 
     ngOnDestroy() {
