@@ -13,4 +13,5 @@ public interface IAuthenticationService {
     AuthenticationResponse login(AuthenticationRequest request);
     List<MenuPermissionResponseDTO> getMenusWithPermissionsByUser(Users user);
     void assignRoleToUser(Long userId, Long roleId);
+    Long getCurrentUserId();
 }

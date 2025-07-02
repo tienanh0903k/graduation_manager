@@ -2,7 +2,10 @@ package com.example.graduate.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final RoleMenuPermissionRepository roleMenuPermissionRepository;
+    private final UserMapper userMapper;
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
@@ -140,9 +144,26 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         List<MenuPermissionResponseDTO> menuPermissions = getMenusWithPermissionsByUser(user);
         return AuthenticationResponse.builder()
                 .token(token)
-                .userDto(UserMapper.ConvertUser(user))
+                .userDto(userMapper.toDTO(user))
                 .menuPermissions(menuPermissions)
                 .message("Authentication successful")
                 .build();
     }
-}
+
+
+     /**
+      * Lấy id của người dùng hiện tại từ security context
+      *
+      * @return The current user's id.
+      */
+     public Long getCurrentUserId() {
+        //dynamic object
+         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+         if (principal instanceof Users) {
+             return ((Users) principal).getId();
+         }
+
+         throw new RuntimeException("User not authenticated");
+     }
+ }
