@@ -1,0 +1,39 @@
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 700px;
+  padding: 1rem;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  label {
+    width: 150px;
+    font-weight: bold;
+  }
+
+  input {
+    flex: 1;
+  }
+}
+
+.form-row-inline {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+
+.ckeditor-wrapper {
+  flex-direction: column;
+  align-items: flex-start;
+
+  ckeditor {
+    width: 100%;
+  }
+}

@@ -1,0 +1,70 @@
+<!-- <p-panel header="Thông tin đề tài đồ án tốt nghiệp"
+    class="p-panel-info"
+    [style]="{ width: '100%' }"
+    [toggleable]="true"
+>
+  <div class="form-grid">
+    <div class="form-row">
+      <label>Tên giảng viên</label>
+      <input pInputText type="text" value="Nguyễn Văn Quyết" disabled />
+    </div>
+
+    <div class="form-row">
+      <label>Tên đề tài</label>
+      <input pInputText type="text" value="Xây dựng website tìm kiếm việc làm Công nghệ Thông tin" disabled />
+    </div>
+
+    <div class="form-row">
+      <label>Biểu mẫu</label>
+      <div class="form-row-inline">
+        <button pButton type="button" label="Biểu mẫu" class="p-button-secondary p-button-sm"></button>
+        <button pButton type="button" label="Quy trình hướng dẫn" class="p-button-sm"></button>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Bản báo cáo cuối</label>
+      <div class="form-row-inline">
+        <p-fileUpload mode="basic" name="finalReport" chooseLabel="Chọn tệp"></p-fileUpload>
+        <button pButton type="button" label="Lưu lại" class="p-button-sm"></button>
+      </div>
+    </div>
+  </div>
+</p-panel>
+
+
+<p-panel header="Báo cáo đồ án tốt nghiệp">
+  <div class="form-grid">
+    <div class="form-row">
+      <label>Tuần</label>
+      <input pInputText type="text" value="Tuần 12" disabled />
+      <label style="margin-left: 2rem;">Từ ngày</label>
+      <input pInputText type="text" value="26/05/2025" disabled />
+      <label style="margin-left: 2rem;">Đến ngày</label>
+      <input pInputText type="text" value="01/06/2025" disabled />
+    </div>
+
+    <div class="form-row">
+      <label>Công việc</label>
+      <input pInputText type="text" value="Hoàn thành cuốn báo cáo và slides" />
+    </div>
+
+    <div class="form-row">
+      <label>Nội dung cần thực hiện</label>
+      <input pInputText type="text" value="- Hoàn thiện cuốn báo cáo theo mẫu - Chuẩn bị slides báo cáo" />
+    </div>
+
+    <div class="form-row">
+      <label>Kết quả</label>
+      <input pInputText type="text" value="- Kết luận - Cuốn báo cáo - Slides báo cáo" />
+    </div>
+
+    <div class="form-row ckeditor-wrapper">
+
+
+    </div>
+  </div>
+</p-panel>
+ -->
+<ckeditor *ngIf="Editor && config" [(ngModel)]="task.reportDetail" [editor]="Editor" [config]="config">
+</ckeditor>

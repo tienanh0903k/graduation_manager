@@ -1,111 +1,84 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { TagModule } from 'primeng/tag';
-import { BreadcrumbUtil } from '../../core/utils/breadcrumb.util';
-import { Router } from '@angular/router';
-import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'primeng/api';
+import { ProjectTopicService } from '../../core/services/project-topic.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { PanelModule } from 'primeng/panel';
+import { TableModule } from 'primeng/table';
 
 @Component({
     selector: 'app-create-project',
     standalone: true,
-    imports: [CommonModule, TableModule, DropdownModule, InputTextModule, ButtonModule, FormsModule, TagModule, PanelModule, DialogModule],
+    imports: [CommonModule, InputTextModule, ButtonModule, FormsModule, DialogModule, DropdownModule, ToastModule, PanelModule, TableModule],
     templateUrl: './create-project.component.html',
-    styleUrls: ['./create-project.component.scss']
+    styleUrls: ['./create-project.component.scss'],
+    providers: [MessageService]
 })
 export class CreateProjectComponent {
+    isDialogVisible = false;
     topics = [
         {
-            title: 'Xây dựng website tìm kiếm việc làm Công nghệ Thông tin',
-            lecturer: 'Nguyễn Văn Quyết',
-            email: 'quyetict@hust.edu.vn',
-            phone: '0912188636',
-            description: 'Hệ thống hỗ trợ sinh viên tìm việc làm ngành CNTT.',
-            studentCount: '15/15',
-            department: 'Hệ thống thông tin',
-            status: 'Đã được duyệt'
+            title: 'Hệ thống quản lý sinh viên',
+            lecturer: 'Nguyễn Văn A',
+            department: 'Công nghệ phần mềm',
+            description: 'Xây dựng hệ thống quản lý thông tin sinh viên, bao gồm đăng ký môn học, điểm danh, và quản lý điểm số.',
+            status: 'Đang chờ duyệt'
         },
         {
-            title: 'Phát triển ứng dụng quản lý lớp học trực tuyến',
-            lecturer: 'Trần Thị Mai',
-            email: 'maitt@hust.edu.vn',
-            phone: '0905123456',
-            description: 'Ứng dụng giúp GV quản lý bài tập, điểm số, sinh viên.',
-            studentCount: '10/15',
-            department: 'Khoa học máy tính',
-            status: 'Chờ duyệt'
-        },
-        {
-            title: 'AI hỗ trợ chẩn đoán hình ảnh y tế',
-            lecturer: 'Lê Văn Nam',
-            email: 'namlv@hust.edu.vn',
-            phone: '0987654321',
-            description: 'Dự án áp dụng machine learning vào xử lý ảnh y tế.',
-            studentCount: '12/15',
-            department: 'Khoa học máy tính',
-            status: 'Đã được duyệt'
+            title: 'Ứng dụng AI trong y tế',
+            lecturer: 'Trần Thị B',
+            department: 'Khoa học dữ liệu',
+            description: 'Nghiên cứu và phát triển ứng dụng trí tuệ nhân tạo để hỗ trợ chẩn đoán bệnh trong lĩnh vực y tế.',
+            status: 'Đã duyệt'
         }
     ];
 
+    filteredTopics = [...this.topics];
+
+    departments = [
+        { label: 'Công nghệ phần mềm', value: 'Công nghệ phần mềm' },
+        { label: 'Khoa học dữ liệu', value: 'Khoa học dữ liệu' }
+    ];
+
+    lecturers = [
+        { label: 'Nguyễn Văn A', value: 1 },
+        { label: 'Trần Thị B', value: 2 }
+    ];
+
+    constructor(
+        private projectTopicService: ProjectTopicService,
+        private messageService: MessageService
+    ) {}
+
     form = {
         title: '',
-        lecturer: '',
-        email: '',
-        phone: '',
         description: '',
-        studentCount: '',
-        department: '',
-        status: 'Chờ duyệt'
+        teacherId: 1
     };
 
     submitProposal() {
-        this.topics.push({ ...this.form });
-        this.filteredTopics = [...this.topics]; // cập nhật lại bảng
-        this.closeProposeDialog();
-
-        // Reset form sau khi lưu
-        this.form = {
-            title: '',
-            lecturer: '',
-            email: '',
-            phone: '',
-            description: '',
-            studentCount: '',
-            department: '',
-            status: 'Chờ duyệt'
-        };
-    }
-    breadcrumbLabel = '';
-    isDialogVisible: boolean = false;
-
-    constructor(private router: Router) {
-        this.breadcrumbLabel = BreadcrumbUtil.getLabelFromPath(this.router.url);
-    }
-
-    filteredTopics = [...this.topics];
-
-    selectedDepartment = '';
-    searchTitle = '';
-    selectedLecturer = '';
-
-    departments = [
-        { label: 'Hệ thống thông tin', value: 'Hệ thống thông tin' },
-        { label: 'Khoa học máy tính', value: 'Khoa học máy tính' }
-    ];
-
-    lecturers = [{ label: 'Nguyễn Văn Quyết', value: 'Nguyễn Văn Quyết' }];
-
-    filterTopics() {
-        this.filteredTopics = this.topics.filter((t) => {
-            const matchDept = this.selectedDepartment ? t.department === this.selectedDepartment : true;
-            const matchLecturer = this.selectedLecturer ? t.lecturer === this.selectedLecturer : true;
-            const matchTitle = this.searchTitle ? t.title.toLowerCase().includes(this.searchTitle.toLowerCase()) : true;
-            return matchDept && matchLecturer && matchTitle;
+        this.projectTopicService.createTopic(this.form).subscribe({
+            next: () => {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Thành công',
+                    detail: 'Đề tài đã được gửi thành công!'
+                });
+                this.closeProposeDialog();
+                this.resetForm();
+            },
+            error: () => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Lỗi',
+                    detail: 'Không thể gửi đề tài. Vui lòng thử lại.'
+                });
+            }
         });
     }
 
@@ -115,5 +88,21 @@ export class CreateProjectComponent {
 
     closeProposeDialog() {
         this.isDialogVisible = false;
+    }
+
+    resetForm() {
+        this.form = {
+            title: '',
+            description: '',
+            teacherId: 1
+        };
+    }
+
+    selectedDepartment = '';
+    selectedLecturer = '';
+    searchTitle = '';
+
+    filterTopics() {
+        this.filteredTopics = this.topics.filter((topic) => {});
     }
 }

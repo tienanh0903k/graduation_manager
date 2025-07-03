@@ -43,3 +43,7 @@
 2025-07-03 01:07:44.264 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 3.699 seconds (process running for 21821.76)
 2025-07-03 01:07:51.752 [http-nio-8080-exec-1] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 10
 2025-07-03 01:07:51.757 [http-nio-8080-exec-1] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - Student found: com.example.graduate.models.Student@3873160b
+2025-07-03 12:19:47.132 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 18116 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-03 12:19:47.134 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-03 12:19:53.504 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 6.817 seconds (process running for 7.519)
+2025-07-03 12:21:32.813 [http-nio-8080-exec-5] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 6
