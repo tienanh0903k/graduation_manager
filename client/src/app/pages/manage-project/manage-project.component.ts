@@ -1,45 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
+import { NgIf } from '@angular/common';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { loadCKEditorCloud, CKEditorCloudResult } from '@ckeditor/ckeditor5-angular';
-import type { ClassicEditor, EditorConfig } from 'https://cdn.ckeditor.com/typings/ckeditor5.d.ts';
-
+import { TableModule } from 'primeng/table';
 @Component({
     selector: 'app-manage-project',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule, DropdownModule, FileUploadModule, PanelModule, CKEditorModule],
+    imports: [FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule, CKEditorModule, DropdownModule, FileUploadModule, PanelModule, NgIf],
     templateUrl: './manage-project.component.html',
-    styleUrl: './manage-project.component.scss'
+    styleUrl: './manage-project.component.scss',
+    encapsulation: ViewEncapsulation.None
 })
 export class ManageProjectComponent implements OnInit {
-    public Editor!: {
-        create(sourceElementOrData: string | HTMLElement, config?: EditorConfig): Promise<ClassicEditor>;
-        EditorWatchdog: any;
+    @Input() students: any[] = [];
+    @Input() selectedStudent: any;
+    @Input() selectedStudentReports: any[] = [];
+
+    public Editor = ClassicEditor;
+
+    public task = {
+        reportDetail: ''
     };
-    public config!: EditorConfig;
 
-    public ngOnInit(): void {
-        loadCKEditorCloud({
-            version: '45.2.1',
-            premium: true
-        }).then(this._setupEditor.bind(this));
-    }
+    public config = {
+        licenseKey: 'GPL', // ✅ Thêm dòng này để tránh lỗi
 
-    private _setupEditor(cloud: CKEditorCloudResult<{ version: '45.2.1'; premium: true }>) {
-        const { ClassicEditor, Essentials, Paragraph, Bold, Italic } = cloud.CKEditor;
+        placeholder: 'Nhập nội dung báo cáo...',
+        toolbar: ['heading', '|', 'bold', 'italic', 'link', '|', 'undo', 'redo']
+    };
 
-        this.Editor = ClassicEditor;
-        this.config = {
-            plugins: [Essentials, Paragraph, Bold, Italic],
-            toolbar: ['bold', 'italic'],
-            placeholder: 'Nhập nội dung báo cáo...'
-        };
-    }
+    public isEditorReady = true;
 
     project = {
         lecturer: 'Nguyễn Văn Quyết',
@@ -51,35 +47,28 @@ export class ManageProjectComponent implements OnInit {
         description: '<p>This is a sample form using CKEditor.</p>'
     };
 
+    ngOnInit(): void {
+        console.log();
+    }
+
     weeks = Array.from({ length: 20 }, (_, i) => ({ label: `Tuần ${i + 1}`, value: i + 1 }));
     selectedWeek = 17;
     startDate!: Date;
     endDate!: Date;
 
-    task = {
-        work: '',
-        content: '',
-        result: '',
-        reportDetail: ''
-    };
-
     rows = 10;
     currentPage = 0;
 
-    myProjectReports = [
-        {
-            week: 'Tuần 17',
-            content: '',
-            reportLink: '',
-            comment: '',
-            score: ''
-        },
-        {
-            week: 'Tuần 16',
-            content: '',
-            reportLink: '',
-            comment: '',
-            score: ''
-        }
-    ];
+    myProjectReports = Array.from({ length: 17 }, (_, i) => ({
+        week: `Tuần ${17 - i}`, // giảm dần từ Tuần 17 -> Tuần 1
+        content: '',
+        reportLink: '',
+        comment: '',
+        score: ''
+    }));
+
+    editReport(row: any) {
+        console.log('Editing', row);
+        // mở dialog chỉnh sửa nội dung báo cáo tuần
+    }
 }

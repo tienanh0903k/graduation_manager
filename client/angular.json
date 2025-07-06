@@ -32,10 +32,7 @@
                             }
                         ],
                         "styles": [
-                            "src/styles.scss",
-                              "https://cdn.ckeditor.com/ckeditor5/45.2.1/classic/theme/theme.css",
-                               { "input": "src/styles.css" }
-                        ],
+                            "src/styles.scss"                        ],
                         "scripts": []
                     },
                     "configurations": {

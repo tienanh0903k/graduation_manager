@@ -13,15 +13,26 @@ export function buildMenuTree(flatMenus: any[]): any[] {
       menu.routerLink = [menu.route];
     }
 
-    if (menu.parentId === null) {
+    if (menu.parentId == null) {
       tree.push(menu);
     } else {
       const parent = menuMap.get(menu.parentId);
       if (parent) {
+        parent.items = parent.items || [];
         parent.items.push(menu);
       }
     }
   });
+
+  // Sắp xếp đệ quy theo orderNo
+  function sortMenus(menus: any[]) {
+    menus.sort((a, b) => (a.orderNo ?? 999) - (b.orderNo ?? 999));
+    menus.forEach(menu => {
+      if (menu.items?.length) sortMenus(menu.items);
+    });
+  }
+
+  sortMenus(tree);
 
   return tree;
 }

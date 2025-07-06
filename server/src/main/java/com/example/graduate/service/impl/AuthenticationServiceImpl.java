@@ -69,6 +69,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             String token = jwtService.generateToken(user);
             return buildAuthenticationResponse(token, user);
         } catch (BadCredentialsException e) {
+            
             throw new BadCredentialsException("Invalid credentials", e);
         }
     }

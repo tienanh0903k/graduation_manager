@@ -47,3 +47,63 @@
 2025-07-03 12:19:47.134 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
 2025-07-03 12:19:53.504 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 6.817 seconds (process running for 7.519)
 2025-07-03 12:21:32.813 [http-nio-8080-exec-5] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 6
+2025-07-04 16:43:53.007 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 16308 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-04 16:43:53.007 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-04 16:44:00.158 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 7.607 seconds (process running for 8.63)
+2025-07-04 16:44:14.836 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 16:55:21.843 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 16:56:22.626 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 16:57:18.183 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 17:03:25.072 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 17:05:52.520 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 17:11:59.770 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 17:12:21.247 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 17:12:56.536 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 17:16:10.801 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 17:17:46.085 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 17:18:18.405 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 17:21:14.084 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 17:23:57.191 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 22:35:49.091 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 2988 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-04 22:35:49.096 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-04 22:36:01.784 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 13.694 seconds (process running for 16.025)
+2025-07-04 22:38:38.769 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 2988 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-04 22:38:38.770 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-04 22:38:41.395 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 2.667 seconds (process running for 175.636)
+2025-07-04 22:38:59.937 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 2988 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-04 22:38:59.937 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-04 22:39:03.256 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 3.347 seconds (process running for 197.496)
+2025-07-04 22:54:59.068 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 22:55:13.740 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-04 23:19:50.199 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-04 23:20:13.167 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
+2025-07-05 07:04:37.251 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 19132 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-05 07:04:37.254 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-05 07:04:42.677 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 5 of constructor in com.example.graduate.service.impl.AuthenticationServiceImpl required a bean of type 'com.example.graduate.mapper.UserMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.example.graduate.mapper.UserMapper' in your configuration.
+
+2025-07-05 07:05:41.541 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 20760 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-05 07:05:41.544 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-05 07:05:47.245 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 6.046 seconds (process running for 6.55)
+2025-07-06 07:02:53.800 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 8172 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-06 07:02:53.802 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-06 07:02:59.758 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 6.37 seconds (process running for 7.06)
+2025-07-06 07:04:23.071 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-06 07:09:18.085 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 07:09:49.885 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 07:12:59.683 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 07:22:37.350 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 07:23:10.203 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 07:24:31.986 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully

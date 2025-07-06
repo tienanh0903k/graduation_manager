@@ -62,7 +62,7 @@ import { LayoutService } from '../service/layout.service';
             transition('collapsed <=> expanded', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
         ])
     ],
-    providers: [LayoutService]
+    // providers: [LayoutService]
 })
 export class AppMenuitem {
     @Input() item!: MenuItem;
@@ -123,26 +123,25 @@ export class AppMenuitem {
     }
 
     itemClick(event: Event) {
-        if (this.item.disabled) {
-            event.preventDefault();
-            return;
-        }
-
-        if (this.item.command) {
-            this.item.command({ originalEvent: event, item: this.item });
-        }
-
-        // Nếu có sub menu thì toggle
-        if (this.item.items) {
-            this.active = !this.active;
-        } else {
-            // Không có sub-menu => đóng toàn bộ menu khác
-            this.active = true;
-        }
-
-        // Gửi key hiện tại cho toàn hệ thống
-        this.layoutService.onMenuStateChange({ key: this.key });
+    if (this.item.disabled) {
+        event.preventDefault();
+        return;
     }
+
+    if (this.item.command) {
+        this.item.command({ originalEvent: event, item: this.item });
+    }
+
+    // Nếu có sub menu thì toggle trạng thái active của nó
+    if (this.item.items) {
+        this.active = !this.active;
+    } else {
+        this.active = true;
+        // 🔥 Gửi sự kiện để tất cả các item khác biết và tắt active
+        this.layoutService.onMenuStateChange({ key: this.key, routeEvent: false });
+    }
+}
+
 
     get submenuAnimation() {
         return this.root ? 'expanded' : this.active ? 'expanded' : 'collapsed';

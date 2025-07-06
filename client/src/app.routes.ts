@@ -8,6 +8,11 @@ import { AuthGuard } from './app/core/guards/auth.guard';
 import { ReportComponent } from './app/pages/report/report.component';
 import { CreateProjectComponent } from './app/pages/create-project/create-project.component';
 import { ManageProjectComponent } from './app/pages/manage-project/manage-project.component';
+import { MyProjectComponent } from './app/pages/my-project/my-project.component';
+import { ViewCouncilComponent } from './app/pages/view-council/view-council.component';
+import { TeacherGuard } from './app/core/guards/teacher.guard';
+import { ReviewProjectComponent } from './app/pages/admin-teacher/review-project/review-project.component';
+
 
 export const appRoutes: Routes = [
     {
@@ -19,6 +24,10 @@ export const appRoutes: Routes = [
             { path: 'report', component: ReportComponent },
             { path: 'create-project', component: CreateProjectComponent },
             { path: 'manage-project', component: ManageProjectComponent },
+            { path: 'my-project', component:  MyProjectComponent},
+            { path: 'view-council', component:  ViewCouncilComponent},
+            { path: 'review-project', component: ReviewProjectComponent, canActivate: [TeacherGuard] },
+
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },
 

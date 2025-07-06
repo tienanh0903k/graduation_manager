@@ -13,6 +13,11 @@ export const selectAuthUser = createSelector(
   (state) => state.userDto
 );
 
+export const selectUserRole = createSelector(
+  selectAuthUser,
+  (user) => user?.role
+);
+
 export const selectAuthMenuPermissions = createSelector(
   selectAuthState,
   (state) => state.menuPermissions

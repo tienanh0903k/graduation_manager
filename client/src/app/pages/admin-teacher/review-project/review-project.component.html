@@ -1,0 +1,14 @@
+<p-dropdown
+  [options]="students"
+  [(ngModel)]="selectedStudent"
+  optionLabel="label"
+  optionValue="value"
+  placeholder="Chọn sinh viên"
+  (onChange)="onStudentChanged(selectedStudent)">
+</p-dropdown>
+
+<app-manage-project
+  [students]="students"
+  [selectedStudent]="selectedStudent"
+  [selectedStudentReports]="selectedStudentReports">
+</app-manage-project>

@@ -1,0 +1,63 @@
+<div class="card">
+  <h2>Danh sách giảng viên phản biện</h2>
+
+  <p-table [value]="referees" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>STT</th>
+        <th>Giảng viên phản biện</th>
+        <th>Mã giảng viên</th>
+        <th>Tên giảng viên</th>
+        <th>Email</th>
+        <th>Số điện thoại</th>
+        <th>Hẹn lịch phản biện</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-referee let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>{{ referee.role }}</td>
+        <td>{{ referee.code }}</td>
+        <td>{{ referee.name }}</td>
+        <td>{{ referee.email }}</td>
+        <td>{{ referee.phone }}</td>
+        <td>{{ referee.schedule }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+    <p-divider></p-divider>
+
+  <div *ngIf="council && isTodayOrPast(council.date)">
+    <h2>Hội đồng {{ council.name }} - {{ council.date | date: 'dd/MM/yyyy' }}</h2>
+
+    <p-table [value]="council.members" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>STT</th>
+          <th>Mã giảng viên</th>
+          <th>Tên giảng viên</th>
+          <th>Mã bộ môn</th>
+          <th>Nhiệm vụ</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-member let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ member.code }}</td>
+          <td>{{ member.name }}</td>
+          <td>{{ member.department }}</td>
+          <td>
+            <p-dropdown
+              [options]="roles"
+              [(ngModel)]="member.role"
+              optionLabel="label"
+              [style]="{ width: '150px' }"
+              [disabled]="true">
+            </p-dropdown>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

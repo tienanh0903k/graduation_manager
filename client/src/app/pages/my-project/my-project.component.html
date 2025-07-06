@@ -1,0 +1,54 @@
+<p-toast></p-toast>
+
+<div class="card">
+  <h2>Quản lý đề tài tốt nghiệp</h2>
+
+  <div class="grid formgrid p-fluid">
+    <div class="field col-12 md:col-6">
+      <label for="title">Tên đề tài gốc</label>
+      <input id="title" type="text" pInputText [value]="project?.originalTitle" disabled>
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <label for="teacher">Giảng viên hướng dẫn</label>
+      <input id="teacher" type="text" pInputText [value]="project?.teacherName" disabled>
+    </div>
+
+    <div class="field col-12">
+      <label for="description">Mô tả gốc</label>
+      <textarea id="description" rows="5" pInputTextarea [value]="project?.originalDescription" disabled></textarea>
+    </div>
+
+    <div class="field col-6">
+      <label>Trạng thái</label>
+      <p-tag
+        [value]="project?.statusText"
+        [severity]="project?.status === 'APPROVED' ? 'success' : project?.status === 'REJECTED' ? 'danger' : 'warning'">
+      </p-tag>
+    </div>
+
+    <div class="field col-6" *ngIf="project?.feedback">
+      <label>Phản hồi từ giảng viên</label>
+      <p class="text-danger">{{ project.feedback }}</p>
+    </div>
+  </div>
+
+  <p-divider></p-divider>
+
+  <div *ngIf="!project?.isApproved">
+    <h3>Đề xuất chỉnh sửa đề tài</h3>
+    <div class="grid formgrid p-fluid">
+      <div class="field col-12 md:col-6">
+        <label for="proposedTitle">Tên đề tài mới</label>
+        <input id="proposedTitle" type="text" pInputText [(ngModel)]="form.proposedTitle">
+      </div>
+
+      <div class="field col-12">
+        <label for="proposedDescription">Mô tả mới</label>
+        <textarea id="proposedDescription" rows="5" pInputTextarea [(ngModel)]="form.proposedDescription"></textarea>
+      </div>
+    </div>
+
+    <button pButton type="button" label="Gửi yêu cầu chỉnh sửa" icon="pi pi-send" class="mt-2" (click)="submitEditRequest()"></button>
+  </div>
+</div>
