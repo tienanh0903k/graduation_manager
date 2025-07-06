@@ -12,7 +12,6 @@ export class AuthEffects {
     private actions$ = inject(Actions);
     private authService = inject(AuthService);
     private router = inject(Router);
-     private store = inject(Store);
 
     login$ = createEffect(() =>
         this.actions$.pipe(
@@ -40,25 +39,25 @@ export class AuthEffects {
 
 
 
-    autoLogin$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(AuthActions.autoLogin),
-            switchMap(() => {
-                const token = localStorage.getItem('auth_token');
-                const user = JSON.parse(localStorage.getItem('user') || 'null');
+    // autoLogin$ = createEffect(() =>
+    //     this.actions$.pipe(
+    //         ofType(AuthActions.autoLogin),
+    //         switchMap(() => {
+    //             const token = localStorage.getItem('auth_token');
+    //             const user = JSON.parse(localStorage.getItem('user') || 'null');
 
-                if (token && user) {
-                    return of(AuthActions.loginSuccess({
-                        response: {
-                            token,
-                            userDto: user,
-                            menuPermissions: JSON.parse(localStorage.getItem('menuPermissions') || 'null'),
-                            message: 'Tự động đăng nhập thành công'
-                        }
-                    }));
-                }
-                return of(AuthActions.autoLoginFailure());
-            })
-        )
-    );
+    //             if (token && user) {
+    //                 return of(AuthActions.loginSuccess({
+    //                     response: {
+    //                         token,
+    //                         userDto: user,
+    //                         menuPermissions: JSON.parse(localStorage.getItem('menuPermissions') || 'null'),
+    //                         message: 'Tự động đăng nhập thành công'
+    //                     }
+    //                 }));
+    //             }
+    //             return of(AuthActions.autoLoginFailure());
+    //         })
+    //     )
+    // );
 }

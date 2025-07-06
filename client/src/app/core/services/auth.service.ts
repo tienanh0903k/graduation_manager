@@ -24,7 +24,15 @@ export class AuthService {
     }
 
     public getToken(): string | null {
-        return localStorage.getItem('token');
+        const raw = localStorage.getItem('auth');
+        if (!raw) return null;
+
+        try {
+            const parsed = JSON.parse(raw);
+            return parsed?.token ?? null;
+        } catch {
+            return null;
+        }
     }
 
     public hasToken(): boolean {
@@ -32,12 +40,18 @@ export class AuthService {
     }
 
     public setAuthData(response: AuthenticationResponse): void {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('userDto', JSON.stringify(response.userDto));
-        localStorage.setItem('menuPermissions', JSON.stringify(response.menuPermissions));
+        const authState = {
+            token: response.token,
+            userDto: response.userDto,
+            menuPermissions: response.menuPermissions,
+            message: response.message ?? null,
+            isLoading: false,
+            error: null
+        };
+        localStorage.setItem('auth', JSON.stringify(authState));
     }
 
-     public getUser(): User | null {
+    public getUser(): User | null {
         const data = localStorage.getItem('userDto');
         return data ? JSON.parse(data) : null;
     }
@@ -46,5 +60,4 @@ export class AuthService {
         const data = localStorage.getItem('menuPermissions');
         return data ? JSON.parse(data) : null;
     }
-
 }

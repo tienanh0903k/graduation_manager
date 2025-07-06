@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { catchError, filter, map, take, timeout } from 'rxjs/operators';
+import { catchError, filter, map, take } from 'rxjs/operators';
 import { selectAuthUser, selectUserRole } from '../store/auth/auth.selectors';
 
 @Injectable({
@@ -16,7 +16,6 @@ export class TeacherGuard implements CanActivate {
 
     canActivate(): Observable<boolean> {
         return this.store.select(selectUserRole).pipe(
-            timeout(2000),
             filter((role) => role !== null),
             take(1),
             map((role) => {
