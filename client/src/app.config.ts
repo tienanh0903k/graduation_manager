@@ -12,6 +12,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { authReducer } from './app/core/store/auth/auth.reducer';
 import { AuthEffects } from './app/core/store/auth/auth.effects';
 import { metaReducers } from './app/core/store/store.meta';
+import { ConfirmationService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -22,6 +23,8 @@ export const appConfig: ApplicationConfig = {
         providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),
         provideStore({ auth: authReducer }, { metaReducers }),
         provideEffects([AuthEffects]),
-        provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+        provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+        ConfirmationService
+
     ]
 };

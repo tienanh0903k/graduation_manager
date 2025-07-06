@@ -30,7 +30,7 @@ public class CouncilMember {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    private Teacher lecture;
 
     @Column(length = 30)
     private String role; // chủ tịch, thư ký, ủy viên

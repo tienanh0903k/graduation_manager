@@ -1,22 +1,50 @@
-import { Component } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { StyleClassModule } from 'primeng/styleclass';
-import { AppConfigurator } from './app.configurator';
-import { LayoutService } from '../service/layout.service';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Router, RouterModule } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { StyleClassModule } from "primeng/styleclass";
+import { MenuItem } from "primeng/api";
+import { Menu, MenuModule } from "primeng/menu";
+import { AppConfigurator } from "./app.configurator";
+import { LayoutService } from "../service/layout.service";
 
 @Component({
-    selector: 'app-topbar',
-    standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule, AppConfigurator],
-    template: ` <div class="layout-topbar">
-        <div class="layout-topbar-logo-container">
-            <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
-                <i class="pi pi-bars"></i>
-            </button>
-            <a class="layout-topbar-logo" routerLink="/">
-                <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  selector: "app-topbar",
+  standalone: true,
+  imports: [
+    RouterModule,
+    CommonModule,
+    StyleClassModule,
+    AppConfigurator,
+    MenuModule
+  ],
+  // -------------------------------------------------------------------------
+  // NOTE:  <p-menu> is *self‑closing* when used as overlay.  DO NOT add
+  //        "</p-menu>" or split the tag across lines.  Only *one* instance of
+  //        #userMenu should exist in the template.
+  // -------------------------------------------------------------------------
+  template: `
+    <div class="layout-topbar">
+      <!-- Logo + burger + user menu popup -->
+      <div class="layout-topbar-logo-container relative">
+        <p-menu
+          #userMenu
+          [model]="items"
+          [popup]="true"
+          [appendTo]="'body'"
+          styleClass="user-menu z-50"
+        />
+
+        <!-- Burger menu (left) -->
+        <button
+          class="layout-menu-button layout-topbar-action"
+          (click)="layoutService.onMenuToggle()"
+        >
+          <i class="pi pi-bars"></i>
+        </button>
+
+        <!-- App logo -->
+        <a class="layout-topbar-logo" routerLink="/">
+           <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         fill-rule="evenodd"
                         clip-rule="evenodd"
@@ -33,60 +61,105 @@ import { LayoutService } from '../service/layout.service';
                         />
                     </g>
                 </svg>
-                <span>SAKAI</span>
-            </a>
-        </div>
+          <span>SAKAI</span>
+        </a>
+      </div>
 
-        <div class="layout-topbar-actions">
-            <div class="layout-config-menu">
-                <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
-                    <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
-                </button>
-                <div class="relative">
-                    <button
-                        class="layout-topbar-action layout-topbar-action-highlight"
-                        pStyleClass="@next"
-                        enterFromClass="hidden"
-                        enterActiveClass="animate-scalein"
-                        leaveToClass="hidden"
-                        leaveActiveClass="animate-fadeout"
-                        [hideOnOutsideClick]="true"
-                    >
-                        <i class="pi pi-palette"></i>
-                    </button>
-                    <app-configurator />
-                </div>
-            </div>
+      <!-- Right‑hand action cluster -->
+      <div class="layout-topbar-actions">
+        <!-- Theme / palette toggles -->
+        <div class="layout-config-menu">
+          <button
+            type="button"
+            class="layout-topbar-action"
+            (click)="toggleDarkMode()"
+          >
+            <i
+              [ngClass]="{
+                pi: true,
+                'pi-moon': layoutService.isDarkTheme(),
+                'pi-sun': !layoutService.isDarkTheme()
+              }"
+            ></i>
+          </button>
 
-            <button class="layout-topbar-menu-button layout-topbar-action" pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
-                <i class="pi pi-ellipsis-v"></i>
+          <div class="relative">
+            <button
+              class="layout-topbar-action layout-topbar-action-highlight"
+              pStyleClass="@next"
+              enterFromClass="hidden"
+              enterActiveClass="animate-scalein"
+              leaveToClass="hidden"
+              leaveActiveClass="animate-fadeout"
+              [hideOnOutsideClick]="true"
+            >
+              <i class="pi pi-palette"></i>
             </button>
-
-            <div class="layout-topbar-menu hidden lg:block">
-                <div class="layout-topbar-menu-content">
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-calendar"></i>
-                        <span>Calendar</span>
-                    </button>
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-inbox"></i>
-                        <span>Messages</span>
-                    </button>
-                    <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
-                        <span>Profile</span>
-                    </button>
-                </div>
-            </div>
+            <app-configurator />
+          </div>
         </div>
-    </div>`
+
+        <!-- Popup user menu trigger -->
+        <button
+          class="layout-topbar-action"
+          (click)="toggleUserMenu($event)"
+          aria-label="User menu"
+        >
+          <i class="pi pi-user"></i>
+        </button>
+      </div>
+    </div>
+  `,
+  // Inline styles only for demo; move to SCSS in real project
+  styles: [
+    `
+      .user-menu {
+        z-index: 1000 !important;
+        min-width: 200px;
+      }
+    `
+  ]
 })
-export class AppTopbar {
-    items!: MenuItem[];
+export class AppTopbar implements OnInit {
+  items: MenuItem[] = [];
 
-    constructor(public layoutService: LayoutService) {}
+  @ViewChild("userMenu") userMenu?: Menu;
 
-    toggleDarkMode() {
-        this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
-    }
+  constructor(
+    public layoutService: LayoutService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // initialise popup items
+    this.items = [
+      {
+        label: "Thông tin cá nhân",
+        icon: "pi pi-user",
+        command: () => this.router.navigate(["/profile"])
+      },
+      {
+        label: "Đăng xuất",
+        icon: "pi pi-sign-out",
+        command: () => this.logout()
+      }
+    ];
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(["/auth/login"]);
+  }
+
+  toggleUserMenu(event: Event): void {
+    // ViewChild may be undefined on first change‑detector tick
+    this.userMenu?.toggle(event);
+  }
+
+  toggleDarkMode(): void {
+    this.layoutService.layoutConfig.update((state) => ({
+      ...state,
+      darkTheme: !state.darkTheme
+    }));
+  }
 }

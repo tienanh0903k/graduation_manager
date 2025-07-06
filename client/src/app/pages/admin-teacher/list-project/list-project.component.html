@@ -5,8 +5,15 @@
     <span>Quản lý đề tài hướng dẫn</span>
 </nav>
 
-<p-panel header="Danh sách đề tài sinh viên đăng ký" [toggleable]="true">
-    <p>Danh sách các đề tài mà sinh viên đã chọn bạn làm giảng viên hướng dẫn</p>
+
+<p-panel header="Tìm kiếm đề tài" [toggleable]="true">
+    <div class="search-bar">
+        <input type="text" pInputText placeholder="Tên đề tài" [(ngModel)]="searchTitle" />
+        <input type="text" pInputText placeholder="Tên hoặc mã sinh viên" [(ngModel)]="searchStudent" />
+        <p-dropdown [options]="sortOptions" [(ngModel)]="selectedSort" placeholder="Chọn sắp xếp"
+            optionLabel="label" optionValue="value"></p-dropdown>
+        <button pButton type="button" (click)="filterTopics()">Tìm kiếm</button>
+    </div>
 </p-panel>
 
 <p-table [value]="projects" [loading]="loading" [paginator]="true" [rows]="10" responsiveLayout="scroll"

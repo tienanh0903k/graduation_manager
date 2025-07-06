@@ -1,0 +1,124 @@
+/* ========= Breadcrumb ========= */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+
+  font-size: 14px;
+  color: #333;
+
+  box-shadow: 0 1px 2px rgba(128, 128, 128, 0.099);
+
+  span {
+    margin-right: 4px;
+  }
+}
+
+/* ========= Search Bar ========= */
+.search-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem 1.5rem;
+  align-items: end;
+  margin-top: .5rem;
+
+  label {
+    font-size: 0.85rem;
+    color: var(--surface-600);
+    margin-bottom: .25rem;
+    display: block;
+  }
+
+  /* nút Tìm kiếm căn cùng hàng input */
+  button.p-button {
+    margin-top: 1.8rem;
+  }
+}
+
+
+
+
+
+/* ========= Panel ========= */
+:host ::ng-deep p-panel > .p-panel-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ========= Table ========= */
+:host ::ng-deep .p-table {
+  thead th {
+    background: var(--surface-50);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  tbody td {
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  /* Cột STT luôn hẹp và căn giữa */
+  tbody td:first-child,
+  thead th:first-child {
+    width: 60px;
+    text-align: center;
+  }
+}
+
+/* ========= PrimeNG Tag tùy biến màu ========= */
+/* Bạn đã set class qua [ngClass] rồi; ở đây chỉ tinh chỉnh thêm */
+:host ::ng-deep .p-tag-success {
+  background: var(--green-500);
+  color: #fff;
+}
+
+:host ::ng-deep .p-tag-warning {
+  background: var(--yellow-500);
+  color: #212121;
+}
+
+:host ::ng-deep .p-tag-danger {
+  background: var(--red-500);
+  color: #fff;
+}
+
+/* ========= Button icon size & spacing ========= */
+:host ::ng-deep .p-button.p-button-text.p-button-sm {
+  width: 2rem;
+  height: 2rem;
+  margin-right: .25rem;
+  i {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========= Dialog ========= */
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 1.5rem 2rem;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+  label {
+    display: block;
+    margin-bottom: .25rem;
+    color: var(--surface-700);
+  }
+  p, ul {
+    margin: 0;
+  }
+}
+
+/* ========= Toast vị trí cố định (tuỳ chọn) ========= */
+:host ::ng-deep .p-toast {
+  top: 6rem;     /* tránh trùng Header */
+  right: 1.5rem;
+}

@@ -107,3 +107,83 @@ Consider defining a bean of type 'com.example.graduate.mapper.UserMapper' in you
 2025-07-06 07:22:37.350 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
 2025-07-06 07:23:10.203 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
 2025-07-06 07:24:31.986 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 07:28:11.499 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 8172 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-06 07:28:11.500 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-06 07:28:13.819 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 2.371 seconds (process running for 1521.121)
+2025-07-06 07:37:05.025 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 08:47:02.009 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-06 10:02:23.412 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 8172 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-06 10:02:23.420 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-06 10:02:27.838 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 4.503 seconds (process running for 10775.139)
+2025-07-06 10:02:51.305 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 8172 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-06 10:02:51.306 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-06 10:02:53.093 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 1.845 seconds (process running for 10800.393)
+2025-07-06 10:04:16.629 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 8172 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-06 10:04:16.638 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-06 10:04:18.912 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 2.34 seconds (process running for 10886.214)
+2025-07-06 10:04:29.286 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 8172 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-06 10:04:29.286 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-06 10:04:31.314 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 2.063 seconds (process running for 10898.616)
+2025-07-06 20:30:57.266 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 11364 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-06 20:30:57.277 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-06 20:31:09.976 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 13.345 seconds (process running for 15.089)
+2025-07-06 20:33:09.840 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 20:33:37.836 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 20:37:13.577 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 20:38:13.398 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 20:40:02.219 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 21:00:26.187 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 21:02:00.014 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 21:08:21.386 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:42.017 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:49.284 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:50.087 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:50.534 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:50.935 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:51.169 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:51.355 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:13:51.483 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:11.959 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:12.786 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:13.256 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:13.605 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:13.924 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:14.133 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:48.600 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:50.351 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:14:50.730 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:39.462 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:41.887 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:42.056 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:42.234 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:42.384 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:42.551 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:42.768 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:42.923 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:43.116 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:16:43.298 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:42.688 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:44.682 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:50.511 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:51.161 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:51.605 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:52.140 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:52.571 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:53.102 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:53.359 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:53.387 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:53.390 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:53.459 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:17:53.476 [http-nio-8080-exec-9] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:00.879 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:01.691 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:02.591 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:02.991 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:03.826 [http-nio-8080-exec-1] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:04.358 [http-nio-8080-exec-10] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:04.665 [http-nio-8080-exec-7] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:04.844 [http-nio-8080-exec-3] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:18:09.422 [http-nio-8080-exec-4] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:20:45.383 [http-nio-8080-exec-2] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
+2025-07-06 22:35:52.893 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User vankhoa@gmail.com logged in successfully
+2025-07-06 22:36:15.675 [http-nio-8080-exec-8] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
