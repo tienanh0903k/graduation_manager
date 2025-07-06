@@ -12,6 +12,7 @@ import { MyProjectComponent } from './app/pages/my-project/my-project.component'
 import { ViewCouncilComponent } from './app/pages/view-council/view-council.component';
 import { TeacherGuard } from './app/core/guards/teacher.guard';
 import { ReviewProjectComponent } from './app/pages/admin-teacher/review-project/review-project.component';
+import { ListProjectComponent } from './app/pages/admin-teacher/list-project/list-project.component';
 
 
 export const appRoutes: Routes = [
@@ -27,6 +28,8 @@ export const appRoutes: Routes = [
             { path: 'my-project', component:  MyProjectComponent},
             { path: 'view-council', component:  ViewCouncilComponent},
             { path: 'review-project', component: ReviewProjectComponent, canActivate: [TeacherGuard] },
+            { path: 'approve-project', component: ListProjectComponent, canActivate: [TeacherGuard] },
+
 
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },

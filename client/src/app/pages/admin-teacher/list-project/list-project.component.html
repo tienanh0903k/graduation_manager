@@ -1,0 +1,105 @@
+
+<nav class="breadcrumb">
+    <span>Trang chủ</span>
+    <span>/</span>
+    <span>Quản lý đề tài hướng dẫn</span>
+</nav>
+
+<p-panel header="Danh sách đề tài sinh viên đăng ký" [toggleable]="true">
+    <p>Danh sách các đề tài mà sinh viên đã chọn bạn làm giảng viên hướng dẫn</p>
+</p-panel>
+
+<p-table [value]="projects" [loading]="loading" [paginator]="true" [rows]="10" responsiveLayout="scroll"
+    [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>STT</th>
+            <th>Tên đề tài</th>
+            <th>Sinh viên thực hiện</th>
+            <th>Mô tả</th>
+            <th>Ngày đăng ký</th>
+            <th>Trạng thái</th>
+            <th>Tác vụ</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-project let-i="rowIndex">
+        <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ project.title }}</td>
+            <td>
+                <span *ngFor="let student of project.students">
+                    {{ student.name }} ({{ student.code }})<br>
+                </span>
+            </td>
+            <td>{{ project.description | truncate:50 }}</td>
+            <td>{{ project.registrationDate | date:'dd/MM/yyyy' }}</td>
+            <td>
+                <span class="p-tag" [ngClass]="{
+                    'p-tag-success': project.status === 'APPROVED',
+                    'p-tag-warning': project.status === 'PENDING',
+                    'p-tag-danger': project.status === 'REJECTED'
+                }">
+                    {{ getStatusText(project.status) }}
+                </span>
+            </td>
+            <td>
+                <button pButton icon="pi pi-eye" class="p-button-rounded p-button-text p-button-sm"
+                    (click)="viewProjectDetails(project)"></button>
+                <button pButton icon="pi pi-check" class="p-button-rounded p-button-text p-button-sm p-button-success"
+                    *ngIf="project.status === 'PENDING'" (click)="approveProject(project.id)"></button>
+                <button pButton icon="pi pi-times" class="p-button-rounded p-button-text p-button-sm p-button-danger"
+                    *ngIf="project.status === 'PENDING'" (click)="rejectProject(project.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- Project Detail Dialog -->
+<p-dialog header="Chi tiết đề tài" [(visible)]="isDetailDialogVisible" [modal]="true" [style]="{ width: '700px' }"
+    (onHide)="isDetailDialogVisible = false">
+    <div *ngIf="selectedProject" class="p-fluid">
+        <div class="p-field">
+            <label><strong>Tên đề tài:</strong></label>
+            <p>{{ selectedProject.title }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Sinh viên thực hiện:</strong></label>
+            <ul>
+                <li *ngFor="let student of selectedProject.students">
+                    {{ student.name }} ({{ student.code }})
+                </li>
+            </ul>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Mô tả chi tiết:</strong></label>
+            <p>{{ selectedProject.description }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Mục tiêu đề tài:</strong></label>
+            <p>{{ selectedProject.objectives }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Yêu cầu:</strong></label>
+            <p>{{ selectedProject.requirements }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Ngày đăng ký:</strong></label>
+            <p>{{ selectedProject.registrationDate | date:'dd/MM/yyyy' }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Trạng thái:</strong></label>
+            <p-tag [severity]="getStatusSeverity(selectedProject.status)"
+                   [value]="getStatusText(selectedProject.status)"></p-tag>
+        </div>
+    </div>
+</p-dialog>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

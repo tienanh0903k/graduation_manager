@@ -1,11 +1,26 @@
-<p-dropdown
-  [options]="students"
-  [(ngModel)]="selectedStudent"
-  optionLabel="label"
-  optionValue="value"
-  placeholder="Chọn sinh viên"
-  (onChange)="onStudentChanged(selectedStudent)">
-</p-dropdown>
+<!-- //thêm lable hay các thêm 1 title là chọn sinh viên cần xem báo cáo , thêm tìm kiếm ở dropdown vì có nhiều sinh viên -->
+
+<p-panel
+  header="Chọn sinh viên cần xem báo cáo"
+  styleClass="student-panel"
+  [style]="{ width: '100%', marginBottom: '1rem' }">
+
+  <div class="field">
+    <label for="student" class="field-label">Sinh viên</label>
+
+    <p-dropdown
+      inputId="student"
+      [options]="students"
+      [(ngModel)]="selectedStudent"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Chọn sinh viên"
+      filter="true"
+      [showClear]="true"
+      (onChange)="onStudentChanged(selectedStudent)">
+    </p-dropdown>
+  </div>
+</p-panel>
 
 <app-manage-project
   [students]="students"

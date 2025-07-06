@@ -11,6 +11,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { authReducer } from './app/core/store/auth/auth.reducer';
 import { AuthEffects } from './app/core/store/auth/auth.effects';
+import { metaReducers } from './app/core/store/store.meta';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -19,7 +20,8 @@ export const appConfig: ApplicationConfig = {
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         provideAnimationsAsync(),
         providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),
-        provideStore({ auth: authReducer }),
-        provideEffects([AuthEffects]),        provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+        provideStore({ auth: authReducer }, { metaReducers }),
+        provideEffects([AuthEffects]),
+        provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
     ]
 };

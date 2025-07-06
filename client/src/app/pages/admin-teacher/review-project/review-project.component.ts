@@ -3,11 +3,13 @@ import { ManageProjectComponent } from '../../manage-project/manage-project.comp
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
     selector: 'app-review-project',
     imports: [ManageProjectComponent,
           CommonModule,
+          PanelModule,
     FormsModule,
     DropdownModule,
     ],
