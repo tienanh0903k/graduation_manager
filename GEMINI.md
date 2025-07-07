@@ -1,24 +1,50 @@
-fix lỗi 
 
-X [ERROR] TS2339: Property 'hasToken' does not exist on type 'AuthService'. [plugin angular-compiler]
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
-    src/app/core/guards/auth.guard.ts:16:25:
-      16 │     if (this.authService.hasToken()) {
-         ╵                          ~~~~~~~~
+@Component({
+  selector: 'app-product-card',
+  standalone: true,
+  templateUrl: './product-card.html',
+  styleUrls: ['./product-card.scss'],
+})
+export class ProductCardComponent {
+  /* ───── Inputs ───── */
+  @Input({ required: true }) productId!: string;
+  @Input() disabled = false;
 
+  /* ───── Outputs ───── */
+  @Output() addToCart = new EventEmitter<string>();
 
-X [ERROR] TS2307: Cannot find module '../MenuPermission/MenuPermissionResponseDTO' or its corresponding type declarations. [plugin angular-compiler]
+  /* ───── Template‑facing props ───── */
+  protected isLoading = false;
 
-    src/app/core/models/authentication-response.model.ts:2:42:
-      2 │ ...onResponseDTO } from '../MenuPermission/MenuPermissionResponseDTO';
-        ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  /* ───── View‑queries ───── */
+  // @ViewChild('img') image!: ElementRef<HTMLImageElement>;
 
+  /* ───── Private fields ───── */
+  private readonly destroy$ = new Subject<void>();
 
-Application bundle generation failed. [1.800 seconds]
+  /* ───── Constructor & DI ───── */
+  constructor(private router: Router) {}
 
-X [ERROR] TS2307: Cannot find module '../MenuPermission/MenuPermissionResponseDTO' or its corresponding type declarations. [plugin angular-compiler]
+  /* ───── Lifecycle hooks ───── */
+  ngOnInit(): void {
+    this._loadProduct();
+  }
 
-    src/app/core/models/authentication-response.model.ts:2:42:
-      2 │ ...onResponseDTO } from '../MenuPermission/MenuPermissionResponseDTO';
-        ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
+  /* ───── Public methods / handlers ───── */
+  onAddToCart(): void {
+    this.addToCart.emit(this.productId);
+  }
+
+  /* ───── Private helpers ───── */
+  private _loadProduct(): void {
+    // …
+  }
+}

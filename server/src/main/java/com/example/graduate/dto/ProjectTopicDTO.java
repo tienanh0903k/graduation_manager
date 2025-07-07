@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-    import java.util.List;
+import java.util.List;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class ProjectTopicDTO {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProjectTopicDTO {
         private Long id;
         private String title;
         private String description;
@@ -17,4 +17,4 @@ import lombok.NoArgsConstructor;
         private Integer maxSlots;
         private Long defenseCouncilId;
         private List<Long> reviewerIds;
-    }
+}

@@ -131,7 +131,6 @@ export class AppTopbar implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // initialise popup items
     this.items = [
       {
         label: "Thông tin cá nhân",
