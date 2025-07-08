@@ -1,0 +1,130 @@
+<!-- Breadcrumb -->
+<nav class="breadcrumb">
+    <span>Trang chủ</span>
+    <span>/</span>
+    <span>Danh sách sinh viên chấm bài</span>
+</nav>
+
+<!-- Search Panel -->
+<p-panel header="Tìm kiếm sinh viên" [toggleable]="true">
+    <div class="search-bar">
+        <input type="text" pInputText placeholder="Tên sinh viên hoặc mã số" [(ngModel)]="searchStudent" />
+        <input type="text" pInputText placeholder="Tên đề tài" [(ngModel)]="searchTitle" />
+        <p-dropdown [options]="sortOptions" [(ngModel)]="selectedSort" placeholder="Sắp xếp theo"
+            optionLabel="label" optionValue="value"></p-dropdown>
+        <button pButton type="button" (click)="filterStudents()">Tìm kiếm</button>
+    </div>
+</p-panel>
+
+<!-- Students Table -->
+<p-table [value]="studentProjects" [loading]="loading" [paginator]="true" [rows]="10" responsiveLayout="scroll"
+    [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>STT</th>
+            <th>Sinh viên</th>
+            <th>Mã số</th>
+            <th>Đề tài</th>
+            <th>Mô tả</th>
+            <th>Ngày đăng ký</th>
+            <th>Trạng thái</th>
+            <th>Tác vụ</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.student.name }}</td>
+            <td>{{ item.student.code }}</td>
+            <td>{{ item.project.title }}</td>
+            <td>{{ item.project.description | truncate:50 }}</td>
+            <td>{{ item.project.registrationDate | date:'dd/MM/yyyy' }}</td>
+            <td>
+                <span class="p-tag" [ngClass]="{
+                    'p-tag-success': item.project.status === 'APPROVED',
+                    'p-tag-warning': item.project.status === 'PENDING',
+                    'p-tag-danger': item.project.status === 'REJECTED'
+                }">
+                    {{ getStatusText(item.project.status) }}
+                </span>
+            </td>
+            <td>
+                <button pButton icon="pi pi-eye" class="p-button-rounded p-button-text p-button-sm"
+                    (click)="viewStudentDetails(item)"></button>
+                <button pButton icon="pi pi-plus" class="p-button-rounded p-button-text p-button-sm p-button-success"
+                    (click)="addGrade(item)"></button>
+                     <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-sm p-button-warning"
+        (click)="openEditDialog(item)"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- Detail Dialog -->
+<p-dialog header="Chi tiết sinh viên & đề tài" [(visible)]="isDetailDialogVisible" [modal]="true"
+    [style]="{ width: '700px' }" (onHide)="isDetailDialogVisible = false">
+    <div *ngIf="selectedItem" class="p-fluid">
+        <div class="p-field">
+            <label><strong>Họ tên sinh viên:</strong></label>
+            <p>{{ selectedItem.student.name }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Mã số sinh viên:</strong></label>
+            <p>{{ selectedItem.student.code }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Tên đề tài:</strong></label>
+            <p>{{ selectedItem.project.title }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Mô tả:</strong></label>
+            <p>{{ selectedItem.project.description }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Mục tiêu:</strong></label>
+            <p>{{ selectedItem.project.objectives }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Yêu cầu:</strong></label>
+            <p>{{ selectedItem.project.requirements }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Ngày đăng ký:</strong></label>
+            <p>{{ selectedItem.project.registrationDate | date:'dd/MM/yyyy' }}</p>
+        </div>
+
+        <div class="p-field">
+            <label><strong>Trạng thái:</strong></label>
+            <p-tag [severity]="getStatusSeverity(selectedItem.project.status)"
+                   [value]="getStatusText(selectedItem.project.status)"></p-tag>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Chấm điểm & Ghi chú" [(visible)]="isEditDialogVisible" [modal]="true" [style]="{ width: '400px' }">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="grade">Điểm:</label>
+            <p-inputNumber [(ngModel)]="gradeValue" [min]="0" [max]="10"></p-inputNumber>
+        </div>
+        <div class="p-field">
+            <label for="note">Ghi chú:</label>
+            <textarea id="note" pInputTextarea rows="4" [(ngModel)]="gradeNote"></textarea>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton label="Lưu" icon="pi pi-save" (click)="submitGrade()"></button>
+        <button pButton label="Hủy" icon="pi pi-times" class="p-button-secondary" (click)="isEditDialogVisible=false"></button>
+    </ng-template>
+</p-dialog>
+
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

@@ -36,6 +36,8 @@
                     console.log('Menu model initialized:', this.model);
 
                 });
+
+
         }
     }
 

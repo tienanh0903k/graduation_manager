@@ -13,12 +13,13 @@ import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../core/store/auth/auth.actions';
 import { selectAuthError, selectAuthIsLoading } from '../../../core/store/auth/auth.selectors';
 import { Observable } from 'rxjs';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
     selector: 'app-login',
     standalone: true,
     templateUrl: './login.component.html',
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, ReactiveFormsModule, RouterModule, RippleModule, AppFloatingConfigurator, CommonModule],
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, ReactiveFormsModule, RouterModule, RippleModule, AppFloatingConfigurator, CommonModule, ProgressSpinnerModule],
     styleUrls: ['./login.component.scss']
 })
 export class Login {

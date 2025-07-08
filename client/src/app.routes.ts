@@ -1,3 +1,4 @@
+// app.routes.ts
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Dashboard } from './app/pages/dashboard/dashboard';
@@ -13,6 +14,7 @@ import { ViewCouncilComponent } from './app/pages/view-council/view-council.comp
 import { TeacherGuard } from './app/core/guards/teacher.guard';
 import { ReviewProjectComponent } from './app/pages/admin-teacher/review-project/review-project.component';
 import { ListProjectComponent } from './app/pages/admin-teacher/list-project/list-project.component';
+import { StudentReviewComponent } from './app/pages/admin-teacher/student-review/student-review.component';
 
 
 export const appRoutes: Routes = [
@@ -25,16 +27,20 @@ export const appRoutes: Routes = [
             { path: 'report', component: ReportComponent },
             { path: 'create-project', component: CreateProjectComponent },
             { path: 'manage-project', component: ManageProjectComponent },
-            { path: 'my-project', component:  MyProjectComponent},
-            { path: 'view-council', component:  ViewCouncilComponent},
+            { path: 'my-project', component: MyProjectComponent },
+            { path: 'view-council', component: ViewCouncilComponent },
             { path: 'review-project', component: ReviewProjectComponent, canActivate: [TeacherGuard] },
             { path: 'approve-project', component: ListProjectComponent, canActivate: [TeacherGuard] },
-
+            { path: 'teacher-review', component: StudentReviewComponent, canActivate: [TeacherGuard] },
 
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },
 
-            { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
+            // { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') },
+            // {
+            //     path: 'admin-teacher',
+            //     loadChildren: () => import('./app/pages/admin-teacher/admin-teacher.routes').then((m) => m.getAdminTeacherRoutes())
+            // }
         ]
     },
     { path: 'landing', component: Landing },
