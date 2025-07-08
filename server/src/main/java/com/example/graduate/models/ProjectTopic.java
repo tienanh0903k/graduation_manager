@@ -40,7 +40,9 @@ public class ProjectTopic {
     @JoinColumn(name = "defense_council_id")
     private Council defenseCouncil;
 
-    
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentProject> studentProjects;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reviewer> reviewers;
 }

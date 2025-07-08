@@ -1,59 +1,36 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
-import { DialogModule } from 'primeng/dialog';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ProjectTopicService } from '../../core/services/project-topic.service';
-import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
-import { PanelModule } from 'primeng/panel';
-import { TableModule } from 'primeng/table';
+import { SharedModule } from '../../shared/shared.module';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
     selector: 'app-create-project',
     standalone: true,
-    imports: [CommonModule, InputTextModule, ButtonModule, FormsModule, DialogModule, DropdownModule, ToastModule, PanelModule, TableModule],
+    imports: [SharedModule, TextareaModule ],
     templateUrl: './create-project.component.html',
     styleUrls: ['./create-project.component.scss'],
     providers: [MessageService]
 })
-export class CreateProjectComponent {
+export class CreateProjectComponent implements OnInit {
     isDialogVisible = false;
-    topics = [
-        {
-            title: 'Hệ thống quản lý sinh viên',
-            lecturer: 'Nguyễn Văn A',
-            department: 'Công nghệ phần mềm',
-            description: 'Xây dựng hệ thống quản lý thông tin sinh viên, bao gồm đăng ký môn học, điểm danh, và quản lý điểm số.',
-            status: 'Đang chờ duyệt'
-        },
-        {
-            title: 'Ứng dụng AI trong y tế',
-            lecturer: 'Trần Thị B',
-            department: 'Khoa học dữ liệu',
-            description: 'Nghiên cứu và phát triển ứng dụng trí tuệ nhân tạo để hỗ trợ chẩn đoán bệnh trong lĩnh vực y tế.',
-            status: 'Đã duyệt'
-        }
-    ];
 
-    filteredTopics = [...this.topics];
+    topics: any[] = [];
+    filteredTopics: any[] = [];
 
     departments = [
-        { label: 'Công nghệ phần mềm', value: 'Công nghệ phần mềm' },
-        { label: 'Khoa học dữ liệu', value: 'Khoa học dữ liệu' }
+        { label: '125213', value: 125213 },
+        { label: '125214', value: 125214 }
     ];
 
-    lecturers = [
+    teacherOptions = [
         { label: 'Nguyễn Văn A', value: 1 },
         { label: 'Trần Thị B', value: 2 }
     ];
 
-    constructor(
-        private projectTopicService: ProjectTopicService,
-        private messageService: MessageService
-    ) {}
+    selectedDepartment = '';
+    selectedLecturer = '';
+    searchTitle = '';
 
     form = {
         title: '',
@@ -61,7 +38,35 @@ export class CreateProjectComponent {
         teacherId: 1
     };
 
-    submitProposal() {
+    constructor(
+        private projectTopicService: ProjectTopicService,
+        private messageService: MessageService
+    ) {}
+
+    ngOnInit(): void {
+        this._loadTopics();
+    }
+
+    private _loadTopics(): void {
+        this.projectTopicService.getAll().subscribe({
+            next: (data) => {
+                this.topics = data;
+                this.filteredTopics = [...this.topics];
+            },
+            error: () => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Lỗi',
+                    detail: 'Không thể tải danh sách đề tài. Vui lòng thử lại.'
+                });
+            }
+        });
+    }
+
+    /**
+     * Gửi đề xuất đề tài mới
+     */
+    submitProposal(): void {
         this.projectTopicService.createTopic(this.form).subscribe({
             next: () => {
                 this.messageService.add({
@@ -71,8 +76,10 @@ export class CreateProjectComponent {
                 });
                 this.closeProposeDialog();
                 this.resetForm();
+                this._loadTopics(); // Tải lại danh sách
             },
-            error: () => {
+            error: (err) => {
+                console.error('Error creating topic:', err)
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Lỗi',
@@ -82,15 +89,15 @@ export class CreateProjectComponent {
         });
     }
 
-    openProposeDialog() {
+    openProposeDialog(): void {
         this.isDialogVisible = true;
     }
 
-    closeProposeDialog() {
+    closeProposeDialog(): void {
         this.isDialogVisible = false;
     }
 
-    resetForm() {
+    resetForm(): void {
         this.form = {
             title: '',
             description: '',
@@ -98,11 +105,24 @@ export class CreateProjectComponent {
         };
     }
 
-    selectedDepartment = '';
-    selectedLecturer = '';
-    searchTitle = '';
+    /**
+     * Lọc danh sách đề tài theo bộ lọc
+     */
+    filterTopics(): void {
+        this.filteredTopics = this.topics.filter((topic) => {
+            const matchesDepartment = !this.selectedDepartment || topic.department === this.selectedDepartment;
+            const matchesLecturer =
+                !this.selectedLecturer ||
+                topic.lecturer.toLowerCase().includes(this.getLecturerNameById(this.selectedLecturer).toLowerCase());
+            const matchesTitle =
+                !this.searchTitle || topic.title.toLowerCase().includes(this.searchTitle.toLowerCase());
 
-    filterTopics() {
-        this.filteredTopics = this.topics.filter((topic) => {});
+            return matchesDepartment && matchesLecturer && matchesTitle;
+        });
+    }
+
+    private getLecturerNameById(id: number | string): string {
+        const lecturer = this.teacherOptions.find((t) => t.value === +id);
+        return lecturer?.label || '';
     }
 }

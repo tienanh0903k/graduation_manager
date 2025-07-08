@@ -49,6 +49,16 @@
   }
 }
 
+
+::ng-deep textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+}
+
 // modals styles
 ::ng-deep .p-dialog .p-field {
   margin-bottom: 1rem;

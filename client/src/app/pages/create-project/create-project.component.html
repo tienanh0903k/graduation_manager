@@ -7,9 +7,9 @@
 
 <p-panel header="Tìm kiếm đề tài" [toggleable]="true">
     <div class="search-bar">
-        <p-dropdown [options]="departments" [(ngModel)]="selectedDepartment" placeholder="Mã Bộ môn"></p-dropdown>
+        <p-dropdown [options]="departments" [(ngModel)]="selectedDepartment" placeholder="Mã lớp"></p-dropdown>
         <input type="text" pInputText placeholder="Tên đề tài" [(ngModel)]="searchTitle" />
-        <p-dropdown [options]="lecturers" [(ngModel)]="selectedLecturer" placeholder="Tên giảng viên"></p-dropdown>
+        <p-dropdown [options]="teacherOptions" [(ngModel)]="selectedLecturer" placeholder="Tên giảng viên"></p-dropdown>
         <button pButton type="button" (click)="filterTopics()">Tìm kiếm</button>
     </div>
 </p-panel>
@@ -20,42 +20,42 @@
 </div>
 
 <p-table [value]="topics" [paginator]="true" [rows]="10" responsiveLayout="scroll"
-        [tableStyle]="{ 'min-width': '50rem' }">
+    [tableStyle]="{ 'min-width': '50rem' }">
 
 
-        <ng-template pTemplate="header">
-            <tr>
-                <th>STT</th>
-                <th>Tên đề tài</th>
-                <th>Tên giảng viên</th>
-                <th>Mô tả</th>
-                <th>Tác vụ</th>
-                <th>Trạng thái</th>
-            </tr>
-        </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>STT</th>
+            <th>Tên đề tài</th>
+            <th>Tên giảng viên</th>
+            <th>Mô tả</th>
+            <th>Tác vụ</th>
+            <th>Trạng thái</th>
+        </tr>
+    </ng-template>
 
-        <ng-template pTemplate="body" let-topic let-i="rowIndex">
-            <tr>
-                <td>{{ i + 1 }}</td>
-                <td>{{ topic.title }}</td>
-                <td>{{ topic.lecturer }}</td>
-                <td>{{ topic.description }}</td>
-                <td>
-                    <button pButton icon="pi pi-eye" class="p-button-text"></button>
-                </td>
-                <td>
-                    <span class="p-tag" [ngClass]="{
+    <ng-template pTemplate="body" let-topic let-i="rowIndex">
+        <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ topic.title }}</td>
+            <td>{{ topic.lecturer }}</td>
+            <td>{{ topic.description }}</td>
+            <td>
+                <button pButton icon="pi pi-eye" class="p-button-text"></button>
+            </td>
+            <td>
+                <span class="p-tag" [ngClass]="{
           'p-tag-success': topic.status === 'Đã được duyệt',
           'p-tag-warning': topic.status === 'Chờ duyệt'
         }">
-                        {{ topic.status }}
-                    </span>
-                </td>
-            </tr>
-        </ng-template>
+                    {{ topic.status }}
+                </span>
+            </td>
+        </tr>
+    </ng-template>
 
 
-    </p-table>
+</p-table>
 
 <!-- DIALOG TẠO ĐỀ TÀI MỚI -->
 <p-dialog header="Đề xuất đề tài mới" [(visible)]="isDialogVisible" [modal]="true" [style]="{ width: '600px' }"
@@ -68,13 +68,24 @@
 
         <div class="p-field">
             <label for="description">Mô tả</label>
-            <textarea id="description" pInputTextarea rows="3" [(ngModel)]="form.description"
-                name="description"></textarea>
+           <textarea
+                id="description"
+                pInputTextarea
+                rows="3"
+                [(ngModel)]="form.description"
+                name="description">
+            </textarea>
+
         </div>
 
-        <!-- <p-dropdown [options]="teacherOptions" [(ngModel)]="form.teacherId" name="teacherId"
-            placeholder="Chọn giảng viên"></p-dropdown> -->
-
+        <div class="p-field">
+            <label for="teacherId">Chọn giáo viên hướng dẫn:</label>
+             <p-dropdown [options]="teacherOptions" [(ngModel)]="selectedLecturer" name="teacherId"
+                placeholder="Chọn giảng viên"
+                styleClass="w-full"
+            >
+        </p-dropdown>
+        </div>
 
         <div class="p-dialog-footer">
             <button pButton type="button" label="Hủy" class="p-button-text" (click)="closeProposeDialog()"></button>
