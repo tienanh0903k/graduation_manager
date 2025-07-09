@@ -27,8 +27,9 @@
         <tr>
             <th>STT</th>
             <th>Tên đề tài</th>
-            <th>Tên giảng viên</th>
-            <th>Mô tả</th>
+            <th>Giảng viên hướng dẫn</th>
+            <th>Sinh viên</th>
+            <th>Lớp</th>
             <th>Tác vụ</th>
             <th>Trạng thái</th>
         </tr>
@@ -37,8 +38,10 @@
     <ng-template pTemplate="body" let-topic let-i="rowIndex">
         <tr>
             <td>{{ i + 1 }}</td>
-            <td>{{ topic.title }}</td>
-            <td>{{ topic.lecturer }}</td>
+            <td>{{ topic.tenDeTai }}</td>
+            <td>{{ topic.tenGiaoVien }}</td>
+            <td>{{ topic.tenSinhVien }}</td>
+            <td>{{ topic.lop }}</td>
             <td>{{ topic.description }}</td>
             <td>
                 <button pButton icon="pi pi-eye" class="p-button-text"></button>

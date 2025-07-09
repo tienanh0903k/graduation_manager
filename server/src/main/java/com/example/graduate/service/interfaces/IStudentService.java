@@ -12,5 +12,6 @@ public interface IStudentService {
      * @param pageable
      * @return
      */
-    Page<StudentProjectListDTO> searchStudentProjects(String search, Pageable pageable);
+    Page<StudentProjectListDTO> searchByFilters(String classCode, String teacherName, String title, Pageable pageable);
+
 }

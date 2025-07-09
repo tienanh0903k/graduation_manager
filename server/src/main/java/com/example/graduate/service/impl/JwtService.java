@@ -6,10 +6,13 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
+import com.example.graduate.exception.JwtAuthenticationException;
 import com.example.graduate.models.Users;
 import com.example.graduate.service.interfaces.IJwtService;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -43,11 +46,17 @@ public class JwtService implements IJwtService {
     }
 
     private Claims extractClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new JwtAuthenticationException("Token đã hết hạn", e);
+        } catch (JwtException e) {
+            throw new JwtAuthenticationException("Token không hợp lệ", e);
+        }
     }
 
     private Key getSignInKey() {

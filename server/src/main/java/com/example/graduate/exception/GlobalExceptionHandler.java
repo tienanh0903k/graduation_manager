@@ -1,5 +1,7 @@
 package com.example.graduate.exception;
 
+import java.util.Map;
+
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,4 +32,14 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(JwtAuthenticationException.class)
+    public ResponseEntity<?> handleJwtAuthenticationException(JwtAuthenticationException ex) {
+    return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(Map.of(
+                "error", "Unauthorized",
+                "message", ex.getMessage()
+            ));
+
+    }
 }

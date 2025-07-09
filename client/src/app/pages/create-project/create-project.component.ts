@@ -3,11 +3,12 @@ import { MessageService } from 'primeng/api';
 import { ProjectTopicService } from '../../core/services/project-topic.service';
 import { SharedModule } from '../../shared/shared.module';
 import { TextareaModule } from 'primeng/textarea';
+import { StudentsService } from '../../core/services/students.service';
 
 @Component({
     selector: 'app-create-project',
     standalone: true,
-    imports: [SharedModule, TextareaModule ],
+    imports: [SharedModule, TextareaModule],
     templateUrl: './create-project.component.html',
     styleUrls: ['./create-project.component.scss'],
     providers: [MessageService]
@@ -16,16 +17,15 @@ export class CreateProjectComponent implements OnInit {
     isDialogVisible = false;
 
     topics: any[] = [];
-    filteredTopics: any[] = [];
 
     departments = [
-        { label: '125213', value: 125213 },
-        { label: '125214', value: 125214 }
+        { label: '125213', value: '125213' },
+        { label: '125214', value: '125214' }
     ];
 
     teacherOptions = [
-        { label: 'Nguyễn Văn A', value: 1 },
-        { label: 'Trần Thị B', value: 2 }
+        { label: 'Nguyễn Văn A', value: 'Nguyễn Văn A' },
+        { label: 'Trần Thị B', value: 'Trần Thị B' }
     ];
 
     selectedDepartment = '';
@@ -40,26 +40,26 @@ export class CreateProjectComponent implements OnInit {
 
     constructor(
         private projectTopicService: ProjectTopicService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private studentsService: StudentsService
     ) {}
 
     ngOnInit(): void {
-        this._loadTopics();
+        this.loadSearchResults();
     }
 
-    private _loadTopics(): void {
-        this.projectTopicService.getAll().subscribe({
-            next: (data) => {
-                this.topics = data;
-                this.filteredTopics = [...this.topics];
-            },
-            error: () => {
+    /**
+     * Tìm kiếm đề tài từ backend theo bộ lọc
+     */
+    loadSearchResults(): void {
+        this.studentsService.searchStudentProjects(this.selectedDepartment || undefined, this.selectedLecturer || undefined, this.searchTitle || undefined, 0, 10).subscribe({
+            next: (topics) => (this.topics = topics),
+            error: () =>
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Lỗi',
-                    detail: 'Không thể tải danh sách đề tài. Vui lòng thử lại.'
-                });
-            }
+                    detail: 'Không thể tìm kiếm đề tài. Vui lòng thử lại.'
+                })
         });
     }
 
@@ -76,10 +76,10 @@ export class CreateProjectComponent implements OnInit {
                 });
                 this.closeProposeDialog();
                 this.resetForm();
-                this._loadTopics(); // Tải lại danh sách
+                this.loadSearchResults(); // Tải lại danh sách sau khi thêm
             },
             error: (err) => {
-                console.error('Error creating topic:', err)
+                console.error('Error creating topic:', err);
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Lỗi',
@@ -106,23 +106,9 @@ export class CreateProjectComponent implements OnInit {
     }
 
     /**
-     * Lọc danh sách đề tài theo bộ lọc
+     * Lọc đề tài từ input UI
      */
     filterTopics(): void {
-        this.filteredTopics = this.topics.filter((topic) => {
-            const matchesDepartment = !this.selectedDepartment || topic.department === this.selectedDepartment;
-            const matchesLecturer =
-                !this.selectedLecturer ||
-                topic.lecturer.toLowerCase().includes(this.getLecturerNameById(this.selectedLecturer).toLowerCase());
-            const matchesTitle =
-                !this.searchTitle || topic.title.toLowerCase().includes(this.searchTitle.toLowerCase());
-
-            return matchesDepartment && matchesLecturer && matchesTitle;
-        });
-    }
-
-    private getLecturerNameById(id: number | string): string {
-        const lecturer = this.teacherOptions.find((t) => t.value === +id);
-        return lecturer?.label || '';
+        this.loadSearchResults();
     }
 }
