@@ -17,6 +17,9 @@ export class CreateProjectComponent implements OnInit {
     isDialogVisible = false;
 
     topics: any[] = [];
+    totalRecords = 0;
+    currentPage = 0;
+    rowsPerPage = 10;
 
     departments = [
         { label: '125213', value: '125213' },
@@ -48,12 +51,18 @@ export class CreateProjectComponent implements OnInit {
         this.loadSearchResults();
     }
 
-    /**
-     * Tìm kiếm đề tài từ backend theo bộ lọc
-     */
     loadSearchResults(): void {
-        this.studentsService.searchStudentProjects(this.selectedDepartment || undefined, this.selectedLecturer || undefined, this.searchTitle || undefined, 0, 10).subscribe({
-            next: (topics) => (this.topics = topics),
+        this.studentsService.searchStudentProjects(
+            this.selectedDepartment || undefined,
+            this.selectedLecturer || undefined,
+            this.searchTitle || undefined,
+            this.currentPage,
+            this.rowsPerPage
+        ).subscribe({
+            next: (res) => {
+                this.topics = res.content; // nếu backend trả kiểu Page
+                this.totalRecords = res.totalElements;
+            },
             error: () =>
                 this.messageService.add({
                     severity: 'error',
@@ -63,9 +72,12 @@ export class CreateProjectComponent implements OnInit {
         });
     }
 
-    /**
-     * Gửi đề xuất đề tài mới
-     */
+    onPageChange(event: any): void {
+        this.currentPage = event.first / event.rows;
+        this.rowsPerPage = event.rows;
+        this.loadSearchResults();
+    }
+
     submitProposal(): void {
         this.projectTopicService.createTopic(this.form).subscribe({
             next: () => {
@@ -76,7 +88,14 @@ export class CreateProjectComponent implements OnInit {
                 });
                 this.closeProposeDialog();
                 this.resetForm();
-                this.loadSearchResults(); // Tải lại danh sách sau khi thêm
+
+                // Reset bộ lọc nếu muốn
+                this.selectedDepartment = '';
+                this.selectedLecturer = '';
+                this.searchTitle = '';
+
+                this.currentPage = 0; // về trang đầu
+                this.loadSearchResults();
             },
             error: (err) => {
                 console.error('Error creating topic:', err);
@@ -105,10 +124,8 @@ export class CreateProjectComponent implements OnInit {
         };
     }
 
-    /**
-     * Lọc đề tài từ input UI
-     */
     filterTopics(): void {
+        this.currentPage = 0;
         this.loadSearchResults();
     }
 }

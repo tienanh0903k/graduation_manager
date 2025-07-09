@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../enviroments/environment';
 import { Observable } from 'rxjs';
+import { PaginatedResponse } from '../models/PaginatedResponse.model';
 
 export interface StudentProjectList {
     tenGiaoVien: string;
@@ -17,7 +18,7 @@ export class StudentsService {
 
     constructor(private http: HttpClient) {}
 
-    searchStudentProjects(classCode?: string, teacherName?: string, title?: string, page: number = 0, size: number = 10): Observable<StudentProjectList[]> {
+    searchStudentProjects(classCode?: string, teacherName?: string, title?: string, page: number = 0, size: number = 10): Observable<PaginatedResponse<StudentProjectList>> {
         let params = new HttpParams()
                                     .set('page', page.toString())
                                     .set('size', size.toString());
@@ -32,6 +33,6 @@ export class StudentsService {
             params = params.set('title', title);
         }
 
-        return this.http.get<StudentProjectList[]>(`${this.apiUrl}/search`, { params });
+        return this.http.get<PaginatedResponse<StudentProjectList>>(`${this.apiUrl}/search`, { params });
     }
 }

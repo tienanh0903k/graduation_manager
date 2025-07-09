@@ -19,8 +19,17 @@
         (click)="openProposeDialog()"></button>
 </div>
 
-<p-table [value]="topics" [paginator]="true" [rows]="10" responsiveLayout="scroll"
-    [tableStyle]="{ 'min-width': '50rem' }">
+<p-table
+    [value]="topics"
+    [paginator]="true"
+    [rows]="rowsPerPage"
+    [totalRecords]="totalRecords"
+    [lazy]="true"
+    (onPage)="onPageChange($event)"
+    responsiveLayout="scroll"
+    [tableStyle]="{ 'min-width': '50rem' }"
+>
+
 
 
     <ng-template pTemplate="header">

@@ -4062,3 +4062,47 @@ Caused by: io.jsonwebtoken.ExpiredJwtException: JWT expired at 2025-07-09T03:15:
 2025-07-09 12:22:52.551 [http-nio-8080-exec-5] INFO  c.e.g.s.i.AuthenticationServiceImpl - User duchiep@gmail.com logged in successfully
 2025-07-09 12:23:22.614 [http-nio-8080-exec-6] INFO  c.e.g.s.i.AuthenticationServiceImpl - User minhthuan@gmail.com logged in successfully
 2025-07-09 12:23:30.472 [http-nio-8080-exec-7] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:25:59.823 [http-nio-8080-exec-10] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: %125214%, teacherName: null, title: null
+2025-07-09 12:26:03.454 [http-nio-8080-exec-2] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: %125213%, teacherName: null, title: null
+2025-07-09 12:27:00.376 [http-nio-8080-exec-4] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:27:00.387 [http-nio-8080-exec-4] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@593524a5
+2025-07-09 12:27:00.465 [http-nio-8080-exec-6] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: %125214%, teacherName: %nguy?n v?n a%, title: null
+2025-07-09 12:27:06.618 [http-nio-8080-exec-8] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:27:27.094 [http-nio-8080-exec-9] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:27:27.098 [http-nio-8080-exec-9] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@32673c89
+2025-07-09 12:27:27.124 [http-nio-8080-exec-1] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: %tr?n th? b%, title: null
+2025-07-09 12:27:38.937 [http-nio-8080-exec-2] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:27:46.962 [http-nio-8080-exec-3] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:27:46.968 [http-nio-8080-exec-3] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@59d1a142
+2025-07-09 12:27:47.092 [http-nio-8080-exec-5] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: %nguy?n v?n a%, title: null
+2025-07-09 12:30:24.021 [http-nio-8080-exec-7] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:30:36.557 [http-nio-8080-exec-8] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:30:36.562 [http-nio-8080-exec-8] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@378aa2aa
+2025-07-09 12:30:36.615 [http-nio-8080-exec-9] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:30:55.917 [http-nio-8080-exec-10] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:30:55.921 [http-nio-8080-exec-10] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@cde3c8e
+2025-07-09 12:30:55.984 [http-nio-8080-exec-1] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:31:25.479 [http-nio-8080-exec-2] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:31:25.482 [http-nio-8080-exec-2] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@51445bce
+2025-07-09 12:31:25.498 [http-nio-8080-exec-3] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:31:32.901 [http-nio-8080-exec-4] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:31:32.907 [http-nio-8080-exec-4] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@4993c556
+2025-07-09 12:31:32.927 [http-nio-8080-exec-5] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:31:53.773 [http-nio-8080-exec-6] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:32:06.464 [http-nio-8080-exec-7] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - pass here = 11
+2025-07-09 12:32:06.467 [http-nio-8080-exec-7] INFO  c.e.g.s.impl.ProjectTopicServiceImpl - -----------Student found: com.example.graduate.models.Student@515784b2
+2025-07-09 12:32:06.486 [http-nio-8080-exec-8] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:34:57.385 [http-nio-8080-exec-1] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:37:22.551 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 10468 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-09 12:37:22.551 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-09 12:37:24.736 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 2.273 seconds (process running for 1566.719)
+2025-07-09 12:37:31.223 [restartedMain] INFO  c.e.graduate.GraduateApplication - Starting GraduateApplication using Java 17.0.13 with PID 10468 (D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server\target\classes started by Admin in D:\NTASPORT\JAVA-PROJECT\SpringBoot\graduation-manager\server)
+2025-07-09 12:37:31.223 [restartedMain] INFO  c.e.graduate.GraduateApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-09 12:37:32.647 [restartedMain] INFO  c.e.graduate.GraduateApplication - Started GraduateApplication in 1.433 seconds (process running for 1574.627)
+2025-07-09 12:40:00.428 [http-nio-8080-exec-1] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:41:17.541 [http-nio-8080-exec-2] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:41:19.180 [http-nio-8080-exec-5] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:41:21.316 [http-nio-8080-exec-6] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:41:23.839 [http-nio-8080-exec-8] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null
+2025-07-09 12:41:32.218 [http-nio-8080-exec-9] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: %d? án qu?n lý thí nghi?m%
+2025-07-09 12:41:47.641 [http-nio-8080-exec-10] INFO  c.e.g.s.impl.StudentServiceImpl - Searching projects with classCode: null, teacherName: null, title: null

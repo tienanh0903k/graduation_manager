@@ -23,7 +23,7 @@ public class StudentController {
     }
 
    @GetMapping("/search")
-public ResponseEntity<List<StudentProjectListDTO>> searchProjects(
+public ResponseEntity<Page<StudentProjectListDTO>> searchProjects(
     @RequestParam(required = false) String classCode,
     @RequestParam(required = false) String teacherName,
     @RequestParam(required = false) String title,
@@ -31,7 +31,7 @@ public ResponseEntity<List<StudentProjectListDTO>> searchProjects(
     @RequestParam(defaultValue = "10") int size
 ) {
     Page<StudentProjectListDTO> results = studentService.searchByFilters(classCode, teacherName, title, PageRequest.of(page, size));
-    return ResponseEntity.ok(results.getContent());
+    return ResponseEntity.ok(results);
 }
 
 }
