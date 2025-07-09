@@ -7,7 +7,8 @@ public interface StudentQuery {
               pt.title,
               su.name,
               s.mssv,
-              s.classCode
+              s.classCode,
+              sp.isApproved
           )
           FROM ProjectTopic pt
           JOIN pt.teacher t

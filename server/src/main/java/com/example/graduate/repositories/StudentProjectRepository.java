@@ -34,4 +34,10 @@ public interface StudentProjectRepository extends JpaRepository<StudentProject, 
             """)
     Page<StudentProject> searchByMssv(Long teacherId, String kw, Pageable pageable);
 
+
+    
+
+
+
+
 }

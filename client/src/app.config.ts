@@ -13,11 +13,12 @@ import { AuthEffects } from './app/core/store/auth/auth.effects';
 import { metaReducers } from './app/core/store/store.meta';
 import { ConfirmationService } from 'primeng/api';
 import { tokenInterceptorFn } from './app/core/interceptors/token.interceptor';
+import { errorInterceptorFn } from './app/core/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
-        provideHttpClient(withInterceptors([tokenInterceptorFn])),
+        provideHttpClient(withInterceptors([tokenInterceptorFn, errorInterceptorFn])),
         // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         provideAnimationsAsync(),
         providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),

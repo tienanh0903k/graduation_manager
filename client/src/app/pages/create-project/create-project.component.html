@@ -51,18 +51,17 @@
             <td>{{ topic.tenGiaoVien }}</td>
             <td>{{ topic.tenSinhVien }}</td>
             <td>{{ topic.lop }}</td>
-            <td>{{ topic.description }}</td>
             <td>
                 <button pButton icon="pi pi-eye" class="p-button-text"></button>
             </td>
             <td>
                 <span class="p-tag" [ngClass]="{
-          'p-tag-success': topic.status === 'Đã được duyệt',
-          'p-tag-warning': topic.status === 'Chờ duyệt'
-        }">
-                    {{ topic.status }}
+                      'p-tag-success': topic.trangThai === true,
+                      'p-tag-warning': topic.trangThai === false
+                    }">
+                    {{ topic.trangThai ? 'Đã được duyệt' : 'Chờ duyệt' }}
                 </span>
-            </td>
+</td>
         </tr>
     </ng-template>
 

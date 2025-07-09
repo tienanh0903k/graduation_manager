@@ -5,5 +5,7 @@ public record StudentProjectListDTO(
         String tenDeTai,
         String tenSinhVien,
         String maSinhVien,
-        String lop) {
+        String lop,
+        Boolean trangThai
+        ) {
 }
