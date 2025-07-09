@@ -8,11 +8,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.graduate.dto.AuthenticationRequest;
 import com.example.graduate.dto.AuthenticationResponse;
 import com.example.graduate.dto.RegisterRequest;
+import com.example.graduate.response.ResponseObject;
 import com.example.graduate.service.impl.AuthenticationServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,26 @@ public class AuthController {
                     .body(AuthenticationResponse.builder()
                             .message("Invalid username or password")
                             .build());
+        }
+    }
+
+
+    //==================================== OTP function ====================================
+      /**
+     * Gửi mã OTP đến email của người dùng.
+     *
+     * @param email Địa chỉ email của người nhận OTP.
+     * @return Thông báo thành công hay thất bại.
+     */
+    @PostMapping("/send-otp")
+    public ResponseEntity<ResponseObject> sendOtp(@RequestParam String email) {
+        try {
+            authenticationService.sendOtpToEmail(email);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(ResponseObject.success("Mã OTP đã được gửi tới email của bạn!", null));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ResponseObject.error("Lỗi: " + e.getMessage(), HttpStatus.BAD_REQUEST));
         }
     }
 }

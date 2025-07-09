@@ -14,4 +14,14 @@ public interface IAuthenticationService {
     List<MenuPermissionResponseDTO> getMenusWithPermissionsByUser(Users user);
     void assignRoleToUser(Long userId, Long roleId);
     Long getCurrentUserId();
+
+
+    // send email function
+    void sendEmail(String to,String subject,String body);
+
+    void sendOtpToEmail(String email);
+
+    boolean verifyOtp(String email, String otpCode);
+
+    void resetPassword(String email, String newPassword);
 }
