@@ -15,6 +15,8 @@ import { TeacherGuard } from './app/core/guards/teacher.guard';
 import { ReviewProjectComponent } from './app/pages/admin-teacher/review-project/review-project.component';
 import { ListProjectComponent } from './app/pages/admin-teacher/list-project/list-project.component';
 import { StudentReviewComponent } from './app/pages/admin-teacher/student-review/student-review.component';
+import { RoleComponent } from './app/pages/admin-system/role/role.component';
+import { AdminGuard } from './app/core/guards/admin.guard';
 
 
 export const appRoutes: Routes = [
@@ -32,6 +34,7 @@ export const appRoutes: Routes = [
             { path: 'review-project', component: ReviewProjectComponent, canActivate: [TeacherGuard] },
             { path: 'approve-project', component: ListProjectComponent, canActivate: [TeacherGuard] },
             { path: 'teacher-review', component: StudentReviewComponent, canActivate: [TeacherGuard] },
+            { path: 'role-management', component: RoleComponent, canActivate: [AdminGuard] },
 
             { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation },

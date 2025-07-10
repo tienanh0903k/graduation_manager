@@ -1,11 +1,12 @@
 package com.example.graduate.service.interfaces;
 
 import com.example.graduate.dto.MenuPermission.MenuPermissionDTO;
+import com.example.graduate.models.MenuItem;
 import com.example.graduate.models.RoleName;
-import com.example.graduate.models.Roles;
-import com.example.graduate.models.Users;
+
 
 import java.util.List;
+import java.util.Map;
 
 public interface IRoleMenuService {
     /**
@@ -23,4 +24,5 @@ public interface IRoleMenuService {
     //  * @return          Danh sách menu đã được gán cho role
     //  */
     // List<Long> getMenusByRole(RoleName roleName);
+    Map<String, List<MenuItem>> getMenusByRole(RoleName roleName);
 }

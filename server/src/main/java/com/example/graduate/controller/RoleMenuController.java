@@ -1,6 +1,7 @@
 package com.example.graduate.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.graduate.dto.MenuPermission.MenuPermissionDTO;
+import com.example.graduate.models.MenuItem;
 import com.example.graduate.models.RoleName;
 import com.example.graduate.response.ResponseObject;
 import com.example.graduate.service.interfaces.IRoleMenuService;
@@ -24,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RoleMenuController {
     private final IRoleMenuService roleMenuService;
-
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/{roleName}/assign-menus")
@@ -38,11 +39,16 @@ public class RoleMenuController {
 
     }
 
-     @GetMapping("/admin/test")
-     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-     public String testAdmin() {
-         return "Bạn là admin!";
-     }
+    @GetMapping("/admin/test")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String testAdmin() {
+        return "Bạn là admin!";
+    }
 
+    @GetMapping("/{roleName}/menus")
+    public ResponseEntity<?> getMenusForRole(@PathVariable RoleName roleName) {
+        Map<String, List<MenuItem>> data = roleMenuService.getMenusByRole(roleName);
+        return ResponseEntity.ok(data);
+    }
 
 }

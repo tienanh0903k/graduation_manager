@@ -1,0 +1,31 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+
+  font-size: 14px;
+  color: #333;
+
+  box-shadow: 0 1px 2px rgba(128, 128, 128, 0.099);
+
+  span {
+    margin-right: 4px;
+  }
+}
+
+
+
+
+
+::ng-deep .p-picklist {
+  .p-picklist-buttons {
+    margin-top: 6rem;
+  }
+}
