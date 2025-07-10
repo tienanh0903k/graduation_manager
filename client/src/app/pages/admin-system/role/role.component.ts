@@ -59,7 +59,7 @@ export class RoleComponent implements OnInit {
 
     saveRoleMenus(): void {
         const menuIds = this.assignedMenus.map((m) => m.id); // backend cần mảng id
-        this.roleService.updateMenusForRole(this.selectedRole.id, menuIds).subscribe({
+        this.roleService.updateMenusForRole(this.selectedRole.name, menuIds).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',

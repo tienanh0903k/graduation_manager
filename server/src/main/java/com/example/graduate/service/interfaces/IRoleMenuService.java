@@ -25,4 +25,7 @@ public interface IRoleMenuService {
     //  */
     // List<Long> getMenusByRole(RoleName roleName);
     Map<String, List<MenuItem>> getMenusByRole(RoleName roleName);
+
+    void assignMenusToRoleSimple(RoleName roleName, List<Long> menuIds);
 }
+
