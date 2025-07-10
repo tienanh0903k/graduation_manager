@@ -29,6 +29,7 @@ public class SecurityConfiguration  {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(
                     "/auth/**",                             // cho login/register
+                    "/api/teachers",
                     "/v3/api-docs/**",                      // Swagger JSON
                     "/swagger-ui/**",                       // Swagger UI static files
                     "/swagger-ui.html"                      // Swagger UI HTML

@@ -19,16 +19,8 @@
         (click)="openProposeDialog()"></button>
 </div>
 
-<p-table
-    [value]="topics"
-    [paginator]="true"
-    [rows]="rowsPerPage"
-    [totalRecords]="totalRecords"
-    [lazy]="true"
-    (onPage)="onPageChange($event)"
-    responsiveLayout="scroll"
-    [tableStyle]="{ 'min-width': '50rem' }"
->
+<p-table [value]="topics" [paginator]="true" [rows]="rowsPerPage" [totalRecords]="totalRecords" [lazy]="true"
+    (onPage)="onPageChange($event)" responsiveLayout="scroll" [tableStyle]="{ 'min-width': '50rem' }">
 
 
 
@@ -52,16 +44,26 @@
             <td>{{ topic.tenSinhVien }}</td>
             <td>{{ topic.lop }}</td>
             <td>
-                <button pButton icon="pi pi-eye" class="p-button-text"></button>
-            </td>
-            <td>
-                <span class="p-tag" [ngClass]="{
+                <button pButton icon="pi pi-eye" class="p-button-text" (click)="openDetailDialog(topic)">
+                </button>
+
+                <button *ngIf="canEdit(topic)" pButton icon="pi pi-pencil" class="p-button-text"
+                    (click)="editTopic(topic)">
+                </button>
+
+                <button *ngIf="canDelete(topic)" pButton icon="pi pi-trash" class="p-button-text p-button-danger"
+                    (click)="deleteTopic(topic)">
+                </button>
+                </td>
+
+                <td>
+                    <span class="p-tag" [ngClass]="{
                       'p-tag-success': topic.trangThai === true,
                       'p-tag-warning': topic.trangThai === false
                     }">
-                    {{ topic.trangThai ? 'Đã được duyệt' : 'Chờ duyệt' }}
-                </span>
-</td>
+                        {{ topic.trangThai ? 'Đã được duyệt' : 'Chờ duyệt' }}
+                    </span>
+                </td>
         </tr>
     </ng-template>
 
@@ -79,23 +81,16 @@
 
         <div class="p-field">
             <label for="description">Mô tả</label>
-           <textarea
-                id="description"
-                pInputTextarea
-                rows="3"
-                [(ngModel)]="form.description"
-                name="description">
+            <textarea id="description" pInputTextarea rows="3" [(ngModel)]="form.description" name="description">
             </textarea>
 
         </div>
 
         <div class="p-field">
             <label for="teacherId">Chọn giáo viên hướng dẫn:</label>
-             <p-dropdown [options]="teacherOptions" [(ngModel)]="selectedLecturer" name="teacherId"
-                placeholder="Chọn giảng viên"
-                styleClass="w-full"
-            >
-        </p-dropdown>
+            <p-dropdown [options]="teacherOptions" [(ngModel)]="selectedLecturer" name="teacherId"
+                placeholder="Chọn giảng viên" styleClass="w-full">
+            </p-dropdown>
         </div>
 
         <div class="p-dialog-footer">
@@ -103,6 +98,37 @@
             <button pButton type="submit" label="Lưu" class="p-button-success"></button>
         </div>
     </form>
+</p-dialog>
+
+
+<p-dialog header="Chi tiết đề tài" [(visible)]="isDetailDialogVisible" [modal]="true" [style]="{ width: '500px' }"
+    (onHide)="isDetailDialogVisible = false">
+    <div *ngIf="selectedTopic">
+        <div class="p-field">
+            <label>Tên đề tài:</label>
+            <p>{{ selectedTopic.tenDeTai }}</p>
+        </div>
+
+        <div class="p-field">
+            <label>Giảng viên hướng dẫn:</label>
+            <p>{{ selectedTopic.tenGiaoVien }}</p>
+        </div>
+
+        <div class="p-field">
+            <label>Sinh viên:</label>
+            <p>{{ selectedTopic.tenSinhVien }}</p>
+        </div>
+
+        <div class="p-field">
+            <label>Lớp:</label>
+            <p>{{ selectedTopic.lop }}</p>
+        </div>
+
+        <div class="p-field">
+            <label>Trạng thái:</label>
+            <p>{{ selectedTopic.trangThai ? 'Đã được duyệt' : 'Chờ duyệt' }}</p>
+        </div>
+    </div>
 </p-dialog>
 
 <p-toast></p-toast>

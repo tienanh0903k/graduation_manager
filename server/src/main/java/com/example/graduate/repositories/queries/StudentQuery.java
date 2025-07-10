@@ -7,6 +7,7 @@ public interface StudentQuery {
               pt.title,
               su.name,
               s.mssv,
+              su.id,
               s.classCode,
               sp.isApproved
           )

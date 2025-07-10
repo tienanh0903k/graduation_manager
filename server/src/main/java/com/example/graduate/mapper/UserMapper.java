@@ -2,6 +2,7 @@ package com.example.graduate.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import com.example.graduate.dto.TeacherDTO;
 import com.example.graduate.dto.UserDTO;
 import com.example.graduate.models.Users;
 
@@ -17,6 +18,8 @@ public interface UserMapper extends BaseMapper<Users, UserDTO> {
     // No property named "roleName" exists in source parameter(s). Did you mean "role"?Java(0)
     @Mapping(source = "role", target = "role.name")
     Users toEntity(UserDTO dto);
+
+    TeacherDTO toTeacherDTO(Users user);
 }
 
 

@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ProjectTopicService } from '../../core/services/project-topic.service';
 import { SharedModule } from '../../shared/shared.module';
 import { TextareaModule } from 'primeng/textarea';
 import { StudentsService } from '../../core/services/students.service';
+import { TeacherService } from '../../core/services/teacher.service';
+import { isOwner } from '../../core/utils/permissions.util';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectAuthUserId } from '../../core/store/auth/auth.selectors';
 
 @Component({
     selector: 'app-create-project',
@@ -15,8 +20,17 @@ import { StudentsService } from '../../core/services/students.service';
 })
 export class CreateProjectComponent implements OnInit {
     isDialogVisible = false;
+    isDetailDialogVisible = false;
+    selectedTopic: any = null;
+    currentUserId?: number;
+
+    currentUserId$!: Observable<number | undefined>;
+
+    private store = inject(Store);
 
     topics: any[] = [];
+    teacherOptions: any[] = [];
+
     totalRecords = 0;
     currentPage = 0;
     rowsPerPage = 10;
@@ -24,11 +38,6 @@ export class CreateProjectComponent implements OnInit {
     departments = [
         { label: '125213', value: '125213' },
         { label: '125214', value: '125214' }
-    ];
-
-    teacherOptions = [
-        { label: 'Nguyễn Văn A', value: 'Nguyễn Văn A' },
-        { label: 'Trần Thị B', value: 'Trần Thị B' }
     ];
 
     selectedDepartment = '';
@@ -44,24 +53,25 @@ export class CreateProjectComponent implements OnInit {
     constructor(
         private projectTopicService: ProjectTopicService,
         private messageService: MessageService,
-        private studentsService: StudentsService
+        private studentsService: StudentsService,
+        private teacherService: TeacherService
     ) {}
 
     ngOnInit(): void {
-        this.loadSearchResults();
+        this.currentUserId$ = this.store.select(selectAuthUserId);
+        this.currentUserId$.subscribe((id) => {
+            this.currentUserId = id;
+        });
+        this._loadSearchResults();
+        this._loadTeachers();
     }
 
-    loadSearchResults(): void {
-        this.studentsService.searchStudentProjects(
-            this.selectedDepartment || undefined,
-            this.selectedLecturer || undefined,
-            this.searchTitle || undefined,
-            this.currentPage,
-            this.rowsPerPage
-        ).subscribe({
+    _loadSearchResults(): void {
+        this.studentsService.searchStudentProjects(this.selectedDepartment || undefined, this.selectedLecturer || undefined, this.searchTitle || undefined, this.currentPage, this.rowsPerPage).subscribe({
             next: (res) => {
                 this.topics = res.content; // nếu backend trả kiểu Page
                 this.totalRecords = res.totalElements;
+                console.log('Danh sách đề tài:', this.topics);
             },
             error: () =>
                 this.messageService.add({
@@ -72,10 +82,22 @@ export class CreateProjectComponent implements OnInit {
         });
     }
 
+    _loadTeachers(): void {
+        this.teacherService.getAllTeachers().subscribe({
+            next: (res) => {
+                this.teacherOptions = res.data.map((teacher: any) => ({
+                    label: teacher.name,
+                    value: teacher.name
+                }));
+            },
+            error: (err) => console.error('Lỗi khi tải danh sách giảng viên:', err)
+        });
+    }
+
     onPageChange(event: any): void {
         this.currentPage = event.first / event.rows;
         this.rowsPerPage = event.rows;
-        this.loadSearchResults();
+        this._loadSearchResults();
     }
 
     submitProposal(): void {
@@ -95,7 +117,7 @@ export class CreateProjectComponent implements OnInit {
                 this.searchTitle = '';
 
                 this.currentPage = 0; // về trang đầu
-                this.loadSearchResults();
+                this._loadSearchResults();
             },
             error: (err) => {
                 console.error('Error creating topic:', err);
@@ -108,8 +130,37 @@ export class CreateProjectComponent implements OnInit {
         });
     }
 
+    editTopic(topic: any): void {
+        this.selectedTopic = topic;
+        this.isDialogVisible = true;
+        this.form = {
+            title: topic.tenDeTai,
+            description: topic.moTa || '', // nếu có
+            teacherId: topic.teacherId
+        };
+    }
+
+    deleteTopic(topic: any): void {
+        if (confirm('Bạn có chắc muốn xóa đề tài này?')) {
+            // this.projectTopicService.deleteTopic(topic.id).subscribe({
+            //   next: () => {
+            //     this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đã xóa đề tài.' });
+            //     this._loadSearchResults();
+            //   },
+            //   error: () => {
+            //     this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Không thể xóa đề tài.' });
+            //   }
+            // });
+        }
+    }
+
     openProposeDialog(): void {
         this.isDialogVisible = true;
+    }
+
+    openDetailDialog(topic: any): void {
+        this.selectedTopic = topic;
+        this.isDetailDialogVisible = true;
     }
 
     closeProposeDialog(): void {
@@ -126,6 +177,15 @@ export class CreateProjectComponent implements OnInit {
 
     filterTopics(): void {
         this.currentPage = 0;
-        this.loadSearchResults();
+        this._loadSearchResults();
+    }
+
+    //access edit delete
+    canEdit(topic: any): boolean {
+        return this.currentUserId != null && topic.id === this.currentUserId;
+    }
+
+    canDelete(topic: any): boolean {
+        return this.currentUserId != null && topic.id === this.currentUserId;
     }
 }
