@@ -183,6 +183,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
      *
      * @param email Địa chỉ email của người nhận OTP.
      */
+    @Transactional
     public void sendOtpToEmail(String email) {
         // Tìm người dùng theo email
         Users user = userRepository.findByEmail(email)
@@ -193,7 +194,11 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         LocalDateTime expirationTime = LocalDateTime.now().plusMinutes(5);
 
         // Xoá mã OTP cũ nếu có
-        otpRepository.deleteByUser(user);
+       otpRepository.findByUser(user).ifPresent(existingOtp -> {
+        otpRepository.delete(existingOtp);
+        otpRepository.flush(); // ✅ Đảm bảo xóa ngay
+    });
+
 
         // Tạo bản ghi mới
         OtpVerification otp = new OtpVerification();
@@ -213,15 +218,19 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
 
     @Override
-    public boolean verifyOtp(String email, String otpCode) {
+    public String verifyOtp(String email, String otpCode) {
         Users user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
         Optional<OtpVerification> otpRecord = otpRepository.findByUserAndOtpCode(user, otpCode);
         if (otpRecord.isPresent() && otpRecord.get().getExpirationTime().isAfter(LocalDateTime.now())) {
-            return true;
+            otpRepository.delete(otpRecord.get());
+            String resetToken = jwtService.generateToken(user);
+
+         return resetToken;
         }
-        return false;
+
+        throw new RuntimeException("OTP code is invalid or has expired");
     }
 
     @Override

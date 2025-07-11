@@ -45,6 +45,12 @@ public class OpenApiConfig {
                                 .in(SecurityScheme.In.HEADER)
                                 .name("bearer-key") // Name used to reference this scheme
                         )
+
+                          .addSecuritySchemes("cookieAuth", new SecurityScheme()
+                                .name("cookieAuth")
+                                .type(SecurityScheme.Type.APIKEY)
+                                .in(SecurityScheme.In.COOKIE)  // Sử dụng cookie
+                                .name("resetToken"))  // Tên cookie
                 );
     }
 }

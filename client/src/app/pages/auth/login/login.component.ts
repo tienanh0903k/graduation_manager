@@ -21,7 +21,7 @@ import { ToastModule } from 'primeng/toast';
     selector: 'app-login',
     standalone: true,
     templateUrl: './login.component.html',
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, ReactiveFormsModule, RouterModule, ToastModule, RippleModule, AppFloatingConfigurator, CommonModule, ProgressSpinnerModule],
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, RouterModule, ReactiveFormsModule, RouterModule, ToastModule, RippleModule, AppFloatingConfigurator, CommonModule, ProgressSpinnerModule],
     styleUrls: ['./login.component.scss'],
     providers: [MessageService]
 })

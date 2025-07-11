@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('https://wallpapers.com/images/hd/project-management-aesthetic-desktop-6oxfxe1l1508cpv8.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

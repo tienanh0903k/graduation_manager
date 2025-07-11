@@ -21,7 +21,7 @@ public interface IAuthenticationService {
 
     void sendOtpToEmail(String email);
 
-    boolean verifyOtp(String email, String otpCode);
+    String verifyOtp(String email, String otpCode);
 
     void resetPassword(String email, String newPassword);
 }

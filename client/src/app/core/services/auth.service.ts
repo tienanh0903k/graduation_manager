@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthenticationRequest } from '../models/authentication-request.model';
 import { AuthenticationResponse } from '../models/authentication-response.model';
 import { User } from '../models/user.model';
 import { MenuPermissionResponseDTO } from '../models/MenuPermission/MenuPermissionResponseDTO';
+import { environment } from '../../../enviroments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    private authUrl = 'http://localhost:8080/auth';
+    private readonly apiUrl = 'http://localhost:8080/auth';
 
     constructor(private http: HttpClient) {}
 
     login(request: AuthenticationRequest): Observable<AuthenticationResponse> {
         console.log('Login request:', request);
-        return this.http.post<AuthenticationResponse>(`${this.authUrl}/login`, request);
+        return this.http.post<AuthenticationResponse>(`${this.apiUrl}/login`, request);
     }
 
     logout(): void {
@@ -60,4 +61,35 @@ export class AuthService {
         const data = localStorage.getItem('menuPermissions');
         return data ? JSON.parse(data) : null;
     }
+
+
+    /**
+     *  HÀM XỬ LÝ RESET PASSWORD
+     * @param email
+     * @returns
+     */
+    public sendOtp(email: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/send-otp`, null, {
+            params: { email }
+        });
+    }
+
+    public verifyOtp(email: string, otpCode: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/verify-otp`, null, {
+            params: {
+                email: email,
+                otpCode: otpCode
+            }
+        });
+    }
+
+
+
+    /**
+     * ======================================= QUẢN LÝ RESET TOKEN =======================================
+     */
+    public resetPassword(newPassword: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/reset-password`, { newPassword });
+    }
+
 }

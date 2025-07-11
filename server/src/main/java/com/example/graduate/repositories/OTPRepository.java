@@ -12,4 +12,9 @@ public interface OTPRepository extends JpaRepository<OtpVerification, Long> {
 
     Optional<OtpVerification> findByUserAndOtpCode(Users user, String otpCode);
 
+    Optional<OtpVerification> findByUser(Users user);
+
+
+    
+
 }
