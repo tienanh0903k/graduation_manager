@@ -12,6 +12,25 @@ export interface StudentProjectList {
     lop: string;
 }
 
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}
+
+export interface Student {
+  id: number;
+  mssv: string;
+  classCode: string;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+  };
+}
+
 @Injectable({ providedIn: 'root' })
 export class StudentsService {
     private readonly apiUrl = `${environment.apiUrl}/student`;
@@ -40,5 +59,14 @@ export class StudentsService {
     importStudents(students: any[]): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.post(`${this.apiUrl}/import`, students, { headers });
+    }
+
+    /**
+     * get all student for admin
+     */
+    search(criteria: any, page: number, size: number, sort?: string): Observable<PageResponse<Student>> {
+        let params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+        if (sort) params = params.set('sort', sort);
+        return this.http.post<PageResponse<Student>>(`${this.apiUrl}/search-list`, criteria, { params });
     }
 }

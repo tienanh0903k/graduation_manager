@@ -31,5 +31,38 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             @Param("title") String title,
             Pageable pageable);
 
+    /**
+     * check exist student by mssv
+     * @param mssv
+     * @return
+     */
     boolean existsByMssv(String mssv);
+
+
+
+
+    /**
+     * Tìm kiếm sinh viên có phân trang
+     * 
+     * @param name      họ tên (tìm trong bảng Users)
+     * @param mssv      mã số sinh viên
+     * @param classCode lớp
+     * @param email     email (tìm trong bảng Users)
+     * @param pageable  thông tin phân trang
+     * @return trang kết quả
+     */
+    @Query("""
+             SELECT s
+             FROM Student s
+             JOIN s.user u
+             WHERE (:name IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', :name, '%')))
+               AND (:mssv IS NULL OR LOWER(s.mssv) LIKE LOWER(CONCAT('%', :mssv, '%')))
+               AND (:classCode IS NULL OR LOWER(s.classCode) LIKE LOWER(CONCAT('%', :classCode, '%')))
+            """)
+    Page<Student> searchStudents(
+            @Param("name") String name,
+            @Param("mssv") String mssv,
+            @Param("classCode") String classCode,
+            Pageable pageable);
+
 }

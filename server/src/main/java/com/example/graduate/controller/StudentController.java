@@ -3,6 +3,7 @@ package com.example.graduate.controller;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.graduate.dto.StudentProject.StudentProjectListDTO;
+import com.example.graduate.dto.Students.SearchStudentDTO;
 import com.example.graduate.dto.Students.StudentDTO;
+import com.example.graduate.models.Student;
 import com.example.graduate.response.ResponseObject;
 import com.example.graduate.service.interfaces.IStudentService;
 
@@ -27,6 +30,16 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+
+    /**
+     * get list project for role user (student)
+     * @param classCode
+     * @param teacherName
+     * @param title
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping("/search")
     public ResponseEntity<Page<StudentProjectListDTO>> searchProjects(
             @RequestParam(required = false) String classCode,
@@ -77,6 +90,20 @@ public class StudentController {
     }
 
 
+
+    /**
+     * search student using pageable for admin
+     * @param names
+     * @return
+     */
+    @PostMapping("/search-list")
+    public ResponseEntity<Page<Student>> searchStudents(
+            @RequestBody SearchStudentDTO searchStudentDTO,
+            Pageable pageable
+        ) 
+    { 
+        return ResponseEntity.ok(studentService.searchStudents(searchStudentDTO, pageable));
+    }
 
 
 

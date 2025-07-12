@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -11,7 +11,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ImportExcelDialogComponent } from '../components/import-excel-dialog/import-excel-dialog.component';
 import { MessageService } from 'primeng/api';
-import { StudentsService } from '../../../core/services/students.service';
+import { Student, StudentsService } from '../../../core/services/students.service';
 
 @Component({
     selector: 'app-students',
@@ -21,7 +21,15 @@ import { StudentsService } from '../../../core/services/students.service';
     standalone: true,
     providers: [MessageService]
 })
-export class StudentsComponent {
+export class StudentsComponent implements OnInit {
+    students: Student[] = [];
+    loading = false;
+
+    // PrimeNG Table paging state
+    totalRecords = 0;
+    first = 0;
+    rows = 10;
+
     importDialogVisible = false;
     importPreview: any[] = [];
     addStudentDialogVisible = false;
@@ -38,21 +46,33 @@ export class StudentsComponent {
         { label: 'CNTT K66A', value: '125215' }
     ];
 
-    students: any[] = [];
     filterName = '';
     filterMSSV = '';
     filterClass = '';
 
-    get filteredStudents() {
-        return this.students.filter(
-            (s) => (!this.filterName || s.name?.toLowerCase().includes(this.filterName.toLowerCase())) && (!this.filterMSSV || s.mssv?.toLowerCase().includes(this.filterMSSV.toLowerCase())) && (!this.filterClass || s.class_name === this.filterClass)
-        );
-    }
+    criteria = {
+        name: '',
+        mssv: '',
+        classCode: ''
+    };
+
+    // get filteredStudents() {
+    //     return this.students.filter(
+    //         (s) => (!this.filterName || s.name?.toLowerCase().includes(this.filterName.toLowerCase())) && (!this.filterMSSV || s.mssv?.toLowerCase().includes(this.filterMSSV.toLowerCase())) && (!this.filterClass || s.class_name === this.filterClass)
+    //     );
+    // }
 
     constructor(
         private messageService: MessageService,
         private studentsService: StudentsService
-    ) {}
+    ) {
+        console.log("students",this.students);
+    }
+
+
+    ngOnInit(): void {
+        this._loadPage({ first: 0, rows: this.rows });
+    }
 
     // Hiển thị dialog thêm sinh viên
     showAddStudentDialog() {
@@ -60,14 +80,38 @@ export class StudentsComponent {
         this.addStudentDialogVisible = true;
     }
 
+    _loadPage(event: any): void {
+        this.loading = true;
+        this.first = event.first;
+        this.rows = event.rows;
+
+        let sort: string | undefined;
+        if (event.sortField) {
+            const field = event.sortField === 'user.name' ? 'u.name' : event.sortField;
+            sort = `${field},${event.sortOrder === 1 ? 'asc' : 'desc'}`;
+        }
+
+        this.studentsService.search(this.criteria, this.first / this.rows, this.rows, sort).subscribe((res) => {
+            console.log('Danh sách sinh viên:', res);
+            this.students = res.content;
+            this.totalRecords = res.totalElements;
+            this.loading = false;
+        });
+    }
+
+    onFilterChange(): void {
+        this.first = 0;
+        this._loadPage({ first: 0, rows: this.rows });
+    }
+
     // Lưu sinh viên mới
     saveNewStudent() {
-        if (this.newStudent.name && this.newStudent.mssv && this.newStudent.email && this.newStudent.class_name && this.newStudent.password) {
-            this.students.push({ ...this.newStudent });
-            this.closeAddStudentDialog();
-        } else {
-            alert('Vui lòng điền đầy đủ thông tin!');
-        }
+        // if (this.newStudent.name && this.newStudent.mssv && this.newStudent.email && this.newStudent.class_name && this.newStudent.password) {
+        //     this.students.push({ ...this.newStudent });
+        //     this.closeAddStudentDialog();
+        // } else {
+        //     alert('Vui lòng điền đầy đủ thông tin!');
+        // }
     }
 
     // Đóng dialog thêm sinh viên
@@ -81,13 +125,13 @@ export class StudentsComponent {
     }
 
     addRow() {
-        this.students.push({
-            mssv: '',
-            name: '',
-            email: '',
-            class_name: '',
-            gender: ''
-        });
+        // this.students.push({
+        //     mssv: '',
+        //     name: '',
+        //     email: '',
+        //     class_name: '',
+        //     gender: ''
+        // });
     }
 
     openImportDialog() {

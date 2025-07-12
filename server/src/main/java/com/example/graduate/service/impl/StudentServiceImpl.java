@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.graduate.dto.StudentProject.StudentProjectListDTO;
+import com.example.graduate.dto.Students.SearchStudentDTO;
 import com.example.graduate.dto.Students.StudentDTO;
 import com.example.graduate.models.Roles;
 import com.example.graduate.models.Student;
@@ -30,11 +31,8 @@ public class StudentServiceImpl implements IStudentService {
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
-    
+
     private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
-
-
-  
 
     // @Autowired
     // public StudentServiceImpl(StudentRepository studentRepository) {
@@ -61,12 +59,10 @@ public class StudentServiceImpl implements IStudentService {
         return (input == null || input.isBlank()) ? null : "%" + input.trim().toLowerCase() + "%";
     }
 
-
-
     /**
      * Phương thức thêm danh sách sinh viên từ mảng DTO
      */
-   @Transactional
+    @Transactional
     public void addImportedStudents(List<StudentDTO> students) {
         if (students == null || students.isEmpty()) {
             throw new IllegalArgumentException("Student list is null or empty");
@@ -76,7 +72,7 @@ public class StudentServiceImpl implements IStudentService {
             if (studentRepository.existsByMssv(studentDTO.getMssv())) {
                 System.out.println("Student with mssv " + studentDTO.getMssv() + " already exists. Skipping...");
                 continue;
-    }
+            }
             Roles role = getDefaultStudentRole();
             Users user = Users.builder()
                     .email(studentDTO.getEmail())
@@ -98,9 +94,30 @@ public class StudentServiceImpl implements IStudentService {
     /**
      * Lấy role từ DTO hoặc gán mặc định nếu không có
      */
-   private Roles getDefaultStudentRole() {
+    private Roles getDefaultStudentRole() {
         return roleRepository.findById(3L)
                 .orElseThrow(() -> new RuntimeException("Role with id 3 not found"));
     }
-}
 
+
+
+
+    /**
+     * Phương thức tìm kếm sinh viên
+     * @param name
+     * @param mssv
+     * @param classCode
+     * @param email
+     * @param pageable
+     * @return
+     */
+
+    public Page<Student> searchStudents(SearchStudentDTO searchStudentDTO, Pageable pageable) {
+        return studentRepository.searchStudents(
+                searchStudentDTO.getName(),
+                searchStudentDTO.getMssv(),
+                searchStudentDTO.getClassCode(),
+                pageable);
+    }
+
+}

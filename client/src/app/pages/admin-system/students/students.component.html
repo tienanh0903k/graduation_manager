@@ -1,37 +1,38 @@
+<!-- Filter bar (giữ nguyên UI) -->
 <div class="search-panel">
   <div class="form-row">
-    <label for="searchName">Tìm theo tên</label>
+    <label>Tên</label>
     <div class="input-icon">
       <i class="pi pi-search"></i>
       <input
-        id="searchName"
         pInputText
-        type="text"
-        [(ngModel)]="filterName"
-        placeholder="Nhập tên sinh viên" />
+        [(ngModel)]="criteria.name"
+        (input)="onFilterChange()"
+        placeholder="Nhập tên sinh viên"
+      />
     </div>
   </div>
 
-   <div class="form-row">
-    <label for="searchMSSV">Mã sinh viên</label>
+  <div class="form-row">
+    <label>Mã sinh viên</label>
     <input
-      id="searchMSSV"
       pInputText
-      type="text"
-      [(ngModel)]="filterMSSV"
-      placeholder="Nhập MSSV" />
+      [(ngModel)]="criteria.mssv"
+      (input)="onFilterChange()"
+      placeholder="Nhập MSSV"
+    />
   </div>
 
   <div class="form-row">
-    <label for="filterClass">Lọc theo lớp</label>
+    <label>Lớp</label>
     <p-dropdown
-      id="filterClass"
       [options]="classOptions"
-      [(ngModel)]="filterClass"
+      [(ngModel)]="criteria.classCode"
+      (onChange)="onFilterChange()"
       optionLabel="label"
       placeholder="Chọn lớp"
-      [showClear]="true">
-    </p-dropdown>
+      [showClear]="true"
+    ></p-dropdown>
   </div>
 </div>
 
@@ -41,30 +42,53 @@
 <p-button label="Nhập từ Excel" icon="pi pi-file-excel" (click)="openImportDialog()"></p-button>
     </div>
 
-    <p-table [value]="filteredStudents" editable="true" class="p-datatable-sm">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>MSSV</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Lớp</th>
-                <th>Giới tính</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-i="rowIndex">
-            <tr>
-                <td><p-inputText [(ngModel)]="rowData.mssv"></p-inputText></td>
-                <td><p-inputText [(ngModel)]="rowData.name"></p-inputText></td>
-                <td><p-inputText [(ngModel)]="rowData.email"></p-inputText></td>
-                <td><p-inputText [(ngModel)]="rowData.class_name"></p-inputText></td>
-                <td>
-                    <p-dropdown [(ngModel)]="rowData.gender" [options]="genderOptions" optionLabel="label"
-                        [style]="{ width: '100%' }">
-                    </p-dropdown>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+   <!-- Bảng đã sửa: hiển thị đúng dữ liệu, sortable, không editable inline -->
+<p-table
+  [value]="students"
+  [lazy]="true"
+  (onLazyLoad)="_loadPage($event)"
+  [paginator]="true"
+  [rows]="rows"
+  [totalRecords]="totalRecords"
+  [first]="first"
+  [loading]="loading"
+  [responsive]="true"
+  sortMode="single"
+  class="p-datatable-sm">
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="mssv">MSSV <p-sortIcon field="mssv"></p-sortIcon></th>
+      <th pSortableColumn="user.name">Họ tên <p-sortIcon field="user.name"></p-sortIcon></th>
+      <th pSortableColumn="user.email">Email <p-sortIcon field="user.email"></p-sortIcon></th>
+      <th pSortableColumn="classCode">Lớp <p-sortIcon field="classCode"></p-sortIcon></th>
+      <th>Tùy chọn</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
+      <td>{{ rowData.mssv }}</td>
+      <td>{{ rowData.user.name }}</td>
+      <td>{{ rowData.user.email }}</td>
+      <td>{{ rowData.classCode }}</td>
+      <td>
+        <!-- Nút chức năng đại diện (edit / delete / view) -->
+        <div class="flex gap-1">
+          <p-button
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-sm p-button-text">
+          </p-button>
+          <p-button
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-sm p-button-text p-button-danger"
+           >
+          </p-button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
 
     <div class="text-right mt-3">
         <!-- <p-button label="Lưu danh sách" icon="pi pi-save" class="p-button-success" (click)="saveStudents()"></p-button> -->
