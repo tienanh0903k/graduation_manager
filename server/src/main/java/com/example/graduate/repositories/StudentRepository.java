@@ -30,4 +30,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             @Param("teacherName") String teacherName,
             @Param("title") String title,
             Pageable pageable);
+
+    boolean existsByMssv(String mssv);
 }

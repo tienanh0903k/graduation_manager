@@ -1,0 +1,56 @@
+<p-dialog
+  [header]="header"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '800px', height: '600px' }"
+  [resizable]="true"
+  [closable]="true"
+  [draggable]="true"
+  (onHide)="onCancel()"
+
+>
+  <div class="mb-3">
+    <input type="file" (change)="onExcelFileSelected($event)" accept=".xlsx, .xls" />
+  </div>
+
+  <p-table
+    *ngIf="importPreview.length"
+    [value]="importPreview"
+    [(selection)]="selectedImportRows"
+    dataKey="mssv"
+    [scrollable]="true"
+    scrollHeight="600px"
+    selectionMode="multiple"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th>MSSV</th>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>Lớp</th>
+        <th>Mật khẩu</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-student>
+      <tr [pSelectableRow]="student">
+        <td>
+          <p-tableCheckbox [value]="student"></p-tableCheckbox>
+        </td>
+        <td>{{ student.mssv }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.className }}</td>
+        <td>{{ student.password }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Hủy" class="p-button-text" (click)="onCancel()"></p-button>
+    <p-button label="Nhập vào danh sách" class="p-button-success" (click)="onImport()"></p-button>
+  </ng-template>
+</p-dialog>

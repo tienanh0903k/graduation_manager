@@ -1,0 +1,76 @@
+<!-- <div *ngIf="user$ | async as user" class="card"> -->
+<!-- <div class="card">
+  <h2>Thông tin người dùng</h2>
+>
+  <div class="grid">
+    <div class="col-6">
+      <label>Tên người dùng</label>
+      <input pInputText [value]="user.name" readonly class="w-full" />
+    </div>
+    <div class="col-6">
+      <label>Email</label>
+      <input pInputText [value]="user.email" readonly class="w-full" />
+    </div>
+  </div>
+
+  <div *ngIf="user.role === 1" class="mt-4">
+    <h3>Thông tin sinh viên</h3>
+    <div class="grid">
+      <div class="col-6">
+        <label>Mã sinh viên</label>
+        <input pInputText [value]="user.studentInfo?.mssv" readonly class="w-full" />
+      </div>
+      <div class="col-6">
+        <label>Lớp</label>
+        <input pInputText [value]="user.studentInfo?.class_name" readonly class="w-full" />
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="user.role === 2" class="mt-4">
+    <h3>Thông tin giảng viên</h3>
+    <div class="grid">
+      <div class="col-6">
+        <label>Mã giảng viên</label>
+        <input pInputText [value]="user.teacherInfo?.msgv" readonly class="w-full" />
+      </div>
+      <div class="col-6">
+        <label>Bộ môn</label>
+        <input pInputText [value]="user.teacherInfo?.department" readonly class="w-full" />
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="card">
+  <h2>Thông tin người dùng</h2>
+
+  <div class="grid">
+    <div class="col-6">
+      <label>Tên người dùng</label>
+      <input pInputText [value]="profile.name" readonly class="w-full" />
+    </div>
+    <div class="col-6">
+      <label>Email</label>
+      <input pInputText [value]="profile.email" readonly class="w-full" />
+    </div>
+  </div>
+
+  <div *ngIf="profile.role === 1" class="mt-4">
+    <h3>Thông tin sinh viên</h3>
+    <div class="grid">
+      <div class="col-6">
+        <label>Mã sinh viên</label>
+        <input pInputText [value]="profile.studentInfo.mssv" readonly class="w-full" />
+      </div>
+      <div class="col-6">
+        <label>Lớp</label>
+        <input pInputText [value]="profile.studentInfo.class_name" readonly class="w-full" />
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

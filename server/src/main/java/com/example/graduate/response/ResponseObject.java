@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseObject {
+public class ResponseObject<T> {
     @JsonProperty("message")
     private String message;
 
@@ -20,16 +20,16 @@ public class ResponseObject {
     @JsonProperty("data")
     private Object data;
 
-    public static ResponseObject success(String message, Object data) {
-        return ResponseObject.builder()
+    public static <T> ResponseObject<T> success(String message, T data) {
+        return ResponseObject.<T>builder()
                 .status(HttpStatus.OK)
                 .message(message)
                 .data(data)
                 .build();
     }
 
-    public static ResponseObject error(String message, HttpStatus status) {
-        return ResponseObject.builder()
+    public static <T> ResponseObject<T> error(String message, HttpStatus status) {
+        return ResponseObject.<T>builder()
                 .status(status)
                 .message(message)
                 .data(null)

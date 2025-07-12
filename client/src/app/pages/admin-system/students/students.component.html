@@ -1,0 +1,161 @@
+<div class="search-panel">
+  <div class="form-row">
+    <label for="searchName">Tìm theo tên</label>
+    <div class="input-icon">
+      <i class="pi pi-search"></i>
+      <input
+        id="searchName"
+        pInputText
+        type="text"
+        [(ngModel)]="filterName"
+        placeholder="Nhập tên sinh viên" />
+    </div>
+  </div>
+
+   <div class="form-row">
+    <label for="searchMSSV">Mã sinh viên</label>
+    <input
+      id="searchMSSV"
+      pInputText
+      type="text"
+      [(ngModel)]="filterMSSV"
+      placeholder="Nhập MSSV" />
+  </div>
+
+  <div class="form-row">
+    <label for="filterClass">Lọc theo lớp</label>
+    <p-dropdown
+      id="filterClass"
+      [options]="classOptions"
+      [(ngModel)]="filterClass"
+      optionLabel="label"
+      placeholder="Chọn lớp"
+      [showClear]="true">
+    </p-dropdown>
+  </div>
+</div>
+
+<p-card header="Quản lý sinh viên">
+    <div class="flex justify-between items-center mb-3">
+<p-button label="Thêm sinh viên" icon="pi pi-plus" (click)="showAddStudentDialog()"></p-button>
+<p-button label="Nhập từ Excel" icon="pi pi-file-excel" (click)="openImportDialog()"></p-button>
+    </div>
+
+    <p-table [value]="filteredStudents" editable="true" class="p-datatable-sm">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>MSSV</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Lớp</th>
+                <th>Giới tính</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+            <tr>
+                <td><p-inputText [(ngModel)]="rowData.mssv"></p-inputText></td>
+                <td><p-inputText [(ngModel)]="rowData.name"></p-inputText></td>
+                <td><p-inputText [(ngModel)]="rowData.email"></p-inputText></td>
+                <td><p-inputText [(ngModel)]="rowData.class_name"></p-inputText></td>
+                <td>
+                    <p-dropdown [(ngModel)]="rowData.gender" [options]="genderOptions" optionLabel="label"
+                        [style]="{ width: '100%' }">
+                    </p-dropdown>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <div class="text-right mt-3">
+        <!-- <p-button label="Lưu danh sách" icon="pi pi-save" class="p-button-success" (click)="saveStudents()"></p-button> -->
+    </div>
+</p-card>
+
+<!-- Sử dụng selector đúng và thêm two-way binding -->
+<app-import-excel-dialog
+  [(visible)]="importDialogVisible"
+  (importStudents)="handleImportedStudents($event)"
+>
+</app-import-excel-dialog>
+
+
+<p-dialog
+  header="Thêm Sinh Viên"
+  [(visible)]="addStudentDialogVisible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '400px' }"
+  (onHide)="onAddDialogHide()"
+>
+  <div class="dialog-content">
+    <div class="form-row">
+      <label for="newName">Họ tên</label>
+      <input
+        id="newName"
+        pInputText
+        type="text"
+        [(ngModel)]="newStudent.name"
+        placeholder="Nhập họ tên sinh viên"
+        required
+      />
+    </div>
+    <div class="form-row">
+      <label for="newMSSV">MSSV</label>
+      <input
+        id="newMSSV"
+        pInputText
+        type="text"
+        [(ngModel)]="newStudent.mssv"
+        placeholder="Nhập MSSV"
+        required
+      />
+    </div>
+    <div class="form-row">
+      <label for="newEmail">Email</label>
+      <input
+        id="newEmail"
+        pInputText
+        type="email"
+        [(ngModel)]="newStudent.email"
+        placeholder="Nhập email"
+        required
+      />
+    </div>
+    <div class="form-row">
+      <label for="newClass">Lớp</label>
+      <input
+        id="newClass"
+        pInputText
+        type="text"
+        [(ngModel)]="newStudent.class_name"
+        placeholder="Nhập lớp"
+        required
+      />
+    </div>
+    <div class="form-row">
+        <label for="newPassword">Mật khẩu</label>
+        <input id="newPassword" pInputText type="password" [(ngModel)]="newStudent.password" placeholder="Nhập mật khẩu"
+            required />
+    </div>
+
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <p-button
+        label="Lưu"
+        icon="pi pi-check"
+        (click)="saveNewStudent()"
+        class="p-button-success"
+      ></p-button>
+      <p-button
+        label="Hủy"
+        icon="pi pi-times"
+        (click)="closeAddStudentDialog()"
+        class="p-button-secondary"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
