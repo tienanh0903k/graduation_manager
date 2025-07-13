@@ -1,94 +1,70 @@
-<!-- Filter bar (giữ nguyên UI) -->
+<nav class="breadcrumb">
+    <span>Trang chủ</span>
+    <span>/</span>
+    <span>Quản lý sinh viên</span>
+</nav>
+
 <div class="search-panel">
-  <div class="form-row">
-    <label>Tên</label>
-    <div class="input-icon">
-      <i class="pi pi-search"></i>
-      <input
-        pInputText
-        [(ngModel)]="criteria.name"
-        (input)="onFilterChange()"
-        placeholder="Nhập tên sinh viên"
-      />
+    <div class="form-row">
+        <label>Tên</label>
+        <div class="input-icon">
+            <i class="pi pi-search"></i>
+            <input pInputText [(ngModel)]="criteria.name" (input)="onFilterChange()" placeholder="Nhập tên sinh viên" />
+        </div>
     </div>
-  </div>
 
-  <div class="form-row">
-    <label>Mã sinh viên</label>
-    <input
-      pInputText
-      [(ngModel)]="criteria.mssv"
-      (input)="onFilterChange()"
-      placeholder="Nhập MSSV"
-    />
-  </div>
+    <div class="form-row">
+        <label>Mã sinh viên</label>
+        <input pInputText [(ngModel)]="criteria.mssv" (input)="onFilterChange()" placeholder="Nhập MSSV" />
+    </div>
 
-  <div class="form-row">
-    <label>Lớp</label>
-    <p-dropdown
-      [options]="classOptions"
-      [(ngModel)]="criteria.classCode"
-      (onChange)="onFilterChange()"
-      optionLabel="label"
-      placeholder="Chọn lớp"
-      [showClear]="true"
-    ></p-dropdown>
-  </div>
+    <div class="form-row">
+        <label>Lớp</label>
+        <p-dropdown [options]="classOptions" [(ngModel)]="criteria.classCode" (onChange)="onFilterChange()"
+            optionLabel="label" placeholder="Chọn lớp" [showClear]="true"></p-dropdown>
+    </div>
 </div>
 
 <p-card header="Quản lý sinh viên">
     <div class="flex justify-between items-center mb-3">
-<p-button label="Thêm sinh viên" icon="pi pi-plus" (click)="showAddStudentDialog()"></p-button>
-<p-button label="Nhập từ Excel" icon="pi pi-file-excel" (click)="openImportDialog()"></p-button>
+        <p-button label="Thêm sinh viên" icon="pi pi-plus" (click)="showStudentDialog()"></p-button>
+        <p-button label="Nhập từ Excel" icon="pi pi-file-excel" (click)="openImportDialog()"></p-button>
     </div>
 
-   <!-- Bảng đã sửa: hiển thị đúng dữ liệu, sortable, không editable inline -->
-<p-table
-  [value]="students"
-  [lazy]="true"
-  (onLazyLoad)="_loadPage($event)"
-  [paginator]="true"
-  [rows]="rows"
-  [totalRecords]="totalRecords"
-  [first]="first"
-  [loading]="loading"
-  [responsive]="true"
-  sortMode="single"
-  class="p-datatable-sm">
+    <!-- Bảng đã sửa: hiển thị đúng dữ liệu, sortable, không editable inline -->
+    <p-table [value]="students" [lazy]="true" (onLazyLoad)="_loadPage($event)" [paginator]="true" [rows]="rows"
+        [totalRecords]="totalRecords" [first]="first" [loading]="loading" [responsive]="true" sortMode="single"
+        class="p-datatable-sm">
 
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="mssv">MSSV <p-sortIcon field="mssv"></p-sortIcon></th>
-      <th pSortableColumn="user.name">Họ tên <p-sortIcon field="user.name"></p-sortIcon></th>
-      <th pSortableColumn="user.email">Email <p-sortIcon field="user.email"></p-sortIcon></th>
-      <th pSortableColumn="classCode">Lớp <p-sortIcon field="classCode"></p-sortIcon></th>
-      <th>Tùy chọn</th>
-    </tr>
-  </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="mssv">MSSV <p-sortIcon field="mssv"></p-sortIcon></th>
+                <th pSortableColumn="user.name">Họ tên <p-sortIcon field="user.name"></p-sortIcon></th>
+                <th pSortableColumn="user.email">Email <p-sortIcon field="user.email"></p-sortIcon></th>
+                <th pSortableColumn="classCode">Lớp <p-sortIcon field="classCode"></p-sortIcon></th>
+                <th>Tùy chọn</th>
+            </tr>
+        </ng-template>
 
-  <ng-template pTemplate="body" let-rowData>
-    <tr>
-      <td>{{ rowData.mssv }}</td>
-      <td>{{ rowData.user.name }}</td>
-      <td>{{ rowData.user.email }}</td>
-      <td>{{ rowData.classCode }}</td>
-      <td>
-        <!-- Nút chức năng đại diện (edit / delete / view) -->
-        <div class="flex gap-1">
-          <p-button
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-sm p-button-text">
-          </p-button>
-          <p-button
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-sm p-button-text p-button-danger"
-           >
-          </p-button>
-        </div>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td>{{ rowData.mssv }}</td>
+                <td>{{ rowData.user.name }}</td>
+                <td>{{ rowData.user.email }}</td>
+                <td>{{ rowData.classCode }}</td>
+                <td>
+                    <!-- Nút chức năng đại diện (edit / delete / view) -->
+                    <div class="flex gap-1">
+                        <p-button icon="pi pi-pencil" class="p-button-rounded p-button-sm p-button-text"
+                            (click)="openEditStudentDialog(rowData)">
+                        </p-button>
+                        <p-button icon="pi pi-trash" class="p-button-rounded p-button-sm p-button-text p-button-danger">
+                        </p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 
     <div class="text-right mt-3">
         <!-- <p-button label="Lưu danh sách" icon="pi pi-save" class="p-button-success" (click)="saveStudents()"></p-button> -->
@@ -96,90 +72,42 @@
 </p-card>
 
 <!-- Sử dụng selector đúng và thêm two-way binding -->
-<app-import-excel-dialog
-  [(visible)]="importDialogVisible"
-  (importStudents)="handleImportedStudents($event)"
->
+<app-import-excel-dialog [(visible)]="importDialogVisible" (importStudents)="handleImportedStudents($event)">
 </app-import-excel-dialog>
 
+<p-dialog header="{{ currentStudent ? 'Sửa thông tin sinh viên' : 'Thêm sinh viên' }}"
+    [(visible)]="studentDialogVisible" [modal]="true" [closable]="true" [style]="{ width: '400px' }">
 
-<p-dialog
-  header="Thêm Sinh Viên"
-  [(visible)]="addStudentDialogVisible"
-  [modal]="true"
-  [closable]="true"
-  [style]="{ width: '400px' }"
-  (onHide)="onAddDialogHide()"
->
-  <div class="dialog-content">
-    <div class="form-row">
-      <label for="newName">Họ tên</label>
-      <input
-        id="newName"
-        pInputText
-        type="text"
-        [(ngModel)]="newStudent.name"
-        placeholder="Nhập họ tên sinh viên"
-        required
-      />
+    <div class="dialog-content" *ngIf="currentStudent">
+        <div class="form-row">
+            <label>Họ tên</label>
+            <input pInputText type="text" [(ngModel)]="currentStudent.name" required />
+        </div>
+        <div class="form-row">
+            <label>MSSV</label>
+            <input pInputText type="text" [(ngModel)]="currentStudent.mssv" required />
+        </div>
+        <div class="form-row">
+            <label>Email</label>
+            <input pInputText type="email" [(ngModel)]="currentStudent.email" required />
+        </div>
+        <div class="form-row">
+            <label>Lớp</label>
+            <input pInputText type="text" [(ngModel)]="currentStudent.class_name" required />
+        </div>
+        <div class="form-row" *ngIf="!currentStudent.mssv">
+            <label>Mật khẩu</label>
+            <input pInputText type="password" [(ngModel)]="currentStudent.password" required />
+        </div>
     </div>
-    <div class="form-row">
-      <label for="newMSSV">MSSV</label>
-      <input
-        id="newMSSV"
-        pInputText
-        type="text"
-        [(ngModel)]="newStudent.mssv"
-        placeholder="Nhập MSSV"
-        required
-      />
-    </div>
-    <div class="form-row">
-      <label for="newEmail">Email</label>
-      <input
-        id="newEmail"
-        pInputText
-        type="email"
-        [(ngModel)]="newStudent.email"
-        placeholder="Nhập email"
-        required
-      />
-    </div>
-    <div class="form-row">
-      <label for="newClass">Lớp</label>
-      <input
-        id="newClass"
-        pInputText
-        type="text"
-        [(ngModel)]="newStudent.class_name"
-        placeholder="Nhập lớp"
-        required
-      />
-    </div>
-    <div class="form-row">
-        <label for="newPassword">Mật khẩu</label>
-        <input id="newPassword" pInputText type="password" [(ngModel)]="newStudent.password" placeholder="Nhập mật khẩu"
-            required />
-    </div>
-
-  </div>
-  <ng-template pTemplate="footer">
-    <div class="dialog-footer">
-      <p-button
-        label="Lưu"
-        icon="pi pi-check"
-        (click)="saveNewStudent()"
-        class="p-button-success"
-      ></p-button>
-      <p-button
-        label="Hủy"
-        icon="pi pi-times"
-        (click)="closeAddStudentDialog()"
-        class="p-button-secondary"
-      ></p-button>
-    </div>
-  </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <p-button label="Lưu" icon="pi pi-check" (click)="saveStudent()" class="p-button-success"></p-button>
+            <p-button label="Hủy" icon="pi pi-times" (click)="studentDialogVisible = false"
+                class="p-button-secondary"></p-button>
+        </div>
+    </ng-template>
 </p-dialog>
 
-<p-toast></p-toast>
+
 <p-confirmDialog></p-confirmDialog>

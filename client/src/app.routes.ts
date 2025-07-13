@@ -19,6 +19,7 @@ import { ProfilePageComponent } from './app/pages/profile-page/profile-page.comp
 
 // ✅ Dùng RoleGuard thay vì AdminGuard + TeacherGuard riêng
 import { RoleGuard } from './app/core/guards/role.guard';
+import { MenusComponent } from './app/pages/admin-system/menus/menus.component';
 
 export const appRoutes: Routes = [
   {
@@ -65,6 +66,12 @@ export const appRoutes: Routes = [
       {
         path: 'role-management',
         component: RoleComponent,
+        canActivate: [RoleGuard],
+        data: { role: 'ADMIN' }
+      },
+      {
+        path: 'menu-management',
+        component: MenusComponent,
         canActivate: [RoleGuard],
         data: { role: 'ADMIN' }
       },

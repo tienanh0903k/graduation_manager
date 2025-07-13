@@ -1,5 +1,6 @@
 package com.example.graduate.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -141,40 +142,51 @@ public class AuthController {
     //     }
     // }
 
-
     @PostMapping("/reset-password")
-public ResponseEntity<ResponseObject> resetPassword(HttpServletRequest request, @RequestParam String newPassword) {
-    try {
-        // Lấy resetToken từ cookie bằng CookieUtils
-        String resetToken = CookieUtils.getCookieValue(request, "resetToken");
+    public ResponseEntity<ResponseObject> resetPassword(
+        HttpServletRequest request, 
+        @RequestBody Map<String, String> body
+    ) {
+        try {
 
-        if (resetToken == null || resetToken.isEmpty()) {
+            String newPassword = body.get("newPassword");
+            if (newPassword == null || newPassword.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ResponseObject.error("Thiếu mật khẩu mới", HttpStatus.BAD_REQUEST));
+            }
+
+
+            // Lấy resetToken từ cookie bằng CookieUtils
+            String resetToken = CookieUtils.getCookieValue(request, "resetToken");
+
+            if (resetToken == null || resetToken.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ResponseObject.error("Cookie resetToken không tồn tại hoặc đã hết hạn",
+                                HttpStatus.BAD_REQUEST));
+            }
+
+            logger.info("Reset token from cookie: {}", resetToken);
+
+            // Sử dụng token để lấy email từ JWT
+            String email = Optional.of(resetToken)
+                    .map(jwtService::extractUsername)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
+
+            logger.info("Email lấy từ token: {}", email);
+
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ResponseObject.error("Token không hợp lệ hoặc đã hết hạn", HttpStatus.UNAUTHORIZED));
+            }
+
+            // Thực hiện việc thay đổi mật khẩu
+            authenticationService.resetPassword(email, newPassword);
+
+            return ResponseEntity.ok(ResponseObject.success("Mật khẩu đã được đặt lại thành công", null));
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(ResponseObject.error("Cookie resetToken không tồn tại hoặc đã hết hạn", HttpStatus.BAD_REQUEST));
+                    .body(ResponseObject.error("Lỗi: " + e.getMessage(), HttpStatus.BAD_REQUEST));
         }
-
-        logger.info("Reset token from cookie: {}", resetToken);
-
-        // Sử dụng token để lấy email từ JWT
-        String email = Optional.of(resetToken)
-                .map(jwtService::extractUsername)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
-
-        logger.info("Email lấy từ token: {}", email);
-
-        if (email == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(ResponseObject.error("Token không hợp lệ hoặc đã hết hạn", HttpStatus.UNAUTHORIZED));
-        }
-
-        // Thực hiện việc thay đổi mật khẩu
-        authenticationService.resetPassword(email, newPassword);
-
-        return ResponseEntity.ok(ResponseObject.success("Mật khẩu đã được đặt lại thành công", null));
-    } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ResponseObject.error("Lỗi: " + e.getMessage(), HttpStatus.BAD_REQUEST));
     }
-}
 
 }

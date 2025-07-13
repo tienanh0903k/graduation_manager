@@ -85,6 +85,14 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- aws s3 -->
+		 <dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.12.260</version>
+		</dependency>
+
+
 		<!-- Logging with SLF4J and Logback -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

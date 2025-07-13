@@ -73,13 +73,14 @@ export class AuthService {
             params: { email }
         });
     }
-
+    //send with cookie
     public verifyOtp(email: string, otpCode: string): Observable<any> {
         return this.http.post(`${this.apiUrl}/verify-otp`, null, {
             params: {
                 email: email,
                 otpCode: otpCode
-            }
+            },
+            withCredentials: true
         });
     }
 
@@ -89,7 +90,9 @@ export class AuthService {
      * ======================================= QUẢN LÝ RESET TOKEN =======================================
      */
     public resetPassword(newPassword: string): Observable<any> {
-        return this.http.post(`${this.apiUrl}/reset-password`, { newPassword });
+        return this.http.post(`${this.apiUrl}/reset-password`, { newPassword }, {
+            withCredentials: true
+        });
     }
 
 }

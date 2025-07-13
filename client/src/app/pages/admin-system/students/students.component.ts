@@ -25,6 +25,12 @@ export class StudentsComponent implements OnInit {
     students: Student[] = [];
     loading = false;
 
+    currentStudent: any = null;
+    studentDialogVisible = false;
+
+    editingStudent: any = null;
+    editStudentDialogVisible = false;
+
     // PrimeNG Table paging state
     totalRecords = 0;
     first = 0;
@@ -66,18 +72,17 @@ export class StudentsComponent implements OnInit {
         private messageService: MessageService,
         private studentsService: StudentsService
     ) {
-        console.log("students",this.students);
+        console.log('students', this.students);
     }
-
 
     ngOnInit(): void {
         this._loadPage({ first: 0, rows: this.rows });
     }
 
     // Hiển thị dialog thêm sinh viên
-    showAddStudentDialog() {
-        this.newStudent = { name: '', mssv: '', email: '', class_name: '', password: '' }; // Reset dữ liệu
-        this.addStudentDialogVisible = true;
+    showStudentDialog() {
+        this.currentStudent = { name: '', mssv: '', email: '', class_name: '', password: '' };
+        this.studentDialogVisible = true;
     }
 
     _loadPage(event: any): void {
@@ -137,6 +142,28 @@ export class StudentsComponent implements OnInit {
     openImportDialog() {
         console.log('Opening import dialog...');
         this.importDialogVisible = true;
+    }
+
+    openEditStudentDialog(student: any) {
+        this.currentStudent = {
+            ...student,
+            name: student.user?.name ?? student.name,
+            email: student.user?.email ?? student.email,
+            class_name: student.classCode ?? student.class_name,
+            mssv: student.mssv
+        };
+        this.studentDialogVisible = true;
+    }
+
+    saveStudent() {
+        if (this.currentStudent && this.currentStudent.mssv) {
+            // Sửa
+            // this.studentsService.updateStudent(this.currentStudent).subscribe(...);
+        } else {
+            // Thêm mới
+            // this.studentsService.addStudent(this.currentStudent).subscribe(...);
+        }
+        this.studentDialogVisible = false;
     }
 
     handleImportedStudents(students: any[]) {
