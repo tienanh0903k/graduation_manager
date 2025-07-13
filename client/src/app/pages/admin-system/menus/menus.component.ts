@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -6,67 +6,104 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { MenuItemsService } from '../../../core/services/menu.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
-export interface MenuItem {
+export interface IMenuItem {
     id: number;
     icon: string;
-    is_visible: boolean;
+    isVisible: boolean;
     label: string;
-    order_no: number;
+    orderNo: number;
     route: string;
-    parent_id: number | null;
-    module: string;
+    parentId: number | null;
 }
 
 @Component({
     selector: 'app-menus',
-    imports: [
-        SharedModule,
-        FormsModule, TableModule, CardModule, DialogModule, DropdownModule, InputTextModule
-    ],
+    standalone: true,
+    imports: [SharedModule, FormsModule, TableModule, ToastModule,CardModule, DialogModule, DropdownModule, InputTextModule, DialogModule, ConfirmDialogModule],
     templateUrl: './menus.component.html',
-    styleUrl: './menus.component.scss'
+    styleUrl: './menus.component.scss',
+    providers: [MessageService, ConfirmationService],
 })
-export class MenusComponent {
-    menus: MenuItem[] = [
-        {
-            id: 1,
-            icon: 'pi pi-fw pi-id-card',
-            is_visible: true,
-            label: 'Bảng điều khiển',
-            order_no: 1,
-            route: '/dashboard',
-            parent_id: null,
-            module: 'SYSTEM'
-        }
-    ];
+export class MenusComponent implements OnInit {
+    menus: IMenuItem[] = [];
 
-    selectedMenu: MenuItem | null = null;
+    selectedMenu: IMenuItem | null = null;
+
     menuDialogVisible = false;
     isEdit = false;
+
+    constructor(private menuItemsService: MenuItemsService,
+        private confirmationService: ConfirmationService,
+        private messageService: MessageService
+    ) {}
+
+    ngOnInit(): void {
+        this.loadMenus();
+    }
+
+    loadMenus() {
+        this.menuItemsService.getAll().subscribe((data) => {
+            this.menus = data;
+        });
+    }
+
+
+
+    saveMenu() {
+        if (!this.selectedMenu) return;
+        if (this.isEdit) {
+            this.menuItemsService.update(this.selectedMenu.id, this.selectedMenu).subscribe(() => {
+                this.loadMenus();
+                this.menuDialogVisible = false;
+            });
+        } else {
+            this.menuItemsService.create(this.selectedMenu).subscribe(() => {
+                this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm menu thành công' });
+                this.loadMenus();
+                this.menuDialogVisible = false;
+            });
+        }
+    }
+
 
     openAddMenuDialog() {
         this.selectedMenu = {
             id: 0,
             icon: '',
-            is_visible: true,
+            isVisible: true,
             label: '',
-            order_no: 1,
+            orderNo: 1,
             route: '',
-            parent_id: null,
-            module: ''
+            parentId: null
         };
         this.menuDialogVisible = true;
         this.isEdit = false;
     }
 
-    editMenu(menu: MenuItem) {
+    editMenu(menu: IMenuItem) {
         this.selectedMenu = { ...menu };
         this.menuDialogVisible = true;
         this.isEdit = true;
     }
 
-    deleteMenu(menu: MenuItem) {
-        // show confirm, xong rồi xóa menu
+    deleteMenu(menu: IMenuItem) {
+        this.confirmationService.confirm({
+        message: `Bạn có chắc chắn muốn xoá menu "${menu.label}"?`,
+        header: 'Xác nhận xoá',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Xoá',
+        rejectLabel: 'Huỷ',
+        acceptButtonStyleClass: 'p-button-danger',
+        accept: () => {
+            this.menuItemsService.delete(menu.id).subscribe(() => {
+                this.loadMenus();
+            });
+        }
+    });
     }
 }

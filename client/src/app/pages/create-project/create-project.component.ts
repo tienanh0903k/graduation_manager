@@ -35,10 +35,10 @@ export class CreateProjectComponent implements OnInit {
     currentPage = 0;
     rowsPerPage = 10;
 
-    departments = [
-        { label: '125213', value: '125213' },
-        { label: '125214', value: '125214' }
-    ];
+    departments = Array.from({ length: 9 }, (_, i) => {
+        const val = (125211 + i).toString();
+        return { label: val, value: val };
+    });
 
     selectedDepartment = '';
     selectedLecturer = '';
@@ -124,7 +124,7 @@ export class CreateProjectComponent implements OnInit {
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Lỗi',
-                    detail: 'Không thể gửi đề tài. Vui lòng thử lại.'
+                    detail: 'Sinh viên chỉ có thể đề xuất 1 đề tài mà thôi'
                 });
             }
         });

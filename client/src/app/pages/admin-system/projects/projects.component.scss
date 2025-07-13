@@ -1,0 +1,38 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  color: var(--text-color);
+
+  border-radius: 6px;
+  font-size: 14px;
+
+  box-shadow: 0 1px 2px rgba(128, 128, 128, 0.099);
+
+  span {
+    margin-right: 4px;
+  }
+}
+
+
+.flex {
+  display: flex;
+}
+.align-items-center {
+  align-items: center;
+}
+.gap-2 {
+  gap: 0.8rem;
+}
+.mb-3 {
+  margin-bottom: 1.2rem;
+}
+.w-16rem {
+  min-width: 16rem;
+}

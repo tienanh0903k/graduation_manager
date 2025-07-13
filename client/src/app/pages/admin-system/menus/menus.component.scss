@@ -19,3 +19,85 @@
     margin-right: 4px;
   }
 }
+
+
+:host ::ng-deep .p-dialog {
+    border-radius: 10px;
+    box-shadow: 0 2px 40px 0 rgba(56, 56, 56, 0.12);
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+    background: #f8fafc;
+    color: #2e2e2e;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-weight: 600;
+    font-size: 1.15rem;
+    padding: 1rem 1.5rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+    padding: 1.5rem;
+    background: #fff;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+    background: #f8fafc;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0.7rem 1.5rem 1.2rem 1.5rem;
+}
+
+.p-fluid .field {
+    margin-bottom: 1.1rem;
+}
+
+.p-fluid label {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #333;
+}
+
+input[pInputText],
+.p-dropdown {
+    width: 100%;
+    min-width: 0;
+    border-radius: 6px;
+}
+
+.p-button {
+    min-width: 85px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.flex {
+    display: flex;
+}
+
+.gap-2 {
+    gap: 0.7rem;
+}
+
+.mt-4 {
+    margin-top: 1.2rem;
+}
+
+@media (max-width: 600px) {
+    :host ::ng-deep .p-dialog {
+        width: 98vw !important;
+        min-width: 0 !important;
+        left: 1vw !important;
+    }
+
+    :host ::ng-deep .p-dialog .p-dialog-content {
+        padding: 0.7rem !important;
+    }
+}
+
+.mb-3.flex.justify-between {
+    display: flex;
+    justify-content: end;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+}

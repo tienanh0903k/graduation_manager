@@ -1,103 +1,142 @@
 .breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 
-  padding: 0.75rem 1rem;
-  margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
 
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background-color: #fff;
+    background: var(--surface-card);
+    border: 1px solid var(--surface-border);
+    color: var(--text-color);
 
-  font-size: 14px;
-  color: #333;
+    border-radius: 6px;
+    font-size: 14px;
 
-  box-shadow: 0 1px 2px rgba(128, 128, 128, 0.099);
+    box-shadow: 0 1px 2px rgba(128, 128, 128, 0.099);
 
-  span {
-    margin-right: 4px;
-  }
+    span {
+        margin-right: 4px;
+    }
 }
+
 
 
 .search-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
 
-  p-dropdown,
-  input,
-  button {
-    min-width: 180px;
-  }
+    p-dropdown,
+    input,
+    button {
+        min-width: 180px;
+    }
 
-  button {
-    align-self: center;
-  }
+    button {
+        align-self: center;
+    }
 }
 
 .propose-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  margin: 1rem 0;
+    display: flex;
+    justify-content: flex-end;
+    margin: 1rem 0;
 
-  button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-  }
+    button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        background: var(--p-button-primary-background);
+        border: 1px solid var(--surface-border);
+
+    }
 }
 
-
 ::ng-deep textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #333;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
 }
 
 // modals styles
 ::ng-deep .p-dialog .p-field {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 ::ng-deep .p-dialog label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  color: #333;
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #333;
 }
 
 ::ng-deep .p-dialog input,
 ::ng-deep .p-dialog textarea {
-  width: 100%;
+    width: 100%;
 }
 
 ::ng-deep .p-dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-  margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    margin-top: 1rem;
 }
 
 
 
 
 :host ::ng-deep .p-table {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 :host ::ng-deep .p-tag-success {
-  background-color: #c8e6c9;
-  color: #256029;
-  font-weight: bold;
+    background-color: #c8e6c9;
+    color: #256029;
+    font-weight: bold;
 }
 
 :host ::ng-deep .p-button-text {
-  color: #1976d2;
+    color: #1976d2;
+}
+
+:host ::ng-deep .p-dialog {
+  border-radius: 10px;
+  box-shadow: 0 2px 40px 0 rgba(56,56,56,0.13);
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background: #f0f4f8;
+  color: #1d1d1d;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 1.1rem 1.6rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 1.4rem 2rem 1rem 2rem;
+  background: #fff;
+  font-size: 1rem;
+}
+
+.p-field {
+  margin-bottom: 1.1rem;
+}
+.p-field label {
+  display: block;
+  font-weight: 500;
+  color: #38517b;
+  margin-bottom: 0.2rem;
+}
+.p-field p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #212121;
 }

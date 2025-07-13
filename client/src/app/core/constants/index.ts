@@ -20,3 +20,7 @@ export const MENU_CONFIG = [
     children: [],
   }
 ];
+export const departments = Array.from({length: 9}, (_, i) => {
+    const val = (125211 + i).toString();
+    return { label: val, value: val };
+});

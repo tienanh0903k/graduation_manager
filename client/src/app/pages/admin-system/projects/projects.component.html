@@ -1,0 +1,63 @@
+<nav class="breadcrumb">
+    <span>Trang chủ</span>
+    <span>/</span>
+    <span>Quản lý đề tài</span>
+</nav>
+
+
+<!-- 1. Panel Tìm kiếm đề tài -->
+<p-panel header="Tìm kiếm đề tài" [toggleable]="true" styleClass="mb-4">
+    <div class="flex align-items-center gap-2 mb-3">
+        <p-dropdown [options]="departments" [(ngModel)]="selectedDepartment" placeholder="Mã lớp"></p-dropdown>
+        <input type="text" pInputText placeholder="Tên đề tài" [(ngModel)]="searchTitle" />
+        <p-dropdown [options]="teacherOptions" [(ngModel)]="selectedLecturer" placeholder="Tên giảng viên"></p-dropdown>
+        <button pButton type="button" label="Tìm kiếm" (click)="_loadSearchResults()"></button>
+    </div>
+</p-panel>
+
+<!-- 2. Panel Gán phản biện & hội đồng -->
+<p-panel header="Gán phản biện & hội đồng cho đề tài" [toggleable]="true" styleClass="mb-4">
+    <div class="flex align-items-center gap-2 mb-3">
+        <span>Chọn đề tài cần gán:</span>
+        <p-multiSelect [options]="reviewerOptions" [(ngModel)]="selectedReviewers"
+            placeholder="Chọn giáo viên phản biện" [disabled]="!selectedTopics.length" styleClass="w-16rem">
+        </p-multiSelect>
+        <p-dropdown [options]="councilOptions" [(ngModel)]="selectedCouncil" placeholder="Chọn hội đồng bảo vệ"
+            [disabled]="!selectedTopics.length" styleClass="w-16rem">
+        </p-dropdown>
+        <button pButton label="Gán" icon="pi pi-check" class="p-button-success"
+            [disabled]="!selectedTopics.length || !selectedReviewers.length" (click)="assignReviewerAndCouncil()">
+        </button>
+    </div>
+</p-panel>
+
+<!-- 3. Panel Danh sách đề tài -->
+<p-panel header="Danh sách đề tài" [toggleable]="true">
+    <p-table [value]="topics" [(selection)]="selectedTopics" dataKey="id" selectionMode="multiple" [paginator]="true"
+        [rows]="rowsPerPage" [totalRecords]="totalRecords" [lazy]="true" (onPage)="onPageChange($event)"> <ng-template
+            pTemplate="header">
+            <tr>
+                <th style="width: 3rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                <th>STT</th>
+                <th>Tên đề tài</th>
+                <th>GV hướng dẫn</th>
+                <th>Phản biện</th>
+                <th>Hội đồng bảo vệ</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-topic let-i="rowIndex">
+            <tr>
+                <td><p-tableCheckbox [value]="topic"></p-tableCheckbox></td>
+                <td>{{ i + 1 }}</td>
+                <td>{{ topic.tenDeTai }}</td>
+                <td>{{ topic.tenGiaoVien }}</td>
+                <td>{{ topic.reviewerName || '-' }}</td>
+                <td>{{ topic.hoiDongBaoVe || '-' }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-panel>
+
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

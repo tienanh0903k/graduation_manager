@@ -54,16 +54,16 @@
                 <button *ngIf="canDelete(topic)" pButton icon="pi pi-trash" class="p-button-text p-button-danger"
                     (click)="deleteTopic(topic)">
                 </button>
-                </td>
+            </td>
 
-                <td>
-                    <span class="p-tag" [ngClass]="{
+            <td>
+                <span class="p-tag" [ngClass]="{
                       'p-tag-success': topic.trangThai === true,
                       'p-tag-warning': topic.trangThai === false
                     }">
-                        {{ topic.trangThai ? 'Đã được duyệt' : 'Chờ duyệt' }}
-                    </span>
-                </td>
+                    {{ topic.trangThai ? 'Đã được duyệt' : 'Chờ duyệt' }}
+                </span>
+            </td>
         </tr>
     </ng-template>
 

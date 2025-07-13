@@ -11,30 +11,27 @@
   </div>
   <p-table [value]="menus" [paginator]="true" [rows]="10" [responsive]="true">
     <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Icon</th>
-        <th>Label</th>
-        <th>Module</th>
-        <th>Route</th>
-        <th>Thứ tự</th>
-        <th>Hiển thị</th>
-        <th>Parent</th>
-        <th>Tùy chọn</th>
-      </tr>
+        <tr>
+            <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="icon">Icon <p-sortIcon field="icon"></p-sortIcon></th>
+            <th pSortableColumn="label">Label <p-sortIcon field="label"></p-sortIcon></th>
+            <th pSortableColumn="route">Route <p-sortIcon field="route"></p-sortIcon></th>
+            <th pSortableColumn="is_visible">Hiển thị <p-sortIcon field="is_visible"></p-sortIcon></th>
+            <th pSortableColumn="parent_id">Parent <p-sortIcon field="parent_id"></p-sortIcon></th>
+            <th>Tùy chọn</th>
+        </tr>
     </ng-template>
+
     <ng-template pTemplate="body" let-menu>
       <tr>
         <td>{{menu.id}}</td>
         <td><i [class]="menu.icon"></i></td>
         <td>{{menu.label}}</td>
-        <td>{{menu.module}}</td>
         <td>{{menu.route}}</td>
-        <td>{{menu.order_no}}</td>
         <td>
           <p-tag [value]="menu.is_visible ? 'Có' : 'Ẩn'" [severity]="menu.is_visible ? 'success' : 'danger'"></p-tag>
         </td>
-        <td>{{menu.parent_id}}</td>
+        <td>{{menu.parentId}}</td>
         <td>
           <p-button icon="pi pi-pencil" class="p-button-rounded p-button-text p-button-sm" (click)="editMenu(menu)"></p-button>
           <p-button icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger p-button-sm" (click)="deleteMenu(menu)"></p-button>
@@ -44,4 +41,52 @@
   </p-table>
 </p-card>
 
-<!-- Dialog thêm/sửa menu sẽ để ở đây -->
+
+<p-dialog
+    [(visible)]="menuDialogVisible"
+    [modal]="true"
+    [header]="isEdit ? 'Sửa menu' : 'Thêm menu'"
+    [closable]="true"
+    [dismissableMask]="true"
+    [style]="{width: '400px'}"
+    (onHide)="selectedMenu = null"
+>
+    <form *ngIf="selectedMenu" (ngSubmit)="saveMenu()">
+        <div class="p-fluid">
+            <div class="field mb-3">
+                <label for="label">Tên menu</label>
+                <input id="label" pInputText [(ngModel)]="selectedMenu.label" name="label" required />
+            </div>
+            <div class="field mb-3">
+                <label for="icon">Icon</label>
+                <input id="icon" pInputText [(ngModel)]="selectedMenu.icon" name="icon" />
+            </div>
+            <div class="field mb-3">
+                <label for="route">Route</label>
+                <input id="route" pInputText [(ngModel)]="selectedMenu.route" name="route" />
+            </div>
+            <div class="field mb-3">
+                <label for="order_no">Thứ tự</label>
+                <input id="order_no" type="number" pInputText [(ngModel)]="selectedMenu.orderNo" name="order_no" />
+            </div>
+            <div class="field mb-3">
+                <label for="isVisible">Hiển thị</label>
+                <p-dropdown
+                    [options]="[{label: 'Có', value: true}, {label: 'Ẩn', value: false}]"
+                    [(ngModel)]="selectedMenu.isVisible"
+                    name="isVisible">
+                </p-dropdown>
+            </div>
+            <div class="field mb-3">
+                <label for="parentId">Menu cha (parent_id)</label>
+                <input id="parentId" type="number" pInputText [(ngModel)]="selectedMenu.parentId" name="parentId" />
+            </div>
+        </div>
+        <div class="flex justify-content-end gap-2 mt-4">
+            <button pButton type="button" label="Hủy" (click)="menuDialogVisible=false"></button>
+            <button pButton type="submit" label="Lưu" [disabled]="!selectedMenu.label"></button>
+        </div>
+    </form>
+</p-dialog>
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>
