@@ -3,14 +3,15 @@ package com.example.graduate.repositories.queries;
 public interface StudentQuery {
   String SEARCH_PROJECT_BY_STUDENT = """
           SELECT new com.example.graduate.dto.StudentProject.StudentProjectListDTO(
-               pt.id, 
+              pt.id, 
               tu.name,
               pt.title,
               su.name,
               s.mssv,
+              su.id,
               s.classCode,
               sp.isApproved,
-              ru.name
+              ru.name 
           )
           FROM ProjectTopic pt
           JOIN pt.teacher t

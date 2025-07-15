@@ -15,7 +15,7 @@ export class ProjectTopicService {
 
     constructor(private http: HttpClient) {}
 
-    private getAuthHeaders(): HttpHeaders {
+    public getAuthHeaders(): HttpHeaders {
         const rawAuth = localStorage.getItem('auth');
         if (!rawAuth) {
             throw new Error('Authentication token not found');

@@ -32,6 +32,15 @@ public class WeeklyReport {
     private LocalDate startDate;
     private LocalDate endDate;
 
+
+    @Column(length = 255)
+    private String task;
+
+    @Column(columnDefinition = "TEXT")
+    private String guide;
+
+
+
     @Column(columnDefinition = "TEXT")
     private String content;
 

@@ -2,11 +2,14 @@ package com.example.graduate.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.example.graduate.dto.TeacherDTO;
+import com.example.graduate.dto.Teacher.ProjectTopicByTeacher;
 import com.example.graduate.mapper.UserMapper;
 import com.example.graduate.models.RoleName;
+import com.example.graduate.repositories.ProjectTopicRepository;
 import com.example.graduate.repositories.UserRepository;
 import com.example.graduate.service.interfaces.ITeacherService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ import java.util.stream.Collectors;
 public class TeacherServiceImpl implements ITeacherService {
 
     private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+
+    @Autowired
+    private ProjectTopicRepository projectTopicRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -43,5 +49,13 @@ public class TeacherServiceImpl implements ITeacherService {
                 .filter(user -> RoleName.TEACHER.equals(user.getRole().getName()))
                 .map(userMapper::toTeacherDTO)
                 .collect(Collectors.toList());
+    }
+
+
+
+    @Override
+    @Transactional
+    public List<ProjectTopicByTeacher> getPendingTopicsByTeacher(Long teacherUserId, String keyword, boolean isApproved) {
+        return projectTopicRepository.findTopicsByTeacherAndApprovalStatus(teacherUserId, keyword, isApproved);
     }
 }

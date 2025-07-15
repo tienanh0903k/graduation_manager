@@ -23,25 +23,24 @@
 
 /* ========= Search Bar ========= */
 .search-bar {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem 1.5rem;
-  align-items: end;
-  margin-top: .5rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
 
-  label {
-    font-size: 0.85rem;
-    color: var(--surface-600);
-    margin-bottom: .25rem;
-    display: block;
+  input {
+    flex: 1;
+    min-width: 200px;
   }
 
-  /* nút Tìm kiếm căn cùng hàng input */
-  button.p-button {
-    margin-top: 1.8rem;
+  p-dropdown {
+    min-width: 180px;
+  }
+
+  button {
+    white-space: nowrap;
   }
 }
-
 
 
 
@@ -51,18 +50,19 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
-
 /* ========= Table ========= */
 :host ::ng-deep .p-table {
   thead th {
     background: var(--surface-50);
     font-weight: 600;
     text-align: center;
+    color: #333; /* Màu chữ của tiêu đề bảng */
   }
 
   tbody td {
     vertical-align: top;
     line-height: 1.4;
+    color: #444; /* Màu chữ của các ô trong phần thân bảng */
   }
 
   /* Cột STT luôn hẹp và căn giữa */
@@ -110,7 +110,7 @@
   label {
     display: block;
     margin-bottom: .25rem;
-    color: var(--surface-700);
+    color: #000;
   }
   p, ul {
     margin: 0;
@@ -121,4 +121,15 @@
 :host ::ng-deep .p-toast {
   top: 6rem;     /* tránh trùng Header */
   right: 1.5rem;
+}
+
+.status-approved {
+  color: green; /* Màu chữ xanh cho đã duyệt */
+  font-weight: bold;
+}
+
+/* Class cho trạng thái "Chưa duyệt" */
+.status-pending {
+  color: orange; /* Màu chữ cam cho chưa duyệt */
+  font-weight: bold;
 }

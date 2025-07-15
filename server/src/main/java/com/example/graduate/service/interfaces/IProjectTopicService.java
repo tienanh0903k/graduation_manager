@@ -14,4 +14,6 @@ public interface IProjectTopicService {
     ProjectTopicDTO save(Long studentId, ProjectTopicDTO projectTopicDTO);
     void deleteById(Long id);
     Page<ProjectTopicFullDto> getFullTopicInfoWithStudentFilter(Long teacherId, String name, String studentId, Pageable pageable);
+
+    
 }

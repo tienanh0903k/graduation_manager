@@ -7,8 +7,9 @@ import { StudentsService } from '../../core/services/students.service';
 import { TeacherService } from '../../core/services/teacher.service';
 import { isOwner } from '../../core/utils/permissions.util';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { selectAuthUserId } from '../../core/store/auth/auth.selectors';
+import _ from 'lodash';
 
 @Component({
     selector: 'app-create-project',
@@ -44,10 +45,14 @@ export class CreateProjectComponent implements OnInit {
     selectedLecturer = '';
     searchTitle = '';
 
-    form = {
+    form:  {
+    title: string;
+    description: string;
+    teacherId: number | null;
+} = {
         title: '',
         description: '',
-        teacherId: 1
+        teacherId: null
     };
 
     constructor(
@@ -67,9 +72,16 @@ export class CreateProjectComponent implements OnInit {
     }
 
     _loadSearchResults(): void {
-        this.studentsService.searchStudentProjects(this.selectedDepartment || undefined, this.selectedLecturer || undefined, this.searchTitle || undefined, this.currentPage, this.rowsPerPage).subscribe({
+        this.studentsService.searchStudentProjects(this.selectedDepartment || undefined, this.selectedLecturer || undefined, this.searchTitle || undefined, this.currentPage, this.rowsPerPage)
+        .pipe(
+            map((res) => {
+                 const uniqueTopics = _.uniqBy(res.content, 'id');
+                 return { ...res, content: uniqueTopics };
+            })
+        )
+        .subscribe({
             next: (res) => {
-                this.topics = res.content; // nếu backend trả kiểu Page
+                this.topics = res.content;
                 this.totalRecords = res.totalElements;
                 console.log('Danh sách đề tài:', this.topics);
             },
@@ -85,9 +97,10 @@ export class CreateProjectComponent implements OnInit {
     _loadTeachers(): void {
         this.teacherService.getAllTeachers().subscribe({
             next: (res) => {
+                console.log('Danh sách giảng viên:', res.data);
                 this.teacherOptions = res.data.map((teacher: any) => ({
                     label: teacher.name,
-                    value: teacher.name
+                    value: teacher.id
                 }));
             },
             error: (err) => console.error('Lỗi khi tải danh sách giảng viên:', err)
@@ -101,7 +114,22 @@ export class CreateProjectComponent implements OnInit {
     }
 
     submitProposal(): void {
-        this.projectTopicService.createTopic(this.form).subscribe({
+         if (this.form.teacherId === null) {
+             this.messageService.add({
+                 severity: 'warn',
+                 summary: 'Thiếu thông tin',
+                 detail: 'Vui lòng chọn giảng viên hướng dẫn.'
+             });
+             return;
+         }
+
+          const payload: any = {
+              title: this.form.title,
+              description: this.form.description,
+              teacherId: this.form.teacherId
+          };
+
+        this.projectTopicService.createTopic(payload).subscribe({
             next: () => {
                 this.messageService.add({
                     severity: 'success',
@@ -182,10 +210,10 @@ export class CreateProjectComponent implements OnInit {
 
     //access edit delete
     canEdit(topic: any): boolean {
-        return this.currentUserId != null && topic.id === this.currentUserId;
+        return this.currentUserId != null && topic.userId === this.currentUserId;
     }
 
     canDelete(topic: any): boolean {
-        return this.currentUserId != null && topic.id === this.currentUserId;
+        return this.currentUserId != null && topic.userId === this.currentUserId;
     }
 }

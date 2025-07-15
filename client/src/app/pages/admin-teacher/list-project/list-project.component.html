@@ -1,22 +1,23 @@
-
 <nav class="breadcrumb">
     <span>Trang chủ</span>
     <span>/</span>
     <span>Quản lý đề tài hướng dẫn</span>
 </nav>
 
-
 <p-panel header="Tìm kiếm đề tài" [toggleable]="true">
-    <div class="search-bar">
-        <input type="text" pInputText placeholder="Tên đề tài" [(ngModel)]="searchTitle" />
-        <input type="text" pInputText placeholder="Tên hoặc mã sinh viên" [(ngModel)]="searchStudent" />
-        <p-dropdown [options]="sortOptions" [(ngModel)]="selectedSort" placeholder="Chọn sắp xếp"
-            optionLabel="label" optionValue="value"></p-dropdown>
-        <button pButton type="button" (click)="filterTopics()">Tìm kiếm</button>
+    <div class="search-bar"
+        [ngStyle]="{'display': 'flex', 'gap': '10px', 'align-items': 'center', 'flex-wrap': 'wrap'}">
+        <input type="text" pInputText placeholder="Tên đề tài" [(ngModel)]="searchTitle"
+            [ngStyle]="{'flex': '1', 'min-width': '200px'}" />
+        <input type="text" pInputText placeholder="Tên hoặc mã sinh viên" [(ngModel)]="searchStudent"
+            [ngStyle]="{'flex': '1', 'min-width': '200px'}" />
+        <p-dropdown [options]="sortOptions" [(ngModel)]="selectedSort" placeholder="Chọn sắp xếp" optionLabel="label"
+            optionValue="value" [ngStyle]="{'min-width': '180px'}"></p-dropdown>
+        <button pButton type="button" (click)="onSearchOrSortChange()" [ngStyle]="{'white-space': 'nowrap'}">Tìm kiếm</button>
     </div>
 </p-panel>
 
-<p-table [value]="projects" [loading]="loading" [paginator]="true" [rows]="10" responsiveLayout="scroll"
+<p-table [value]="filteredProjects" [loading]="loading" [paginator]="true" [rows]="10" responsiveLayout="scroll"
     [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
         <tr>
@@ -35,28 +36,23 @@
             <td>{{ i + 1 }}</td>
             <td>{{ project.title }}</td>
             <td>
-                <span *ngFor="let student of project.students">
-                    {{ student.name }} ({{ student.code }})<br>
-                </span>
+                {{ project.student.name }} ({{ project.student.code }})
             </td>
             <td>{{ project.description | truncate:50 }}</td>
             <td>{{ project.registrationDate | date:'dd/MM/yyyy' }}</td>
             <td>
-                <span class="p-tag" [ngClass]="{
-                    'p-tag-success': project.status === 'APPROVED',
-                    'p-tag-warning': project.status === 'PENDING',
-                    'p-tag-danger': project.status === 'REJECTED'
-                }">
-                    {{ getStatusText(project.status) }}
+                <span [ngClass]="{
+                        'status-approved': project.approved === true,
+                        'status-pending': project.approved === false
+                    }">
+                    {{ project.status ? 'Đã duyệt' : 'Chưa duyệt' }}
                 </span>
             </td>
             <td>
                 <button pButton icon="pi pi-eye" class="p-button-rounded p-button-text p-button-sm"
                     (click)="viewProjectDetails(project)"></button>
                 <button pButton icon="pi pi-check" class="p-button-rounded p-button-text p-button-sm p-button-success"
-                    *ngIf="project.status === 'PENDING'" (click)="approveProject(project.id)"></button>
-                <button pButton icon="pi pi-times" class="p-button-rounded p-button-text p-button-sm p-button-danger"
-                    *ngIf="project.status === 'PENDING'" (click)="rejectProject(project.id)"></button>
+                    *ngIf="project.status === false" (click)="approveProject(project.id)">Chấp nhận</button>
             </td>
         </tr>
     </ng-template>
@@ -73,11 +69,7 @@
 
         <div class="p-field">
             <label><strong>Sinh viên thực hiện:</strong></label>
-            <ul>
-                <li *ngFor="let student of selectedProject.students">
-                    {{ student.name }} ({{ student.code }})
-                </li>
-            </ul>
+            <p>{{ selectedProject.student.name }} ({{ selectedProject.student.code }})</p>
         </div>
 
         <div class="p-field">
@@ -86,13 +78,8 @@
         </div>
 
         <div class="p-field">
-            <label><strong>Mục tiêu đề tài:</strong></label>
-            <p>{{ selectedProject.objectives }}</p>
-        </div>
-
-        <div class="p-field">
-            <label><strong>Yêu cầu:</strong></label>
-            <p>{{ selectedProject.requirements }}</p>
+            <label><strong>Lớp:</strong></label>
+            <p>{{ selectedProject.className }}</p>
         </div>
 
         <div class="p-field">
@@ -101,10 +88,11 @@
         </div>
 
         <div class="p-field">
-            <label><strong>Trạng thái:</strong></label>
-            <p-tag [severity]="getStatusSeverity(selectedProject.status)"
-                   [value]="getStatusText(selectedProject.status)"></p-tag>
-        </div>
+    <label><strong>Trạng thái:</strong></label>
+    <p-tag
+        [value]="selectedProject.status ? 'Đã duyệt' : 'Chưa duyệt'">
+    </p-tag>
+</div>
     </div>
 </p-dialog>
 

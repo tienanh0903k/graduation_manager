@@ -1,7 +1,6 @@
 package com.example.graduate.models;
 
-import java.time.LocalDate;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,33 +9,33 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table(name = "student_projects")
+@Table(name = "week_templates")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentProject {
-     @Id
+@Builder
+public class WeekTemplate {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
-
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private ProjectTopic project;
-
+    //term_id
     @ManyToOne
     @JoinColumn(name = "project_term_id", nullable = false)
-    private ProjectTerm term;
+    private ProjectTerm projectTerm;
 
-    private Boolean isApproved = false;
+    @Column(name = "week_number", nullable = false)
+    private Integer weekNumber;
 
-    private LocalDate registerDate;
+    @Column(length = 255)
+    private String task;
+
+    @Column(columnDefinition = "TEXT")
+    private String guide;
 }
