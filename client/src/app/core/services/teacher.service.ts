@@ -21,8 +21,15 @@ export class TeacherService {
      * get project by teacher
      */
 
-   getApprovedProjects(keyword: string = '', isApproved: boolean = true): Observable<any[]> {
-    const headers = this.projectTopicService.getAuthHeaders();
-    return this.http.get<any[]>(`${this.apiUrl}/project-topics?isApproved=${isApproved}&keyword=${keyword}`, { headers });
-}
+    getApprovedProjects(keyword: string = '', isApproved: boolean = true): Observable<any[]> {
+        const headers = this.projectTopicService.getAuthHeaders();
+        return this.http.get<any[]>(`${this.apiUrl}/project-topics?isApproved=${isApproved}&keyword=${keyword}`, { headers });
+    }
+
+    /**
+     * approve project
+     */
+    approveProject(projectId: number): Observable<any> {
+        return this.http.patch(`${this.apiUrl}/projects/${projectId}/approve`, {});
+    }
 }

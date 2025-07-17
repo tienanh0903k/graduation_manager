@@ -105,15 +105,19 @@ export class ListProjectComponent implements OnInit {
     }
 
     approveProject(projectId: number): void {
-        // Logic to approve the project
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: `Project ${projectId} approved successfully!` });
+        this.teacherService.approveProject(projectId).subscribe({
+            next: (res) => {
+                this.messageService.add({ severity: 'success', summary: 'Thành công', detail: res.message });
 
-        // Update the project status in the array
-        const projectIndex = this.projects.findIndex(p => p.id === projectId);
-        if (projectIndex !== -1) {
-            this.projects[projectIndex].status = 'APPROVED';
-            //this.filterTopics(); // Refresh filtered results
-        }
+                // Update UI status
+                const project = this.projects.find((p) => p.id === projectId);
+                if (project) project.status = 'APPROVED';
+                this.loadProjects();
+            },
+            error: () => {
+                this.messageService.add({ severity: 'error', summary: 'Lỗi', detail: 'Không thể phê duyệt đề tài' });
+            }
+        });
     }
 
     rejectProject(projectId: number): void {
@@ -121,15 +125,14 @@ export class ListProjectComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: `Project ${projectId} rejected!` });
 
         // Update the project status in the array
-        const projectIndex = this.projects.findIndex(p => p.id === projectId);
+        const projectIndex = this.projects.findIndex((p) => p.id === projectId);
         if (projectIndex !== -1) {
             this.projects[projectIndex].status = 'REJECTED';
             //this.filterTopics(); // Refresh filtered results
         }
     }
 
-
-   /* ====== SEARCH + SORT ====== */
+    /* ====== SEARCH + SORT ====== */
     onSearchOrSortChange(): void {
         // Gọi lại API mỗi khi thay đổi tiêu chí tìm kiếm hoặc trạng thái
         this.loadProjects();

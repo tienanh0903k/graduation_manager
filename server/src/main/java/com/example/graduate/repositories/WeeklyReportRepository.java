@@ -26,12 +26,15 @@ public interface WeeklyReportRepository extends CrudRepository<WeeklyReport, Lon
                 wr.content,
                 wr.comment,
                 wr.score,
-                wr.file_link
+                wr.file_link,
+                t_user.name AS teacher_name
             FROM weekly_reports wr
             JOIN student_projects sp ON wr.student_project_id = sp.id
             JOIN students s ON sp.student_id = s.id
             JOIN users u ON s.user_id = u.id
             JOIN project_topics pt ON sp.project_id = pt.id
+            JOIN teachers t ON pt.teacher_id = t.id
+            JOIN users t_user ON t.user_id = t_user.id
             WHERE wr.start_date <= :date
               AND u.id = :userId
             ORDER BY wr.week_number DESC

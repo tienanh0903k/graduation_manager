@@ -10,4 +10,6 @@ public interface ITeacherService {
 
     //    //get project by teacher id 
     List<ProjectTopicByTeacher> getPendingTopicsByTeacher(Long teacherUserId, String keyword, boolean isApproved);
+
+    boolean approveProject(Long projectId);
 }

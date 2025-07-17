@@ -51,8 +51,9 @@
             <td>
                 <button pButton icon="pi pi-eye" class="p-button-rounded p-button-text p-button-sm"
                     (click)="viewProjectDetails(project)"></button>
-                <button pButton icon="pi pi-check" class="p-button-rounded p-button-text p-button-sm p-button-success"
-                    *ngIf="project.status === false" (click)="approveProject(project.id)">Chấp nhận</button>
+                <button pButton icon="pi pi-fw pi-check" pTooltip="Phê duyệt đề tài"
+        tooltipPosition="top" class="p-button-rounded p-button-text p-button-sm p-button-success"
+                    *ngIf="project.status === false" (click)="approveProject(project.id)"></button>
             </td>
         </tr>
     </ng-template>

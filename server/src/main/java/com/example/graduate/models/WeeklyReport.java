@@ -29,8 +29,8 @@ public class WeeklyReport {
     private StudentProject studentProject;
 
     private Integer weekNumber;
-    private LocalDate startDate;
-    private LocalDate endDate;
+        private LocalDate startDate;
+        private LocalDate endDate;
 
 
     @Column(length = 255)

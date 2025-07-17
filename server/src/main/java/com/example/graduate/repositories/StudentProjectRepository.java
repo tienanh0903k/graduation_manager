@@ -1,5 +1,7 @@
 package com.example.graduate.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,9 +37,10 @@ public interface StudentProjectRepository extends JpaRepository<StudentProject, 
     Page<StudentProject> searchByMssv(Long teacherId, String kw, Pageable pageable);
 
 
-    
-
-
-
+    @Query("""
+            SELECT sp FROM StudentProject sp
+            WHERE sp.project.id = :projectId
+        """)
+    Optional<StudentProject> findByProjectId(Long projectId);
 
 }

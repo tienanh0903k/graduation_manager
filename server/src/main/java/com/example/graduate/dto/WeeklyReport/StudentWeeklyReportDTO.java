@@ -34,4 +34,5 @@ public interface StudentWeeklyReportDTO {
     String getComment();
     Float getScore();
     String getFileLink();
+    String getTeacherName();
 }
